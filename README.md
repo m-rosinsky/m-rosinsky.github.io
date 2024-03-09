@@ -1,5 +1,9 @@
 # Mike's C Programming Tutorial
 
+This tutorial is better done in the [book](./book/index.html)
+
+---
+
 > _Writing code is hard, but learning to code doesn't have to be_
 
 Hey everyone, thanks for checking out my tutorial.
@@ -20,7 +24,7 @@ But teaching is hard, and more importantly, having a good medium for teaching is
 
 I hope to teach people not only to code, but to enjoy coding, using techniques that myself as a student could understand.
 
-I want to teach not from the perspective of a professor, but from the perspective of a peer - As fellow software engineer who is still learning myself, and has gone through what current students are currently going through.
+I want to teach not from the perspective of a professor, but from the perspective of a peer - As a fellow software engineer who is still learning myself, and has gone through what current students are currently going through.
 
 ---
 

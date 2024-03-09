@@ -35,7 +35,7 @@ When a student learns a language that is a bit lower-level, such as C, we force 
 
 When we learn to drive a car, sure we can press the pedals and turn the wheel, but if we don't understand what's going on under the hood, our chances of fixing things, or making the next best car, are slim to none.
 
-Us, as software engineers, are called to understand how software works, under the hood and all, and learning C forces us to do that.
+Us, as engineers in general, but more specifically as software engineers, are called to understand how things work! That includes under the hood, and learning C forces us to do that.
 
 ## But C is Old!
 
