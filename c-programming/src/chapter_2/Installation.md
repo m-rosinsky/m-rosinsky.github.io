@@ -65,7 +65,7 @@ gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
 
 ## MacOS Installation
 
-We'll use the macOS package manager, _homebrew_ to install our C compiler.
+We'll use the macOS package manager, _homebrew_, to install our C compiler.
 
 To check if you have homebrew installed, open a terminal session and run:
 
@@ -127,3 +127,22 @@ To verify we've successfully installed `gcc`, open command prompt or powershell 
 ```
 > gcc --version
 ```
+
+## Online Compilers
+
+There are also a number of websites that allow you to write and execute code directly in a browser window.
+
+This alleviates the need to install packages on your computer.
+
+Some common sites include:
+
+- [OnlineGDB](https://www.onlinegdb.com/)
+- [Programiz](https://www.programiz.com/c-programming/online-compiler/)
+- [tutorialspoint](https://www.tutorialspoint.com/compile_c_online.php)
+- and many more
+
+If you'd like to use the options throughout the process, that's totally fine!
+
+Personally, I think it's good practice to actually get used to working with the compiler and command-line tools, since it's essential in any software engineering job.
+
+But for a quick-and-dirty environment to just try out some code snippets without the overhead of the command-line, it's a great solution!
