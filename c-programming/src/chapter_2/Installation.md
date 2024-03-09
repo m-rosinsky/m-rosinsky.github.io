@@ -141,8 +141,8 @@ Some common sites include:
 - [tutorialspoint](https://www.tutorialspoint.com/compile_c_online.php)
 - and many more
 
-If you'd like to use the options throughout the process, that's totally fine!
+If you'd like to use these options throughout these tutorials, that's totally fine!
 
-Personally, I think it's good practice to actually get used to working with the compiler and command-line tools, since it's essential in any software engineering job.
+Personally, I think it's good practice to get used to working with the compiler and command-line tools, since it's essential in any software engineering job.
 
 But for a quick-and-dirty environment to just try out some code snippets without the overhead of the command-line, it's a great solution!
