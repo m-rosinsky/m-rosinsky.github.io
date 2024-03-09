@@ -1,7 +1,5 @@
 # Mike's C Programming Tutorial
 
-This tutorial is better done in the [book](./book/index.html)
-
 ---
 
 > _Writing code is hard, but learning to code doesn't have to be_
