@@ -46,3 +46,32 @@ The problem is, modern languages like Python, or even C++ abstract some core con
 The point isn't that C is that _only_ option to write production-level code, of course it isn't, but as students we should embrace the opportunity to lift the abstractions so we can actually grasp the concepts.
 
 Then, once we understand these things, moving to the more modern languages is a breeze, and gives us natural intuition into what might be going on when our programs break.
+
+## Do Companies Actually Use C Anymore?
+
+Short answer? _Yes!_ But maybe not like they used to.
+
+C still has its uses in production-level code today, but it fills a bit of a different role than what it used it.
+
+Back before the conveniences of the higher-level modern languages that are common today, C was used for pretty much everything. Want a new text editor program? Write it in C. A file versioning software like git? Write it in C!
+
+These days, projects like those would probably be tackled by more modern languages for a few reasons, such as:
+
+- Most modern languages handle memory operations for you, so its harder to have memory-related issues such as memory leaks
+- Modern languages have larger built-in functionality sets, such as C++ having robust support for strings, where C does not.
+- Most modern languages are not platform dependent, meaning whether we're programming a tool for Windows, Linux, Mac, etc, the code will look the same
+- etc.
+
+C still has it's uses, however, but increasingly less as a general purpose programming language like it used to.
+
+C sees use in things like embedded development, where memory space is at an absolute premium, and languages with larger built-in libraries would be too large.
+
+C also offers more direct acces to hardware, in that we can write to specific addresses that an embedded device may need us to write to.
+
+C also sees widespread use in low-level programming tasks where speed is crucial, such as operating system development, router software, firmware, and more.
+
+## Summary
+
+Hopefully this section has given you as a programmer a bit more motivation to learn C.
+
+Now let's get in to the actual tutorials.
