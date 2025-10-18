@@ -4,7 +4,7 @@ copy-html:
 	@cp index.html index.html.bak
 
 build:
-	@mdbook build c-programming
+	@mdbook build xapi
 
 restore-html:
 	@mv index.html.bak index.html
