@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Mike&#x27;s X API Blog</title>
+        <title>Temporary Webhooks with xURL - Mike&#x27;s X API Blog</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">Mike&#x27;s X API Blog</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,23 +175,55 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mikes-x-developer-api-blog"><a class="header" href="#mikes-x-developer-api-blog">Mike's X Developer API Blog</a></h1>
-<hr />
+                        <h1 id="standing-up-a-temporary-webhook-using-xurl"><a class="header" href="#standing-up-a-temporary-webhook-using-xurl">Standing up a Temporary Webhook using xURL</a></h1>
 <blockquote>
-<p><em>"How about 'Hook into what's happening', y'know for our slogan!"</em></p>
-<p><em>"Mike that's awful"</em></p>
-<p><em>"Yeah..."</em></p>
+<p><strong>Note</strong>: This section assumes you have the <code>xurl</code> CLI tool set up. If you haven't installed and configured <code>xurl</code> yet, check out the <a href="../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
 </blockquote>
-<p>Hey everyone, thanks for checking out my tutorial.</p>
-<p>My name is Mike Rosinsky. I'm a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
-<p>This doesn't intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
+<p>If you're looking for a quick and easy way to stand up a webhook to use with the X API, the xURL tool offers this functionality.</p>
+<p>The xURL webhook abstracts away the need to write your own handlers for the GET and POST requests that X sends to your server. If you're looking for that logic to incorporate into your production app, check out the next section where we write a Python Flask app.</p>
+<h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<p>What you'll need:</p>
+<ul>
+<li>The xURL CLI tool (already installed and configured)</li>
+<li>A free (or higher) account with <code>ngrok.com</code></li>
+<li>Your ngrok auth token</li>
+</ul>
+<h2 id="setup-steps"><a class="header" href="#setup-steps">Setup Steps</a></h2>
+<h3 id="1-register-your-oauth1-keys"><a class="header" href="#1-register-your-oauth1-keys">1. Register Your OAuth1 Keys</a></h3>
+<p>First, ensure your OAuth1 keys are registered with xurl:</p>
+<pre><code class="language-bash">xurl auth oauth1
+</code></pre>
+<p>You'll need to provide your consumer key and secret, and access key and secret. Generate these from the <a href="https://developer.x.com">X Developer Portal</a>.</p>
+<h3 id="2-start-the-webhook-server"><a class="header" href="#2-start-the-webhook-server">2. Start the Webhook Server</a></h3>
+<p>Run the xURL webhook command:</p>
+<pre><code class="language-bash">xurl webhook start
+</code></pre>
+<p>You'll be prompted for your ngrok auth token so that xURL can create a temporary HTTPS endpoint:</p>
+<pre><code>Starting webhook server with ngrok...
+Enter your ngrok authtoken (leave empty to try NGROK_AUTHTOKEN env var):
+</code></pre>
+<p>Once you've entered your auth token, your endpoint will be generated and you'll see output like this:</p>
+<pre><code>Configuring ngrok to forward to local port: 8080
+Ngrok tunnel established!
+  Forwarding URL: https://d1cb5181df5c.ngrok.app -&gt; localhost:8080
+Use this URL for your X API webhook registration: https://d1cb5181df5c.ngrok.app/webhook
+Starting local HTTP server to handle requests from ngrok tunnel (forwarded from https://d1cb5181df5c.ngrok.app)...
+</code></pre>
+<h2 id="using-your-webhook"><a class="header" href="#using-your-webhook">Using Your Webhook</a></h2>
+<p>Leave the terminal window running - any webhook events, including the security check, will be displayed in that window.</p>
+<p><strong>To stop the webhook server</strong>: Press <code>Ctrl+C</code> in the terminal.</p>
+<p>You can now use the generated URL (ending in <code>/webhook</code>) to register a webhook with the X API. See the next section for a tutorial on webhook registration.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../2_realtime/1_webhooks/2_sample_app.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../2_realtime/1_webhooks/4_registration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -201,8 +233,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../2_realtime/1_webhooks/2_sample_app.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../2_realtime/1_webhooks/4_registration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -217,13 +252,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

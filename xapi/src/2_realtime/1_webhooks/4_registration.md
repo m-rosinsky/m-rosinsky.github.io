@@ -15,6 +15,8 @@ The X API offers the following endpoints to manage your registered webhooks:
 | `DELETE` | `/2/webhooks/:webhook_id` | Delete a webhook by ID |
 | `PUT` | `/2/webhooks/:webhook_id` | Manually trigger a security check to re-validate a webhook |
 
+> **Note**: All sample commands in this section use the `xurl` CLI tool. If you haven't set up `xurl` yet, check out the [xURL section](../1_tools/1_xurl/xurl.md) first.
+
 ## Register a Webhook
 
 To register the webhook, you'll use the `POST` route, along with the following JSON body:
@@ -25,10 +27,10 @@ To register the webhook, you'll use the `POST` route, along with the following J
 }
 ```
 
-We can use `curl` to test this:
+We can use `xurl` to test this:
 
 ```bash
-curl https://api.x.com/2/webhooks -X POST -d '{"url": "<YOUR WEBHOOK HTTPS URL>"}'
+xurl --auth app /2/webhooks -X POST -d '{"url": "<YOUR WEBHOOK HTTPS URL>"}'
 ```
 
 When this request is sent, X will send a `GET` request to the provided URL to validate that the webhook belongs to you.
@@ -51,7 +53,7 @@ On successful validation, the webhook will be created:
 Now we can call the `GET` route to see our registered webhooks:
 
 ```bash
-curl https://api.x.com/2/webhooks
+xurl --auth app /2/webhooks
 ```
 
 ```json
@@ -81,7 +83,7 @@ If for some reason this validation fails, the webhook will be marked as `"valid"
 To re-validate the webhook, you can call the `PUT` request, which will manually trigger the re-validation process:
 
 ```bash
-curl https://api.x.com/2/webhooks/1146654567674912769 -X PUT 
+xurl --auth app /2/webhooks/1146654567674912769 -X PUT 
 ```
 
 Providing the validation was successful, our webhook will be re-validated:

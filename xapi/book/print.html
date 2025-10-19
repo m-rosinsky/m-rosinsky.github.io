@@ -186,6 +186,27 @@
 <p>Hey everyone, thanks for checking out my tutorial.</p>
 <p>My name is Mike Rosinsky. I'm a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
 <p>This doesn't intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="xurl---curl-for-x"><a class="header" href="#xurl---curl-for-x">xURL - cURL for X</a></h1>
+<p><code>xURL</code> is a CLI tool specifically design for interfacing with the X API.</p>
+<p>Some key features include:</p>
+<ul>
+<li>URL shortening</li>
+<li>Authentication handling</li>
+<li>Webhook testing via ngrok</li>
+</ul>
+<p>You can check out the full project, including the README here: <a href="https://github.com/xdevplatform/xurl" target="_blank">https://github.com/xdevplatform/xurl</a></p>
+<h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
+<p>Install the tool with one curl command:</p>
+<pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/xdevplatform/xurl/main/install.sh | sudo bash
+</code></pre>
+<p>Register your auth token:</p>
+<pre><code class="language-bash">xurl auth app --bearer-token YOUR_BEARER_TOKEN
+</code></pre>
+<p>and make requests:</p>
+<pre><code class="language-bash">xurl --auth app /2/tweets/20
+</code></pre>
+<p>Check out the xurl github README for further tutorials including using OAuth1 + 2, user auth, and other features.</p>
+<p>I'll be using xurl in all sample commands in follow-on sections in this blog.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="using-webhooks-with-the-x-developer-api"><a class="header" href="#using-webhooks-with-the-x-developer-api">Using Webhooks with the X Developer API</a></h1>
 <blockquote>
 <p>☎️ Don't call us, we'll call you!</p>
@@ -247,7 +268,7 @@ if __name__=='__main__':
 <p>X uses a Challenge-Response Check (CRC) to verify that your webhook endpoint is legitimate and secure. When you register a webhook URL, X will send a GET request with a <code>crc_token</code> parameter. Your app must respond with an HMAC SHA-256 hash of that token using your consumer secret.</p>
 <h3 id="getting-your-consumer-secret"><a class="header" href="#getting-your-consumer-secret">Getting Your Consumer Secret</a></h3>
 <p>To get your consumer secret, go to your X Developer Portal and navigate to your app's settings. You'll find the Consumer Keys section where you can view and regenerate your API keys:</p>
-<p><img src="chapter_1/../../../assets/keys.png" alt="Finding your consumer secret in the X Developer Portal" /></p>
+<p><img src="2_realtime/1_webhooks/../../../assets/keys.png" alt="Finding your consumer secret in the X Developer Portal" /></p>
 <p>Copy the "API Key Secret" (also called Consumer Secret) and set it as an environment variable before running your app.</p>
 <h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
 <p>The CRC check ensures that:</p>
@@ -465,6 +486,45 @@ if __name__ == '__main__':
 <p>Now that the server is running locally, you'll need to host it to generate a publicly-available HTTPS URL.</p>
 <p>This can be done for free using public tools like <code>ngrok</code>, deployed to a cloud environment, or any other means you wish.</p>
 <p>In the next section, we'll register the URL with X so we can start receiving events.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="standing-up-a-temporary-webhook-using-xurl"><a class="header" href="#standing-up-a-temporary-webhook-using-xurl">Standing up a Temporary Webhook using xURL</a></h1>
+<blockquote>
+<p><strong>Note</strong>: This section assumes you have the <code>xurl</code> CLI tool set up. If you haven't installed and configured <code>xurl</code> yet, check out the <a href="2_realtime/1_webhooks/../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+</blockquote>
+<p>If you're looking for a quick and easy way to stand up a webhook to use with the X API, the xURL tool offers this functionality.</p>
+<p>The xURL webhook abstracts away the need to write your own handlers for the GET and POST requests that X sends to your server. If you're looking for that logic to incorporate into your production app, check out the next section where we write a Python Flask app.</p>
+<h2 id="quick-start-1"><a class="header" href="#quick-start-1">Quick Start</a></h2>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<p>What you'll need:</p>
+<ul>
+<li>The xURL CLI tool (already installed and configured)</li>
+<li>A free (or higher) account with <code>ngrok.com</code></li>
+<li>Your ngrok auth token</li>
+</ul>
+<h2 id="setup-steps"><a class="header" href="#setup-steps">Setup Steps</a></h2>
+<h3 id="1-register-your-oauth1-keys"><a class="header" href="#1-register-your-oauth1-keys">1. Register Your OAuth1 Keys</a></h3>
+<p>First, ensure your OAuth1 keys are registered with xurl:</p>
+<pre><code class="language-bash">xurl auth oauth1
+</code></pre>
+<p>You'll need to provide your consumer key and secret, and access key and secret. Generate these from the <a href="https://developer.x.com">X Developer Portal</a>.</p>
+<h3 id="2-start-the-webhook-server"><a class="header" href="#2-start-the-webhook-server">2. Start the Webhook Server</a></h3>
+<p>Run the xURL webhook command:</p>
+<pre><code class="language-bash">xurl webhook start
+</code></pre>
+<p>You'll be prompted for your ngrok auth token so that xURL can create a temporary HTTPS endpoint:</p>
+<pre><code>Starting webhook server with ngrok...
+Enter your ngrok authtoken (leave empty to try NGROK_AUTHTOKEN env var):
+</code></pre>
+<p>Once you've entered your auth token, your endpoint will be generated and you'll see output like this:</p>
+<pre><code>Configuring ngrok to forward to local port: 8080
+Ngrok tunnel established!
+  Forwarding URL: https://d1cb5181df5c.ngrok.app -&gt; localhost:8080
+Use this URL for your X API webhook registration: https://d1cb5181df5c.ngrok.app/webhook
+Starting local HTTP server to handle requests from ngrok tunnel (forwarded from https://d1cb5181df5c.ngrok.app)...
+</code></pre>
+<h2 id="using-your-webhook"><a class="header" href="#using-your-webhook">Using Your Webhook</a></h2>
+<p>Leave the terminal window running - any webhook events, including the security check, will be displayed in that window.</p>
+<p><strong>To stop the webhook server</strong>: Press <code>Ctrl+C</code> in the terminal.</p>
+<p>You can now use the generated URL (ending in <code>/webhook</code>) to register a webhook with the X API. See the next section for a tutorial on webhook registration.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="registering-a-webhook-with-x"><a class="header" href="#registering-a-webhook-with-x">Registering a Webhook With X</a></h1>
 <p>Registering a webhook involves passing the HTTPS URL for your webhook app to X's servers, so they know where to send events to.</p>
 <p>The official docs are here: https://docs.x.com/x-api/webhooks/introduction</p>
@@ -477,14 +537,17 @@ if __name__ == '__main__':
 <tr><td><code>PUT</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Manually trigger a security check to re-validate a webhook</td></tr>
 </tbody></table>
 </div>
+<blockquote>
+<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven't set up <code>xurl</code> yet, check out the <a href="2_realtime/1_webhooks/../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+</blockquote>
 <h2 id="register-a-webhook"><a class="header" href="#register-a-webhook">Register a Webhook</a></h2>
 <p>To register the webhook, you'll use the <code>POST</code> route, along with the following JSON body:</p>
 <pre><code class="language-json">{
     "url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"
 }
 </code></pre>
-<p>We can use <code>curl</code> to test this:</p>
-<pre><code class="language-bash">curl https://api.x.com/2/webhooks -X POST -d '{"url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"}'
+<p>We can use <code>xurl</code> to test this:</p>
+<pre><code class="language-bash">xurl --auth app /2/webhooks -X POST -d '{"url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"}'
 </code></pre>
 <p>When this request is sent, X will send a <code>GET</code> request to the provided URL to validate that the webhook belongs to you.</p>
 <p>This is the security check we demonstrated in the last section.</p>
@@ -498,7 +561,7 @@ if __name__ == '__main__':
 </code></pre>
 <h2 id="list-your-webhooks"><a class="header" href="#list-your-webhooks">List your Webhooks</a></h2>
 <p>Now we can call the <code>GET</code> route to see our registered webhooks:</p>
-<pre><code class="language-bash">curl https://api.x.com/2/webhooks
+<pre><code class="language-bash">xurl --auth app /2/webhooks
 </code></pre>
 <pre><code class="language-json">{
   "data":[
@@ -519,7 +582,7 @@ if __name__ == '__main__':
 <p>X does this by sending the <code>GET</code> CRC check again.</p>
 <p>If for some reason this validation fails, the webhook will be marked as <code>"valid":false</code> and will no longer receive events.</p>
 <p>To re-validate the webhook, you can call the <code>PUT</code> request, which will manually trigger the re-validation process:</p>
-<pre><code class="language-bash">curl https://api.x.com/2/webhooks/1146654567674912769 -X PUT 
+<pre><code class="language-bash">xurl --auth app /2/webhooks/1146654567674912769 -X PUT 
 </code></pre>
 <p>Providing the validation was successful, our webhook will be re-validated:</p>
 <pre><code class="language-json">{
@@ -528,6 +591,36 @@ if __name__ == '__main__':
   }
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
+<p>In this chapter, we'll use the webhook that made in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
+<h2 id="about"><a class="header" href="#about">About</a></h2>
+<p>The X Activity API allows us to subscribe to event types and apply filters. When a matching event is created, it will be delivered to our app.</p>
+<p>XAA offers both webhook and streaming support, but we'll be using the webhook option in this example.</p>
+<h2 id="routes-1"><a class="header" href="#routes-1">Routes</a></h2>
+<p>To manage our active subscriptions in XAA, we're offered the following routes:</p>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>GET</code></td><td><code>/2/activity/subscriptions</code></td><td>List all active subscriptions</td></tr>
+<tr><td><code>POST</code></td><td><code>/2/activity/subscriptions</code></td><td>Create a new subscription (see below for JSON body)</td></tr>
+<tr><td><code>DELETE</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Delete a subscription by ID</td></tr>
+<tr><td><code>PUT</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Update a subscription (see below for JSON body)</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven't set up <code>xurl</code> yet, check out the <a href="2_realtime/2_xaa/../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+</blockquote>
+<p>Let's run the <code>GET</code> route first just to ensure the route is working and our account has access.</p>
+<p>You'll use your bearer token for authentication for all routes:</p>
+<pre><code>xurl --auth app /2/activity/subscriptions
+</code></pre>
+<pre><code class="language-json">{
+  "data":[
+  ],
+  "meta": {
+    "total_subscriptions": 0
+  }
+}
+</code></pre>
+<p>Looks like everything's working. We currently have no active subscriptions.</p>
 
                     </main>
 
