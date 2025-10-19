@@ -8,7 +8,7 @@ class MDBookSidebarScrollbox extends HTMLElement {
         super();
     }
     connectedCallback() {
-        this.innerHTML = '<ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Getting Real-Time Signal</li><li class="chapter-item expanded "><a href="chapter_1/webhooks.html"><strong aria-hidden="true">1.</strong> Webhooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_1/sample_app.html"><strong aria-hidden="true">1.1.</strong> Writing a Basic Webhook App</a></li></ol></li></ol>';
+        this.innerHTML = '<ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Getting Real-Time Signal</li><li class="chapter-item expanded "><a href="chapter_1/webhooks.html"><strong aria-hidden="true">1.</strong> Webhooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_1/sample_app.html"><strong aria-hidden="true">1.1.</strong> Writing a Basic Webhook App</a></li><li class="chapter-item expanded "><a href="chapter_1/registration.html"><strong aria-hidden="true">1.2.</strong> Registering the Webhook with X</a></li></ol></li></ol>';
         // Set the current, active page, and reveal it if it's hidden
         let current_page = document.location.href.toString().split("#")[0].split("?")[0];
         if (current_page.endsWith("/")) {

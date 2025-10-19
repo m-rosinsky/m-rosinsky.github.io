@@ -332,7 +332,6 @@ def webhook_request():
 
     # Handle POST request (Webhook event)
     elif request.method == 'POST':
-
         # Use the json library to render and dump the data.
         event_data = request.get_json()
         if event_data:
@@ -403,19 +402,18 @@ import sys
 app = Flask(__name__)
 
 # Your Twitter consumer secret - set this as an environment variable
-TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET")
-if TWITTER_CONSUMER_SECRET is None:
-  print("Missing consumer secret. Ensure TWITTER_CONSUMER_SECRET env var is set.")
+CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
+if CONSUMER_SECRET is None:
+  print("Missing consumer secret. Ensure CONSUMER_SECRET env var is set.")
   sys.exit(1)
 
 HOST = "0.0.0.0"
 PORT = 8080
 
-@app.route('/webhooks/twitter', methods=['GET', 'POST'])
+@app.route('/webhooks', methods=['GET', 'POST'])
 def webhook_request():
     # Handle GET request (CRC challenge)
     if request.method == 'GET':
-
         crc_token = request.args.get('crc_token')
         print(f"CRC Token received: {crc_token}")
 
@@ -425,7 +423,7 @@ def webhook_request():
 
         # Creates HMAC SHA-256 hash from incoming token and your consumer secret
         sha256_hash_digest = hmac.new(
-            TWITTER_CONSUMER_SECRET.encode('utf-8'),
+            CONSUMER_SECRET.encode('utf-8'),
             msg=crc_token.encode('utf-8'),
             digestmod=hashlib.sha256
         ).digest()
@@ -440,7 +438,7 @@ def webhook_request():
 
     # Handle POST request (Webhook event)
     elif request.method == 'POST':
-
+        # Use the json library to render and dump the data.
         event_data = request.get_json()
         if event_data:
             print(json.dumps(event_data, indent=2))
@@ -456,12 +454,79 @@ def webhook_request():
 
 def main():
     print("--- Starting Webhook App ---")
-    print(f"Using TWITTER_CONSUMER_SECRET from environment variable.")
+    print(f"Using CONSUMER_SECRET from environment variable.")
     print(f"Running with Waitress WSGI server on {HOST}:{PORT}")
     serve(app, host=HOST, port=PORT)
 
 if __name__ == '__main__':
     main()
+</code></pre>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
+<p>Now that the server is running locally, you'll need to host it to generate a publicly-available HTTPS URL.</p>
+<p>This can be done for free using public tools like <code>ngrok</code>, deployed to a cloud environment, or any other means you wish.</p>
+<p>In the next section, we'll register the URL with X so we can start receiving events.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="registering-a-webhook-with-x"><a class="header" href="#registering-a-webhook-with-x">Registering a Webhook With X</a></h1>
+<p>Registering a webhook involves passing the HTTPS URL for your webhook app to X's servers, so they know where to send events to.</p>
+<p>The official docs are here: https://docs.x.com/x-api/webhooks/introduction</p>
+<h2 id="routes"><a class="header" href="#routes">Routes</a></h2>
+<p>The X API offers the following endpoints to manage your registered webhooks:</p>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>GET</code></td><td><code>/2/webhooks</code></td><td>List all registered webhooks for your account</td></tr>
+<tr><td><code>POST</code></td><td><code>/2/webhooks</code></td><td>Create a webhook (see below for JSON body)</td></tr>
+<tr><td><code>DELETE</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Delete a webhook by ID</td></tr>
+<tr><td><code>PUT</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Manually trigger a security check to re-validate a webhook</td></tr>
+</tbody></table>
+</div>
+<h2 id="register-a-webhook"><a class="header" href="#register-a-webhook">Register a Webhook</a></h2>
+<p>To register the webhook, you'll use the <code>POST</code> route, along with the following JSON body:</p>
+<pre><code class="language-json">{
+    "url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"
+}
+</code></pre>
+<p>We can use <code>curl</code> to test this:</p>
+<pre><code class="language-bash">curl https://api.x.com/2/webhooks -X POST -d '{"url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"}'
+</code></pre>
+<p>When this request is sent, X will send a <code>GET</code> request to the provided URL to validate that the webhook belongs to you.</p>
+<p>This is the security check we demonstrated in the last section.</p>
+<p>On successful validation, the webhook will be created:</p>
+<pre><code class="language-json">"data": {
+  "created_at": "2025-10-15T20:53:05.000Z",
+  "id": "1146654567674912769",
+  "url": "&lt;YOUR WEBHOOK HTTPS URL&gt;",
+  "valid": true
+}
+</code></pre>
+<h2 id="list-your-webhooks"><a class="header" href="#list-your-webhooks">List your Webhooks</a></h2>
+<p>Now we can call the <code>GET</code> route to see our registered webhooks:</p>
+<pre><code class="language-bash">curl https://api.x.com/2/webhooks
+</code></pre>
+<pre><code class="language-json">{
+  "data":[
+    {
+      "created_at":"2025-10-15T20:53:05.000Z",
+      "id":"1146654567674912769",
+      "url":"&lt;YOUR WEBHOOK HTTPS URL&gt;",
+      "valid":true
+    }
+  ],
+  "meta":{
+    "result_count":1
+  }
+}
+</code></pre>
+<h2 id="re-validating-your-webhook"><a class="header" href="#re-validating-your-webhook">Re-validating your webhook</a></h2>
+<p>At regular intervals (~24hrs), X will attempt to validate that your webhook is still operational.</p>
+<p>X does this by sending the <code>GET</code> CRC check again.</p>
+<p>If for some reason this validation fails, the webhook will be marked as <code>"valid":false</code> and will no longer receive events.</p>
+<p>To re-validate the webhook, you can call the <code>PUT</code> request, which will manually trigger the re-validation process:</p>
+<pre><code class="language-bash">curl https://api.x.com/2/webhooks/1146654567674912769 -X PUT 
+</code></pre>
+<p>Providing the validation was successful, our webhook will be re-validated:</p>
+<pre><code class="language-json">{
+  "data":{
+    "valid":true
+  }
+}
 </code></pre>
 
                     </main>

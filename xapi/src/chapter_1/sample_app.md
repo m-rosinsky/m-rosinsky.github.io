@@ -153,7 +153,6 @@ def webhook_request():
 
     # Handle POST request (Webhook event)
     elif request.method == 'POST':
-
         # Use the json library to render and dump the data.
         event_data = request.get_json()
         if event_data:
@@ -233,19 +232,18 @@ import sys
 app = Flask(__name__)
 
 # Your Twitter consumer secret - set this as an environment variable
-TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET")
-if TWITTER_CONSUMER_SECRET is None:
-  print("Missing consumer secret. Ensure TWITTER_CONSUMER_SECRET env var is set.")
+CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
+if CONSUMER_SECRET is None:
+  print("Missing consumer secret. Ensure CONSUMER_SECRET env var is set.")
   sys.exit(1)
 
 HOST = "0.0.0.0"
 PORT = 8080
 
-@app.route('/webhooks/twitter', methods=['GET', 'POST'])
+@app.route('/webhooks', methods=['GET', 'POST'])
 def webhook_request():
     # Handle GET request (CRC challenge)
     if request.method == 'GET':
-
         crc_token = request.args.get('crc_token')
         print(f"CRC Token received: {crc_token}")
 
@@ -255,7 +253,7 @@ def webhook_request():
 
         # Creates HMAC SHA-256 hash from incoming token and your consumer secret
         sha256_hash_digest = hmac.new(
-            TWITTER_CONSUMER_SECRET.encode('utf-8'),
+            CONSUMER_SECRET.encode('utf-8'),
             msg=crc_token.encode('utf-8'),
             digestmod=hashlib.sha256
         ).digest()
@@ -270,7 +268,7 @@ def webhook_request():
 
     # Handle POST request (Webhook event)
     elif request.method == 'POST':
-
+        # Use the json library to render and dump the data.
         event_data = request.get_json()
         if event_data:
             print(json.dumps(event_data, indent=2))
@@ -286,10 +284,18 @@ def webhook_request():
 
 def main():
     print("--- Starting Webhook App ---")
-    print(f"Using TWITTER_CONSUMER_SECRET from environment variable.")
+    print(f"Using CONSUMER_SECRET from environment variable.")
     print(f"Running with Waitress WSGI server on {HOST}:{PORT}")
     serve(app, host=HOST, port=PORT)
 
 if __name__ == '__main__':
     main()
 ```
+
+## Next Steps
+
+Now that the server is running locally, you'll need to host it to generate a publicly-available HTTPS URL.
+
+This can be done for free using public tools like `ngrok`, deployed to a cloud environment, or any other means you wish.
+
+In the next section, we'll register the URL with X so we can start receiving events.
