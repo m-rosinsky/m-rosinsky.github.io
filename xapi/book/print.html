@@ -592,7 +592,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
-<p>In this chapter, we'll use the webhook that made in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
+<p>In this chapter, we'll use the webhook we set up in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
 <h2 id="about"><a class="header" href="#about">About</a></h2>
 <p>The X Activity API allows us to subscribe to event types and apply filters. When a matching event is created, it will be delivered to our app.</p>
 <p>XAA offers both webhook and streaming support, but we'll be using the webhook option in this example.</p>
@@ -621,6 +621,113 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 }
 </code></pre>
 <p>Looks like everything's working. We currently have no active subscriptions.</p>
+<h2 id="getting-your-user-id"><a class="header" href="#getting-your-user-id">Getting Your User ID</a></h2>
+<p>Before creating a subscription, we need to know our user ID. The X Activity API requires user IDs (not usernames) in the filter criteria.</p>
+<p>Let's get our user ID using the User Lookup endpoint:</p>
+<pre><code class="language-bash">xurl --auth app /2/users/by/username/YOUR_USERNAME
+</code></pre>
+<p>Replace <code>YOUR_USERNAME</code> with your actual X username (without the @ symbol).</p>
+<p><strong>Example response:</strong></p>
+<pre><code class="language-json">{
+  "data": {
+    "id": "1234567890",
+    "name": "Your Name",
+    "username": "your_username"
+  }
+}
+</code></pre>
+<p>Copy the <code>id</code> value from the response - you'll need it for creating subscriptions.</p>
+<h2 id="creating-a-subscription"><a class="header" href="#creating-a-subscription">Creating a Subscription</a></h2>
+<p>Now let's create our first subscription. We'll subscribe to our own profile update events first, so we can test for an event coming through.</p>
+<h3 id="subscription-parameters"><a class="header" href="#subscription-parameters">Subscription Parameters</a></h3>
+<p>When creating a subscription, you need to specify:</p>
+<ul>
+<li><strong><code>event_type</code></strong>: The type of event to subscribe to (required)</li>
+<li><strong><code>filter</code></strong>: Criteria to filter which events to receive (required)</li>
+<li><strong><code>webhook_id</code></strong>: The ID of your registered webhook where events will be delivered (optional, but required for webhook delivery)</li>
+<li><strong><code>tag</code></strong>: An optional identifier for your subscription (recommended)</li>
+</ul>
+<h3 id="available-event-types"><a class="header" href="#available-event-types">Available Event Types</a></h3>
+<p>XAA supports several event types:</p>
+<ul>
+<li><code>ProfileBioUpdate</code> - When a user updates their bio</li>
+<li><code>ProfilePictureUpdate</code> - When a user changes their profile picture</li>
+<li><code>ProfileBannerPictureUpdate</code> - When a user changes their banner</li>
+<li><code>ProfileScreennameUpdate</code> - When a user changes their username</li>
+<li><code>ProfileGeoUpdate</code> - When a user updates their location</li>
+<li><code>ProfileUrlUpdate</code> - When a user updates their website URL</li>
+</ul>
+<h3 id="creating-the-subscription"><a class="header" href="#creating-the-subscription">Creating the Subscription</a></h3>
+<p>Let's create a subscription to monitor our own profile bio updates:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "ProfileBioUpdate",
+  "filter": {
+    "user_id": "YOUR_USER_ID"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "my bio updates"
+}'
+</code></pre>
+<h3 id="success-response"><a class="header" href="#success-response">Success Response</a></h3>
+<p>If successful, you'll receive a response like this:</p>
+<pre><code class="language-json">{
+  "data": {
+    "subscription": {
+      "created_at": "2025-10-07T05:31:56Z",
+      "event_type": "ProfileBioUpdate",
+      "filter": {
+        "user_id": "YOUR_USER_ID"
+      },
+      "subscription_id": "1146654567674912769",
+      "tag": "my bio updates",
+      "updated_at": "2025-10-07T05:31:56Z",
+      "webhook_id": "YOUR_WEBHOOK_ID"
+    }
+  },
+  "meta": {
+    "total_subscriptions": 1
+  }
+}
+</code></pre>
+<h2 id="testing-your-subscription"><a class="header" href="#testing-your-subscription">Testing Your Subscription</a></h2>
+<p>Once you've created the subscription, any bio updates to your own profile will be delivered to your webhook endpoint. You should see events arrive in your webhook server logs.</p>
+<p><strong>To test</strong>: Update your bio on X and watch for the event to arrive at your webhook!</p>
+<h3 id="sample-event-payload"><a class="header" href="#sample-event-payload">Sample Event Payload</a></h3>
+<p>When a profile bio update occurs, you'll receive a webhook event like this:</p>
+<pre><code class="language-json">{
+  "data": {
+    "filter": {
+      "user_id": "YOUR_USER_ID"
+    },
+    "event_type": "ProfileBioUpdate",
+    "tag": "my bio updates",
+    "payload": {
+      "before": "Dev Platform @X",
+      "after": "Dev Platform @X a"
+    }
+  }
+}
+</code></pre>
+<p>The event includes:</p>
+<ul>
+<li><strong><code>filter</code></strong>: The filter criteria that triggered this event</li>
+<li><strong><code>event_type</code></strong>: The type of event that occurred</li>
+<li><strong><code>tag</code></strong>: The tag you assigned to the subscription</li>
+<li><strong><code>payload</code></strong>: The actual change data (before/after values)</li>
+</ul>
+<p>You can also list your active subscriptions again to confirm:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
+</code></pre>
+<p>This will now show your active subscription in the response.</p>
+<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next Steps</a></h2>
+<p>Your XAA subscription is now active! Events will be delivered to your webhook as they occur. In production applications, you'll want to:</p>
+<ol>
+<li><strong>Handle multiple event types</strong> based on your use case</li>
+<li><strong>Implement proper error handling</strong> for failed deliveries</li>
+<li><strong>Monitor subscription health</strong> and revalidate when needed</li>
+<li><strong>Clean up unused subscriptions</strong> to avoid hitting rate limits</li>
+</ol>
+<p>The X Activity API provides powerful real-time monitoring capabilities when combined with webhooks!</p>
 
                     </main>
 
