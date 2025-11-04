@@ -13,3 +13,4 @@
     - [Temporary Webhooks with xURL](./2_realtime/1_webhooks/3_xurl_webhook.md)
     - [Registering the Webhook with X](./2_realtime/1_webhooks/4_registration.md)
 - [X Activity API](./2_realtime/2_xaa/1_xaa.md)
+    - [Trends by Keyword](./2_realtime/2_xaa/2_trends.md)
