@@ -14,6 +14,7 @@ The X API offers the following endpoints to manage your registered webhooks:
 | `POST` | `/2/webhooks` | Create a webhook (see below for JSON body) |
 | `DELETE` | `/2/webhooks/:webhook_id` | Delete a webhook by ID |
 | `PUT` | `/2/webhooks/:webhook_id` | Manually trigger a security check to re-validate a webhook |
+| `POST` | `/2/webhooks/replay` | Initiate a replay job (See 2.4) |
 
 > **Note**: All sample commands in this section use the `xurl` CLI tool. If you haven't set up `xurl` yet, check out the [xURL section](../1_tools/1_xurl/xurl.md) first.
 

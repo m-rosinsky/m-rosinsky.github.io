@@ -535,6 +535,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <tr><td><code>POST</code></td><td><code>/2/webhooks</code></td><td>Create a webhook (see below for JSON body)</td></tr>
 <tr><td><code>DELETE</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Delete a webhook by ID</td></tr>
 <tr><td><code>PUT</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Manually trigger a security check to re-validate a webhook</td></tr>
+<tr><td><code>POST</code></td><td><code>/2/webhooks/replay</code></td><td>Initiate a replay job (See 2.4)</td></tr>
 </tbody></table>
 </div>
 <blockquote>
@@ -591,6 +592,89 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="replaying-webhook-events"><a class="header" href="#replaying-webhook-events">Replaying Webhook Events</a></h1>
+<p>The X webhook suite allows you to replay past events that were either successfully or unsuccessfully delivered to your endpoint.</p>
+<p>This is useful for recovering missed events due to downtime.</p>
+<p>You can replay up to 24 hours of events (due to data retention restrictions). Note that this functionality is restricted to certain packages.</p>
+<h2 id="route"><a class="header" href="#route">Route</a></h2>
+<p>To initiate replay, you'll use a <code>POST</code> endpoint:</p>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>POST</code></td><td><code>/2/webhooks/replay</code></td><td>Initiate a replay job</td></tr>
+</tbody></table>
+</div>
+<p>To use this endpoint, you'll specify the following fields in the JSON body of the request:</p>
+<pre><code class="language-json">{
+    "webhook_id": "&lt;YOUR WEBHOOK ID&gt;",
+    "from_date": "YYYYMMDDHHMM",
+    "to_date": "YYYYMMDDHHMM",
+}
+</code></pre>
+<p>All fields are required. The <code>from_date</code> must be within 24 hours, and the <code>to_date</code> must be after the <code>from_date</code>. Both dates must not be in the future.</p>
+<blockquote>
+<p>Note: Both dates must be in UTC time</p>
+</blockquote>
+<h2 id="what-is-delivered-in-replay"><a class="header" href="#what-is-delivered-in-replay">What is delivered in replay?</a></h2>
+<p>Any event, regardless of product (Filtered Stream, AAA, XAA), that is delivered via webhook, either successfully or unsuccessfully, will be attempted to be re-delivered during replay.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>You'll check your active webhook IDs using the <code>GET</code> endpoint:</p>
+<pre><code class="language-bash">xurl --auth app /2/webhooks
+</code></pre>
+<pre><code class="language-json">{
+  "data":[
+    {
+      "created_at":"2025-10-15T20:53:05.000Z",
+      "id":"1146654567674912769",
+      "url":"&lt;YOUR WEBHOOK HTTPS URL&gt;",
+      "valid":true
+    }
+  ],
+  "meta":{
+    "result_count":1
+  }
+}
+</code></pre>
+<p>Then you can start a replay job for the past hour of data using your webhook ID.</p>
+<p>Keep in mind that the <code>from_date</code> and <code>to_date</code> are in UTC. So if the time right now is 1200UTC on Dec 1, 2025 you can ask for the past hour like so:</p>
+<pre><code class="language-bash">xurl --auth app /2/webhooks/replay -X POST -d '{
+  "webhook_id": "1146654567674912769",
+  "from_date": "202512011100", 
+  "to_date": "202512011200",
+}'
+</code></pre>
+<p>And if successful, you'll see this response:</p>
+<pre><code class="language-json">{
+  "data":{
+    "job_id":"1995507200941260800",
+    "created_at":"2025-12-01T12:00:07.000Z"
+  }
+}
+</code></pre>
+<p>Near instantly, you should see events start to be delivered to your webhook, if any events were attempted to be delivered in that time frame.</p>
+<p>The events delivered as part of a replay job will have the special tag in the <code>meta</code> field:</p>
+<pre><code class="language-json">{
+    "data": {
+        ...
+    },
+    "meta": {
+        "replay": true
+    }
+}
+</code></pre>
+<p>This allows your app to differentiate when an event is from replay vs first-time delivery, since normal events may be delivered at the same time that replay events are coming through.</p>
+<h2 id="replay-job-completion"><a class="header" href="#replay-job-completion">Replay job completion</a></h2>
+<p>When the replay job completes, you'll see the following event be delivered to your webhook:</p>
+<pre><code class="language-json">{
+    "replay_job_status": {
+        "webhook_id":"1146654567674912769",
+        "job_state": "Complete",
+        "job_state_description": "Job completed successfully",
+        "job_id": "1995507200941260800"
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The replay completion event may arrive out-of-order due to real-world network latencies between X's proxies that distribute events.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
 <p>In this chapter, we'll use the webhook we set up in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
 <h2 id="about"><a class="header" href="#about">About</a></h2>
