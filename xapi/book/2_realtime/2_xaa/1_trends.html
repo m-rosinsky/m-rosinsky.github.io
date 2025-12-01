@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>X Activity API - Mike&#x27;s X API Blog</title>
+        <title>Trends by Keyword - Mike&#x27;s X API Blog</title>
 
 
         <!-- Custom HTML head -->
@@ -175,95 +175,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
-<p>In this chapter, we'll use the webhook we set up in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
-<h2 id="about"><a class="header" href="#about">About</a></h2>
-<p>The X Activity API allows us to subscribe to event types and apply filters. When a matching event is created, it will be delivered to our app.</p>
-<p>XAA offers both webhook and streaming support, but we'll be using the webhook option in this example.</p>
-<h2 id="routes"><a class="header" href="#routes">Routes</a></h2>
-<p>To manage our active subscriptions in XAA, we're offered the following routes:</p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>GET</code></td><td><code>/2/activity/subscriptions</code></td><td>List all active subscriptions</td></tr>
-<tr><td><code>POST</code></td><td><code>/2/activity/subscriptions</code></td><td>Create a new subscription (see below for JSON body)</td></tr>
-<tr><td><code>DELETE</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Delete a subscription by ID</td></tr>
-<tr><td><code>PUT</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Update a subscription (see below for JSON body)</td></tr>
-</tbody></table>
-</div>
+                        <h1 id="getting-new-trends-by-keyword-in-realtime"><a class="header" href="#getting-new-trends-by-keyword-in-realtime">Getting New Trends By Keyword in Realtime</a></h1>
+<p>This chapter is a brief tutorial on how to use the X Activity API to get new trends emerging on X in realtime, filtered by keywords of your choice.</p>
 <blockquote>
-<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven't set up <code>xurl</code> yet, check out the <a href="../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+<p><strong>Note</strong>: This feature is currently only for Enterprise customers</p>
 </blockquote>
-<p>Let's run the <code>GET</code> route first just to ensure the route is working and our account has access.</p>
-<p>You'll use your bearer token for authentication for all routes:</p>
-<pre><code>xurl --auth app /2/activity/subscriptions
-</code></pre>
-<pre><code class="language-json">{
-  "data":[
-  ],
-  "meta": {
-    "total_subscriptions": 0
-  }
-}
-</code></pre>
-<p>Looks like everything's working. We currently have no active subscriptions.</p>
-<h2 id="getting-your-user-id"><a class="header" href="#getting-your-user-id">Getting Your User ID</a></h2>
-<p>Before creating a subscription, we need to know our user ID. The X Activity API requires user IDs (not usernames) in the filter criteria.</p>
-<p>Let's get our user ID using the User Lookup endpoint:</p>
-<pre><code class="language-bash">xurl --auth app /2/users/by/username/YOUR_USERNAME
-</code></pre>
-<p>Replace <code>YOUR_USERNAME</code> with your actual X username (without the @ symbol).</p>
-<p><strong>Example response:</strong></p>
-<pre><code class="language-json">{
-  "data": {
-    "id": "1234567890",
-    "name": "Your Name",
-    "username": "your_username"
-  }
-}
-</code></pre>
-<p>Copy the <code>id</code> value from the response - you'll need it for creating subscriptions.</p>
-<h2 id="creating-a-subscription"><a class="header" href="#creating-a-subscription">Creating a Subscription</a></h2>
-<p>Now let's create our first subscription. We'll subscribe to our own profile update events first, so we can test for an event coming through.</p>
-<h3 id="subscription-parameters"><a class="header" href="#subscription-parameters">Subscription Parameters</a></h3>
-<p>When creating a subscription, you need to specify:</p>
-<ul>
-<li><strong><code>event_type</code></strong>: The type of event to subscribe to (required)</li>
-<li><strong><code>filter</code></strong>: Criteria to filter which events to receive (required)</li>
-<li><strong><code>webhook_id</code></strong>: The ID of your registered webhook where events will be delivered (optional, but required for webhook delivery)</li>
-<li><strong><code>tag</code></strong>: An optional identifier for your subscription (recommended)</li>
-</ul>
-<h3 id="available-event-types"><a class="header" href="#available-event-types">Available Event Types</a></h3>
-<p>XAA supports several event types:</p>
-<ul>
-<li><code>ProfileBioUpdate</code> - When a user updates their bio</li>
-<li><code>ProfilePictureUpdate</code> - When a user changes their profile picture</li>
-<li><code>ProfileBannerPictureUpdate</code> - When a user changes their banner</li>
-<li><code>ProfileScreennameUpdate</code> - When a user changes their username</li>
-<li><code>ProfileGeoUpdate</code> - When a user updates their location</li>
-<li><code>ProfileUrlUpdate</code> - When a user updates their website URL</li>
-</ul>
-<h3 id="creating-the-subscription"><a class="header" href="#creating-the-subscription">Creating the Subscription</a></h3>
-<p>Let's create a subscription to monitor our own profile bio updates:</p>
+<h2 id="subscribing-to-trends"><a class="header" href="#subscribing-to-trends">Subscribing to Trends</a></h2>
+<p>You'll create a subscription to trends using the X Activity API in the same way you did in the last chapter.</p>
+<p>This time, you'll use the <code>TrendsNew</code> event type, and you'll specify a <code>keyword</code> in the <code>filter</code> field instead of a user id:</p>
 <pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
-  "event_type": "ProfileBioUpdate",
+  "event_type": "TrendsNew",
   "filter": {
-    "user_id": "YOUR_USER_ID"
+    "keyword": "Tesla"
   },
-  "webhook_id": "YOUR_WEBHOOK_ID",
-  "tag": "my bio updates"
+  "tag": "Tesla trends",
+  "webhook_id": "YOUR_WEBHOOK_ID"
 }'
 </code></pre>
 <h3 id="success-response"><a class="header" href="#success-response">Success Response</a></h3>
-<p>If successful, you'll receive a response like this:</p>
+<p>Upon success, you'll receive this response:</p>
 <pre><code class="language-json">{
   "data": {
     "subscription": {
       "created_at": "2025-10-07T05:31:56Z",
-      "event_type": "ProfileBioUpdate",
+      "event_type": "TrendsNew",
       "filter": {
-        "user_id": "YOUR_USER_ID"
+        "keyword": "Tesla"
       },
       "subscription_id": "1146654567674912769",
-      "tag": "my bio updates",
+      "tag": "Tesla trends",
       "updated_at": "2025-10-07T05:31:56Z",
       "webhook_id": "YOUR_WEBHOOK_ID"
     }
@@ -273,57 +213,71 @@
   }
 }
 </code></pre>
-<h2 id="testing-your-subscription"><a class="header" href="#testing-your-subscription">Testing Your Subscription</a></h2>
-<p>Once you've created the subscription, any bio updates to your own profile will be delivered to your webhook endpoint. You should see events arrive in your webhook server logs.</p>
-<p><strong>To test</strong>: Update your bio on X and watch for the event to arrive at your webhook!</p>
-<h3 id="sample-event-payload"><a class="header" href="#sample-event-payload">Sample Event Payload</a></h3>
-<p>When a profile bio update occurs, you'll receive a webhook event like this:</p>
+<h3 id="getting-trend-events"><a class="header" href="#getting-trend-events">Getting Trend Events</a></h3>
+<p>If you specified a webhook, then you'll start to see trends with a headline containing your keyword right away (as they are generated of course, so it may be a minute until a trend containing your keyword is seen).</p>
+<p>Trend events have this form:</p>
 <pre><code class="language-json">{
   "data": {
+    "event_uuid": "1985729017958244577",
     "filter": {
-      "user_id": "YOUR_USER_ID"
+      "keyword": "news"
     },
-    "event_type": "ProfileBioUpdate",
-    "tag": "my bio updates",
+    "event_type": "TrendsNew",
+    "tag": "news trends",
     "payload": {
-      "before": "vox populi",
-      "after": "vox dei"
+      "headline": "This is some news breaking on X",
+      "summary": "Some new news broke on X today, which is an awesome place to go for breaking news!"
     }
   }
 }
 </code></pre>
-<p>The event includes:</p>
-<ul>
-<li><strong><code>filter</code></strong>: The filter criteria that triggered this event</li>
-<li><strong><code>event_type</code></strong>: The type of event that occurred</li>
-<li><strong><code>tag</code></strong>: The tag you assigned to the subscription</li>
-<li><strong><code>payload</code></strong>: The actual change data (before/after values)</li>
-</ul>
-<p>You can also list your active subscriptions again to confirm:</p>
-<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
+<p>As the X Activity API matures, more fields will be added to the payload.</p>
+<h3 id="duplicate-trends"><a class="header" href="#duplicate-trends">Duplicate Trends</a></h3>
+<p>If you specified multiple subscriptions for trends, and a single trend event matches multiple subscriptions, it may be delivered multiple times.</p>
+<p>Here's an example:</p>
+<pre><code class="language-json">{
+  "data": {
+    "event_uuid": "1985729017958244577",
+    "filter": {
+      "keyword": "jack"
+    },
+    "event_type": "TrendsNew",
+    "tag": "jack trends",
+    "payload": {
+      "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
+      "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
+    }
+  }
+}
 </code></pre>
-<p>This will now show your active subscription in the response.</p>
-<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
-<p>Your XAA subscription is now active! Events will be delivered to your webhook as they occur. In production applications, you'll want to:</p>
-<ol>
-<li><strong>Handle multiple event types</strong> based on your use case</li>
-<li><strong>Implement proper error handling</strong> for failed deliveries</li>
-<li><strong>Monitor subscription health</strong> and revalidate when needed</li>
-<li><strong>Clean up unused subscriptions</strong> to avoid hitting rate limits</li>
-</ol>
-<p>The X Activity API provides powerful real-time monitoring capabilities when combined with webhooks!</p>
+<pre><code class="language-json">{
+  "data": {
+    "event_uuid": "1985729017958244577",
+    "filter": {
+      "keyword": "mikie"
+    },
+    "event_type": "TrendsNew",
+    "tag": "mikie trends",
+    "payload": {
+      "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
+      "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
+    }
+  }
+}
+</code></pre>
+<p>You can see there are two separate subscriptions, one on the keyword <code>jack</code> and one on <code>mikie</code>. The headline in this trend contained both keywords, so it was delivered to the webhook twice.</p>
+<p>X does some deduplication on its end, but you can use the <code>event_uuid</code> to do deduplication at the application layer as well.</p>
+<h3 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h3>
+<p>Setting up a trends feed using the X Activity API is a perfect way to integrate a live news feed of events you care about into your application!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../2_realtime/1_webhooks/5_replay.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../2_realtime/2_xaa/0_xaa.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../2_realtime/2_xaa/2_trends.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -331,13 +285,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../2_realtime/1_webhooks/5_replay.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../2_realtime/2_xaa/0_xaa.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../2_realtime/2_xaa/2_trends.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>

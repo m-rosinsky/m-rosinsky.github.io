@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Replay Webhook Events - Mike&#x27;s X API Blog</title>
+        <title>Webhooks - Mike&#x27;s X API Blog</title>
 
 
         <!-- Custom HTML head -->
@@ -175,99 +175,31 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="replaying-webhook-events"><a class="header" href="#replaying-webhook-events">Replaying Webhook Events</a></h1>
-<p>The X webhook suite allows you to replay past events that were either successfully or unsuccessfully delivered to your endpoint.</p>
-<p>This is useful for recovering missed events due to downtime.</p>
-<p>You can replay up to 24 hours of events (due to data retention restrictions). Note that this functionality is restricted to certain packages.</p>
-<h2 id="route"><a class="header" href="#route">Route</a></h2>
-<p>To initiate replay, you'll use a <code>POST</code> endpoint:</p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>POST</code></td><td><code>/2/webhooks/replay</code></td><td>Initiate a replay job</td></tr>
-</tbody></table>
-</div>
-<p>To use this endpoint, you'll specify the following fields in the JSON body of the request:</p>
-<pre><code class="language-json">{
-    "webhook_id": "&lt;YOUR WEBHOOK ID&gt;",
-    "from_date": "YYYYMMDDHHMM",
-    "to_date": "YYYYMMDDHHMM",
-}
-</code></pre>
-<p>All fields are required. The <code>from_date</code> must be within 24 hours, and the <code>to_date</code> must be after the <code>from_date</code>. Both dates must not be in the future.</p>
+                        <h1 id="using-webhooks-with-the-x-developer-api"><a class="header" href="#using-webhooks-with-the-x-developer-api">Using Webhooks with the X Developer API</a></h1>
 <blockquote>
-<p>Note: Both dates must be in UTC time</p>
+<p>☎️ Don't call us, we'll call you!</p>
 </blockquote>
-<h2 id="what-is-delivered-in-replay"><a class="header" href="#what-is-delivered-in-replay">What is delivered in replay?</a></h2>
-<p>Any event, regardless of product (Filtered Stream, AAA, XAA), that is delivered via webhook, either successfully or unsuccessfully, will be attempted to be re-delivered during replay.</p>
-<h2 id="example"><a class="header" href="#example">Example</a></h2>
-<p>You'll check your active webhook IDs using the <code>GET</code> endpoint:</p>
-<pre><code class="language-bash">xurl --auth app /2/webhooks
-</code></pre>
-<pre><code class="language-json">{
-  "data":[
-    {
-      "created_at":"2025-10-15T20:53:05.000Z",
-      "id":"1146654567674912769",
-      "url":"&lt;YOUR WEBHOOK HTTPS URL&gt;",
-      "valid":true
-    }
-  ],
-  "meta":{
-    "result_count":1
-  }
-}
-</code></pre>
-<p>Then you can start a replay job for the past hour of data using your webhook ID.</p>
-<p>Keep in mind that the <code>from_date</code> and <code>to_date</code> are in UTC. So if the time right now is 1200UTC on Dec 1, 2025 you can ask for the past hour like so:</p>
-<pre><code class="language-bash">xurl --auth app /2/webhooks/replay -X POST -d '{
-  "webhook_id": "1146654567674912769",
-  "from_date": "202512011100", 
-  "to_date": "202512011200",
-}'
-</code></pre>
-<p>And if successful, you'll see this response:</p>
-<pre><code class="language-json">{
-  "data":{
-    "job_id":"1995507200941260800",
-    "created_at":"2025-12-01T12:00:07.000Z"
-  }
-}
-</code></pre>
-<p>Near instantly, you should see events start to be delivered to your webhook, if any events were attempted to be delivered in that time frame.</p>
-<p>The events delivered as part of a replay job will have the special tag in the <code>meta</code> field:</p>
-<pre><code class="language-json">{
-    "data": {
-        ...
-    },
-    "meta": {
-        "replay": true
-    }
-}
-</code></pre>
-<p>This allows your app to differentiate when an event is from replay vs first-time delivery, since normal events may be delivered at the same time that replay events are coming through.</p>
-<h2 id="replay-job-completion"><a class="header" href="#replay-job-completion">Replay job completion</a></h2>
-<p>When the replay job completes, you'll see the following event be delivered to your webhook:</p>
-<pre><code class="language-json">{
-    "replay_job_status": {
-        "webhook_id":"1146654567674912769",
-        "job_state": "Complete",
-        "job_state_description": "Job completed successfully",
-        "job_id": "1995507200941260800"
-    }
-}
-</code></pre>
-<blockquote>
-<p><strong>Note</strong>: The replay completion event may arrive out-of-order due to real-world network latencies between X's proxies that distribute events.</p>
-</blockquote>
+<h2 id="whats-a-webhook"><a class="header" href="#whats-a-webhook">What's a Webhook?</a></h2>
+<p>Webhooks are an efficient way to receive real-time data from the X Developer API. It's an industry standard practice, and a growing number of X's products currently support webhooks.</p>
+<p>Instead of polling the API servers to check if any new data is available on a regular interval, the API will reach out to you automatically!</p>
+<p>You register your server's callback URL with X, and when new data becomes available that matches your criteria, the API will reach out to your server, deliver the event, and disconnect.</p>
+<p>This is all secured using industry standard encryption, making it an ideal choice for efficient, event-driven data delivery.</p>
+<p>A growing number of X's real-time products support webhook delivery. These products include:</p>
+<ul>
+<li>Filtered Stream</li>
+<li>Account Activity API</li>
+<li>X Activity API</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../2_realtime/1_webhooks/4_registration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../1_tools/1_xurl/xurl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../2_realtime/2_xaa/1_xaa.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../2_realtime/1_webhooks/1_sample_app.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -277,11 +209,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../2_realtime/1_webhooks/4_registration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../1_tools/1_xurl/xurl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../2_realtime/2_xaa/1_xaa.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../2_realtime/1_webhooks/1_sample_app.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
