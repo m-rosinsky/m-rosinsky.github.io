@@ -14,4 +14,4 @@
     - [Registering the Webhook with X](./2_realtime/1_webhooks/3_registration.md)
     - [Replay Webhook Events](./2_realtime/1_webhooks/4_replay.md)
 - [X Activity API](./2_realtime/2_xaa/0_xaa.md)
-    - [Trends by Keyword](./2_realtime/2_xaa/1_trends.md)
+    - [Trends by Keyword](./2_realtime/2_xaa/1_news.md)

@@ -83,12 +83,13 @@ When creating a subscription, you need to specify:
 ### Available Event Types
 
 XAA supports several event types:
-- `ProfileBioUpdate` - When a user updates their bio
-- `ProfilePictureUpdate` - When a user changes their profile picture
-- `ProfileBannerPictureUpdate` - When a user changes their banner
-- `ProfileScreennameUpdate` - When a user changes their username
-- `ProfileGeoUpdate` - When a user updates their location
-- `ProfileUrlUpdate` - When a user updates their website URL
+- `profile.update.bio` - When a user updates their bio
+- `profile.update.profile_picture` - When a user changes their profile picture
+- `profile.update.banner_picture` - When a user changes their banner
+- `profile.update.screenname` - When a user changes their username
+- `profile.update.geo` - When a user updates their location
+- `profile.update.url` - When a user updates their website URL
+- `profile.update.verification_badge` - When a user updates their badge (check mark)
 
 ### Creating the Subscription
 
@@ -96,7 +97,7 @@ Let's create a subscription to monitor our own profile bio updates:
 
 ```bash
 xurl --auth app /2/activity/subscriptions -X POST -d '{
-  "event_type": "ProfileBioUpdate",
+  "event_type": "profile.update.bio",
   "filter": {
     "user_id": "YOUR_USER_ID"
   },
@@ -114,7 +115,7 @@ If successful, you'll receive a response like this:
   "data": {
     "subscription": {
       "created_at": "2025-10-07T05:31:56Z",
-      "event_type": "ProfileBioUpdate",
+      "event_type": "profile.update.bio",
       "filter": {
         "user_id": "YOUR_USER_ID"
       },
@@ -146,7 +147,7 @@ When a profile bio update occurs, you'll receive a webhook event like this:
     "filter": {
       "user_id": "YOUR_USER_ID"
     },
-    "event_type": "ProfileBioUpdate",
+    "event_type": "profile.update.bio",
     "tag": "my bio updates",
     "payload": {
       "before": "vox populi",
