@@ -8,3 +8,5 @@ title = "Mike's X API Blog"
 # When true (default), mdBook adds in-page headings under the current chapter and
 # expands/collapses that tree as you scroll. Set false for a static sidebar.
 sidebar-header-nav = false
+additional-css = ["copy-md.css"]
+additional-js = ["copy-md.js"]
