@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Mike&#x27;s X API Blog</title>
+        <title>News by keyword - Mike&#x27;s X API Blog</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bc1866c2.js";
+            window.path_to_searchindex_js = "../../searchindex-bc1866c2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-73c737d1.js"></script>
+        <script src="../../toc-73c737d1.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,7 +140,7 @@
                     <h1 class="menu-title">Mike&#x27;s X API Blog</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -174,23 +174,110 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="mikes-x-developer-api-blog"><a class="header" href="#mikes-x-developer-api-blog">Mike’s X Developer API Blog</a></h1>
-<hr>
+                        <h1 id="getting-news-by-keyword-in-realtime"><a class="header" href="#getting-news-by-keyword-in-realtime">Getting News By Keyword in Realtime</a></h1>
+<p>This chapter is a brief tutorial on how to use the X Activity API to get news emerging on X in realtime, filtered by keywords of your choice.</p>
 <blockquote>
-<p><em>“How about ‘Hook into what’s happening’, y’know for our slogan!”</em></p>
-<p><em>“Mike that’s awful”</em></p>
-<p><em>“Yeah…”</em></p>
+<p><strong>Note</strong>: This feature is currently only for Enterprise customers</p>
 </blockquote>
-<p>Hey everyone, thanks for checking out my tutorial.</p>
-<p>My name is Mike Rosinsky. I’m a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
-<p>This doesn’t intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
+<h2 id="subscribing-to-news"><a class="header" href="#subscribing-to-news">Subscribing to News</a></h2>
+<p>You create a subscription the same way as in <a href="./2_subscribe_public.html">Subscribing to public events</a>: <code>POST /2/activity/subscriptions</code> with <code>event_type</code>, <code>filter</code>, and <code>webhook_id</code>. For when to use <strong>app</strong> vs <strong>user</strong> credentials, see <a href="./1_events_and_auth.html">Event types and authentication</a>.</p>
+<p>This time, you’ll use the <code>news.new</code> event type, and you’ll specify a <code>keyword</code> in the <code>filter</code> field instead of a user id:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "news.new",
+  "filter": {
+    "keyword": "Tesla"
+  },
+  "tag": "Tesla trends",
+  "webhook_id": "YOUR_WEBHOOK_ID"
+}'
+</code></pre>
+<h3 id="success-response"><a class="header" href="#success-response">Success Response</a></h3>
+<p>Upon success, you’ll receive this response:</p>
+<pre><code class="language-json">{
+  "data": {
+    "subscription": {
+      "created_at": "2025-10-07T05:31:56Z",
+      "event_type": "news.new",
+      "filter": {
+        "keyword": "Tesla"
+      },
+      "subscription_id": "1146654567674912769",
+      "tag": "Tesla news",
+      "updated_at": "2025-10-07T05:31:56Z",
+      "webhook_id": "YOUR_WEBHOOK_ID"
+    }
+  },
+  "meta": {
+    "total_subscriptions": 1
+  }
+}
+</code></pre>
+<h3 id="getting-news-events"><a class="header" href="#getting-news-events">Getting News Events</a></h3>
+<p>If you specified a webhook, then you’ll start to see news with a headline containing your keyword right away (as they are generated of course, so it may be a minute until a trend containing your keyword is seen).</p>
+<p>News events have this form:</p>
+<pre><code class="language-json">{
+  "data": {
+    "event_uuid": "1985729017958244577",
+    "filter": {
+      "keyword": "spacex"
+    },
+    "event_type": "news.new",
+    "tag": "spacex news",
+    "payload": {
+      "headline": "This is some spacex news breaking on X",
+      "summary": "Spacex just launched a rocket"
+    }
+  }
+}
+</code></pre>
+<p>As the X Activity API matures, more fields will be added to the payload.</p>
+<h3 id="duplicate-news"><a class="header" href="#duplicate-news">Duplicate News</a></h3>
+<p>If you specified multiple subscriptions for news, and a single news event matches multiple subscriptions, it may be delivered multiple times.</p>
+<p>Here’s an example:</p>
+<pre><code class="language-json">{
+  "data": {
+    "event_uuid": "1985729017958244577",
+    "filter": {
+      "keyword": "jack"
+    },
+    "event_type": "news.new",
+    "tag": "jack news",
+    "payload": {
+      "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
+      "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-json">{
+  "data": {
+    "event_uuid": "1985729017958244577",
+    "filter": {
+      "keyword": "mikie"
+    },
+    "event_type": "news.new",
+    "tag": "mikie news",
+    "payload": {
+      "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
+      "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
+    }
+  }
+}
+</code></pre>
+<p>You can see there are two separate subscriptions, one on the keyword <code>jack</code> and one on <code>mikie</code>. The headline in this news contained both keywords, so it was delivered to the webhook twice.</p>
+<p>X does some deduplication on its end, but you can use the <code>event_uuid</code> to do deduplication at the application layer as well.</p>
+<h3 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h3>
+<p>Setting up a news feed using the X Activity API is a perfect way to integrate a live feed of events you care about into your application!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../2_realtime/2_xaa/3_subscribe_private.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
 
-                            <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../2_realtime/2_xaa/5_direction_filter.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -200,8 +287,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../2_realtime/2_xaa/3_subscribe_private.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
 
-                    <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../2_realtime/2_xaa/5_direction_filter.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -221,13 +311,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

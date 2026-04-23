@@ -13,21 +13,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -37,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-bc1866c2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-73c737d1.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -54,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -83,12 +82,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -103,39 +102,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -143,50 +142,51 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="mikes-x-developer-api-blog"><a class="header" href="#mikes-x-developer-api-blog">Mike's X Developer API Blog</a></h1>
-<hr />
+                        <h1 id="mikes-x-developer-api-blog"><a class="header" href="#mikes-x-developer-api-blog">Mike’s X Developer API Blog</a></h1>
+<hr>
 <blockquote>
-<p><em>"How about 'Hook into what's happening', y'know for our slogan!"</em></p>
-<p><em>"Mike that's awful"</em></p>
-<p><em>"Yeah..."</em></p>
+<p><em>“How about ‘Hook into what’s happening’, y’know for our slogan!”</em></p>
+<p><em>“Mike that’s awful”</em></p>
+<p><em>“Yeah…”</em></p>
 </blockquote>
 <p>Hey everyone, thanks for checking out my tutorial.</p>
-<p>My name is Mike Rosinsky. I'm a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
-<p>This doesn't intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="xurl---curl-for-x"><a class="header" href="#xurl---curl-for-x">xURL - cURL for X</a></h1>
+<p>My name is Mike Rosinsky. I’m a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
+<p>This doesn’t intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="xurl---curl-for-x"><a class="header" href="#xurl---curl-for-x">xURL - cURL for X</a></h1>
 <p><code>xURL</code> is a CLI tool specifically design for interfacing with the X API.</p>
 <p>Some key features include:</p>
 <ul>
@@ -205,33 +205,35 @@
 <p>and make requests:</p>
 <pre><code class="language-bash">xurl --auth app /2/tweets/20
 </code></pre>
-<p>Check out the xurl github README for further tutorials including using OAuth1 + 2, user auth, and other features.</p>
-<p>I'll be using xurl in all sample commands in follow-on sections in this blog.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="using-webhooks-with-the-x-developer-api"><a class="header" href="#using-webhooks-with-the-x-developer-api">Using Webhooks with the X Developer API</a></h1>
+<p>Check out the xurl GitHub README for further tutorials. For <strong>user</strong> (non–app-only) requests, <code>xurl</code> selects the credential profile with <strong><code>--auth oauth2</code></strong> (OAuth 2.0 user context) or <strong><code>--auth oauth1</code></strong> (OAuth 1.0a user access), depending on how you registered tokens—not a separate <code>--auth user</code> flag.</p>
+<p>I’ll be using xurl in all sample commands in follow-on sections in this blog.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="using-webhooks-with-the-x-developer-api"><a class="header" href="#using-webhooks-with-the-x-developer-api">Using Webhooks with the X Developer API</a></h1>
 <blockquote>
-<p>☎️ Don't call us, we'll call you!</p>
+<p>☎️ Don’t call us, we’ll call you!</p>
 </blockquote>
-<h2 id="whats-a-webhook"><a class="header" href="#whats-a-webhook">What's a Webhook?</a></h2>
-<p>Webhooks are an efficient way to receive real-time data from the X Developer API. It's an industry standard practice, and a growing number of X's products currently support webhooks.</p>
+<h2 id="whats-a-webhook"><a class="header" href="#whats-a-webhook">What’s a Webhook?</a></h2>
+<p>Webhooks are an efficient way to receive real-time data from the X Developer API. It’s an industry standard practice, and a growing number of X’s products currently support webhooks.</p>
 <p>Instead of polling the API servers to check if any new data is available on a regular interval, the API will reach out to you automatically!</p>
-<p>You register your server's callback URL with X, and when new data becomes available that matches your criteria, the API will reach out to your server, deliver the event, and disconnect.</p>
+<p>You register your server’s callback URL with X, and when new data becomes available that matches your criteria, the API will reach out to your server, deliver the event, and disconnect.</p>
 <p>This is all secured using industry standard encryption, making it an ideal choice for efficient, event-driven data delivery.</p>
-<p>A growing number of X's real-time products support webhook delivery. These products include:</p>
+<p>A growing number of X’s real-time products support webhook delivery. These products include:</p>
 <ul>
 <li>Filtered Stream</li>
 <li>Account Activity API</li>
 <li>X Activity API</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="writing-a-basic-webhook-app"><a class="header" href="#writing-a-basic-webhook-app">Writing a Basic Webhook App</a></h1>
-<p>In this section, we'll write a basic app to get started with receiving webhook events from X.</p>
-<p>Here's the requests that the app will need to handle:</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="writing-a-basic-webhook-app"><a class="header" href="#writing-a-basic-webhook-app">Writing a Basic Webhook App</a></h1>
+<p>In this section, we’ll write a basic app to get started with receiving webhook events from X.</p>
+<p>Here’s the requests that the app will need to handle:</p>
 <ul>
 <li><code>GET</code> requests for security challenge checks</li>
 <li><code>POST</code> requests for receiving events</li>
 </ul>
-<p>After we make the app, we'll need to host it with a public-facing HTTPS URL. I'll show you some options for quick, free methods for getting this stood up quickly so you can test.</p>
+<p>After we make the app, we’ll need to host it with a public-facing HTTPS URL. I’ll show you some options for quick, free methods for getting this stood up quickly so you can test.</p>
 <h2 id="the-basic-app"><a class="header" href="#the-basic-app">The Basic App</a></h2>
-<p>Let's start with a basic skeleton for our webhook app. We'll build it incrementally, adding features step by step.</p>
+<p>Let’s start with a basic skeleton for our webhook app. We’ll build it incrementally, adding features step by step.</p>
 <pre><code class="language-python">from flask import Flask
 from waitress import serve
 
@@ -263,13 +265,13 @@ def main():
 if __name__=='__main__':
     main()
 </code></pre>
-<p>This gives us a basic Flask app with stub endpoints for both GET and POST requests. Now let's implement each part step by step.</p>
+<p>This gives us a basic Flask app with stub endpoints for both GET and POST requests. Now let’s implement each part step by step.</p>
 <h2 id="implementing-the-security-check-get-request"><a class="header" href="#implementing-the-security-check-get-request">Implementing the Security Check (GET Request)</a></h2>
 <p>X uses a Challenge-Response Check (CRC) to verify that your webhook endpoint is legitimate and secure. When you register a webhook URL, X will send a GET request with a <code>crc_token</code> parameter. Your app must respond with an HMAC SHA-256 hash of that token using your consumer secret.</p>
 <h3 id="getting-your-consumer-secret"><a class="header" href="#getting-your-consumer-secret">Getting Your Consumer Secret</a></h3>
-<p>To get your consumer secret, go to your X Developer Portal and navigate to your app's settings. You'll find the Consumer Keys section where you can view and regenerate your API keys:</p>
-<p><img src="2_realtime/1_webhooks/../../../assets/keys.png" alt="Finding your consumer secret in the X Developer Portal" /></p>
-<p>Copy the "API Key Secret" (also called Consumer Secret) and set it as an environment variable before running your app.</p>
+<p>To get your consumer secret, go to your X Developer Portal and navigate to your app’s settings. You’ll find the Consumer Keys section where you can view and regenerate your API keys:</p>
+<p><img src="../assets/keys.png" alt="Finding your consumer secret in the X Developer Portal"></p>
+<p>Copy the “API Key Secret” (also called Consumer Secret) and set it as an environment variable before running your app.</p>
 <h3 id="why-this-matters"><a class="header" href="#why-this-matters">Why This Matters</a></h3>
 <p>The CRC check ensures that:</p>
 <ul>
@@ -278,7 +280,7 @@ if __name__=='__main__':
 <li>The connection between X and your server is secure</li>
 </ul>
 <h3 id="implementation"><a class="header" href="#implementation">Implementation</a></h3>
-<p>First, let's add the necessary imports and environment variable setup:</p>
+<p>First, let’s add the necessary imports and environment variable setup:</p>
 <pre><code class="language-python">from flask import Flask, request, jsonify
 from waitress import serve
 
@@ -300,7 +302,7 @@ if CONSUMER_SECRET is None:
 HOST = "0.0.0.0"
 PORT = 8080
 </code></pre>
-<p>Now let's implement the GET request handler:</p>
+<p>Now let’s implement the GET request handler:</p>
 <pre><code class="language-python">@app.route('/webhooks', methods=['GET', 'POST'])
 def webhook_request():
     # Handle GET request (CRC challenge)
@@ -343,7 +345,7 @@ def webhook_request():
 <li><strong>X verifies</strong>: Compares your hash with what they expect</li>
 </ol>
 <h2 id="implementing-webhook-events-post-request"><a class="header" href="#implementing-webhook-events-post-request">Implementing Webhook Events (POST Request)</a></h2>
-<p>Now let's implement the POST request handler to receive actual webhook events from X.</p>
+<p>Now let’s implement the POST request handler to receive actual webhook events from X.</p>
 <p>Replace the POST stub with this implementation:</p>
 <pre><code class="language-python">@app.route('/webhooks', methods=['GET', 'POST'])
 def webhook_request():
@@ -376,7 +378,7 @@ def webhook_request():
 <li><strong>Handles edge cases</strong> like non-JSON payloads</li>
 </ol>
 <h2 id="running-the-complete-app"><a class="header" href="#running-the-complete-app">Running the Complete App</a></h2>
-<p>Now that we have both GET and POST implemented, let's add a proper main function:</p>
+<p>Now that we have both GET and POST implemented, let’s add a proper main function:</p>
 <pre><code class="language-python">def main():
     print("--- Starting Webhook App ---")
     print(f"Using CONSUMER_SECRET from environment variable.")
@@ -409,7 +411,7 @@ if __name__ == '__main__':
 </ol>
 <p>The app will now properly handle both the security challenge and incoming webhook events from X.</p>
 <h2 id="the-complete-code"><a class="header" href="#the-complete-code">The Complete Code</a></h2>
-<p>Here's the complete, working webhook app that combines everything we've built:</p>
+<p>Here’s the complete, working webhook app that combines everything we’ve built:</p>
 <pre><code class="language-python">from flask import Flask, request, jsonify
 from waitress import serve
 
@@ -483,18 +485,19 @@ if __name__ == '__main__':
     main()
 </code></pre>
 <h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
-<p>Now that the server is running locally, you'll need to host it to generate a publicly-available HTTPS URL.</p>
+<p>Now that the server is running locally, you’ll need to host it to generate a publicly-available HTTPS URL.</p>
 <p>This can be done for free using public tools like <code>ngrok</code>, deployed to a cloud environment, or any other means you wish.</p>
-<p>In the next section, we'll register the URL with X so we can start receiving events.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="standing-up-a-temporary-webhook-using-xurl"><a class="header" href="#standing-up-a-temporary-webhook-using-xurl">Standing up a Temporary Webhook using xURL</a></h1>
+<p>In the next section, we’ll register the URL with X so we can start receiving events.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="standing-up-a-temporary-webhook-using-xurl"><a class="header" href="#standing-up-a-temporary-webhook-using-xurl">Standing up a Temporary Webhook using xURL</a></h1>
 <blockquote>
-<p><strong>Note</strong>: This section assumes you have the <code>xurl</code> CLI tool set up. If you haven't installed and configured <code>xurl</code> yet, check out the <a href="2_realtime/1_webhooks/../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+<p><strong>Note</strong>: This section assumes you have the <code>xurl</code> CLI tool set up. If you haven’t installed and configured <code>xurl</code> yet, check out the <a href="#xurl---curl-for-x">xURL section</a> first.</p>
 </blockquote>
-<p>If you're looking for a quick and easy way to stand up a webhook to use with the X API, the xURL tool offers this functionality.</p>
-<p>The xURL webhook abstracts away the need to write your own handlers for the GET and POST requests that X sends to your server. If you're looking for that logic to incorporate into your production app, check out the next section where we write a Python Flask app.</p>
+<p>If you’re looking for a quick and easy way to stand up a webhook to use with the X API, the xURL tool offers this functionality.</p>
+<p>The xURL webhook abstracts away the need to write your own handlers for the GET and POST requests that X sends to your server. If you’re looking for that logic to incorporate into your production app, check out the next section where we write a Python Flask app.</p>
 <h2 id="quick-start-1"><a class="header" href="#quick-start-1">Quick Start</a></h2>
 <h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
-<p>What you'll need:</p>
+<p>What you’ll need:</p>
 <ul>
 <li>The xURL CLI tool (already installed and configured)</li>
 <li>A free (or higher) account with <code>ngrok.com</code></li>
@@ -505,16 +508,16 @@ if __name__ == '__main__':
 <p>First, ensure your OAuth1 keys are registered with xurl:</p>
 <pre><code class="language-bash">xurl auth oauth1
 </code></pre>
-<p>You'll need to provide your consumer key and secret, and access key and secret. Generate these from the <a href="https://developer.x.com">X Developer Portal</a>.</p>
+<p>You’ll need to provide your consumer key and secret, and access key and secret. Generate these from the <a href="https://developer.x.com">X Developer Portal</a>.</p>
 <h3 id="2-start-the-webhook-server"><a class="header" href="#2-start-the-webhook-server">2. Start the Webhook Server</a></h3>
 <p>Run the xURL webhook command:</p>
 <pre><code class="language-bash">xurl webhook start
 </code></pre>
-<p>You'll be prompted for your ngrok auth token so that xURL can create a temporary HTTPS endpoint:</p>
+<p>You’ll be prompted for your ngrok auth token so that xURL can create a temporary HTTPS endpoint:</p>
 <pre><code>Starting webhook server with ngrok...
 Enter your ngrok authtoken (leave empty to try NGROK_AUTHTOKEN env var):
 </code></pre>
-<p>Once you've entered your auth token, your endpoint will be generated and you'll see output like this:</p>
+<p>Once you’ve entered your auth token, your endpoint will be generated and you’ll see output like this:</p>
 <pre><code>Configuring ngrok to forward to local port: 8080
 Ngrok tunnel established!
   Forwarding URL: https://d1cb5181df5c.ngrok.app -&gt; localhost:8080
@@ -525,24 +528,31 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <p>Leave the terminal window running - any webhook events, including the security check, will be displayed in that window.</p>
 <p><strong>To stop the webhook server</strong>: Press <code>Ctrl+C</code> in the terminal.</p>
 <p>You can now use the generated URL (ending in <code>/webhook</code>) to register a webhook with the X API. See the next section for a tutorial on webhook registration.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="registering-a-webhook-with-x"><a class="header" href="#registering-a-webhook-with-x">Registering a Webhook With X</a></h1>
-<p>Registering a webhook involves passing the HTTPS URL for your webhook app to X's servers, so they know where to send events to.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="registering-a-webhook-with-x"><a class="header" href="#registering-a-webhook-with-x">Registering a Webhook With X</a></h1>
+<p>Registering a webhook involves passing the HTTPS URL for your webhook app to X’s servers, so they know where to send events to.</p>
 <p>The official docs are here: https://docs.x.com/x-api/webhooks/introduction</p>
 <h2 id="routes"><a class="header" href="#routes">Routes</a></h2>
 <p>The X API offers the following endpoints to manage your registered webhooks:</p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Method</th><th>Route</th><th>Description</th></tr>
+</thead>
+<tbody>
 <tr><td><code>GET</code></td><td><code>/2/webhooks</code></td><td>List all registered webhooks for your account</td></tr>
 <tr><td><code>POST</code></td><td><code>/2/webhooks</code></td><td>Create a webhook (see below for JSON body)</td></tr>
 <tr><td><code>DELETE</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Delete a webhook by ID</td></tr>
 <tr><td><code>PUT</code></td><td><code>/2/webhooks/:webhook_id</code></td><td>Manually trigger a security check to re-validate a webhook</td></tr>
 <tr><td><code>POST</code></td><td><code>/2/webhooks/replay</code></td><td>Initiate a replay job (See 2.4)</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <blockquote>
-<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven't set up <code>xurl</code> yet, check out the <a href="2_realtime/1_webhooks/../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven’t set up <code>xurl</code> yet, check out the <a href="2_realtime/1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
 </blockquote>
 <h2 id="register-a-webhook"><a class="header" href="#register-a-webhook">Register a Webhook</a></h2>
-<p>To register the webhook, you'll use the <code>POST</code> route, along with the following JSON body:</p>
+<p>To register the webhook, you’ll use the <code>POST</code> route, along with the following JSON body:</p>
 <pre><code class="language-json">{
     "url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"
 }
@@ -592,17 +602,24 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="replaying-webhook-events"><a class="header" href="#replaying-webhook-events">Replaying Webhook Events</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="replaying-webhook-events"><a class="header" href="#replaying-webhook-events">Replaying Webhook Events</a></h1>
 <p>The X webhook suite allows you to replay past events that were either successfully or unsuccessfully delivered to your endpoint.</p>
 <p>This is useful for recovering missed events due to downtime.</p>
 <p>You can replay up to 24 hours of events (due to data retention restrictions). Note that this functionality is restricted to certain packages.</p>
 <h2 id="route"><a class="header" href="#route">Route</a></h2>
-<p>To initiate replay, you'll use a <code>POST</code> endpoint:</p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<p>To initiate replay, you’ll use a <code>POST</code> endpoint:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Method</th><th>Route</th><th>Description</th></tr>
+</thead>
+<tbody>
 <tr><td><code>POST</code></td><td><code>/2/webhooks/replay</code></td><td>Initiate a replay job</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
-<p>To use this endpoint, you'll specify the following fields in the JSON body of the request:</p>
+<p>To use this endpoint, you’ll specify the following fields in the JSON body of the request:</p>
 <pre><code class="language-json">{
     "webhook_id": "&lt;YOUR WEBHOOK ID&gt;",
     "from_date": "YYYYMMDDHHMM",
@@ -616,7 +633,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <h2 id="what-is-delivered-in-replay"><a class="header" href="#what-is-delivered-in-replay">What is delivered in replay?</a></h2>
 <p>Any event, regardless of product (Filtered Stream, AAA, XAA), that is delivered via webhook, either successfully or unsuccessfully, will be attempted to be re-delivered during replay.</p>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
-<p>You'll check your active webhook IDs using the <code>GET</code> endpoint:</p>
+<p>You’ll check your active webhook IDs using the <code>GET</code> endpoint:</p>
 <pre><code class="language-bash">xurl --auth app /2/webhooks
 </code></pre>
 <pre><code class="language-json">{
@@ -641,7 +658,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   "to_date": "202512011200",
 }'
 </code></pre>
-<p>And if successful, you'll see this response:</p>
+<p>And if successful, you’ll see this response:</p>
 <pre><code class="language-json">{
   "data":{
     "job_id":"1995507200941260800",
@@ -662,7 +679,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 </code></pre>
 <p>This allows your app to differentiate when an event is from replay vs first-time delivery, since normal events may be delivered at the same time that replay events are coming through.</p>
 <h2 id="replay-job-completion"><a class="header" href="#replay-job-completion">Replay job completion</a></h2>
-<p>When the replay job completes, you'll see the following event be delivered to your webhook:</p>
+<p>When the replay job completes, you’ll see the following event be delivered to your webhook:</p>
 <pre><code class="language-json">{
     "replay_job_status": {
         "webhook_id":"1146654567674912769",
@@ -673,44 +690,193 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 }
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: The replay completion event may arrive out-of-order due to real-world network latencies between X's proxies that distribute events.</p>
+<p><strong>Note</strong>: The replay completion event may arrive out-of-order due to real-world network latencies between X’s proxies that distribute events.</p>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
-<p>In this chapter, we'll use the webhook we set up in the previous chapter in conjunction with X's newest real-time data suite, the X Activity API.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="the-x-activity-api"><a class="header" href="#the-x-activity-api">The X Activity API</a></h1>
+<p>This part of the book builds on the <a href="#using-webhooks-with-the-x-developer-api">webhook</a> you registered earlier. Here we use X’s <strong>X Activity API (XAA)</strong> to subscribe to activity events and receive them on your app in near real time.</p>
 <h2 id="about"><a class="header" href="#about">About</a></h2>
-<p>The X Activity API allows us to subscribe to event types and apply filters. When a matching event is created, it will be delivered to our app.</p>
-<p>XAA offers both webhook and streaming support, but we'll be using the webhook option in this example.</p>
+<p>The X Activity API lets you subscribe to <strong>event types</strong> with <strong>filters</strong> (for example a <code>user_id</code> or a <code>keyword</code>). When a matching event occurs, X delivers it to your integration—typically over a <strong>webhook</strong> or a <strong>persistent HTTP stream</strong> (<code>GET /2/activity/stream</code>). These docs focus on webhooks.</p>
+<blockquote>
+<p><strong>Note:</strong> XAA does not deliver posts. For real-time post delivery, use the <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction">Filtered Stream</a> endpoint.</p>
+</blockquote>
+<p><strong>Public</strong> vs <strong>private</strong> for XAA is the same axis as <strong>app vs user auth</strong>: public streams use <strong>OAuth 2.0 app Bearer</strong> tokens; private streams require <strong>explicit user OAuth</strong> (OAuth 2.0 user context or OAuth 1.0a user access). The next chapter lists <strong>event types</strong>, <strong>subscription limits</strong>, and spells that model out in one place.</p>
 <h2 id="routes-1"><a class="header" href="#routes-1">Routes</a></h2>
-<p>To manage our active subscriptions in XAA, we're offered the following routes:</p>
-<div class="table-wrapper"><table><thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Method</th><th>Route</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/2/activity/stream</code></td><td>Connect to the activity stream (persistent HTTP)</td></tr>
 <tr><td><code>GET</code></td><td><code>/2/activity/subscriptions</code></td><td>List all active subscriptions</td></tr>
-<tr><td><code>POST</code></td><td><code>/2/activity/subscriptions</code></td><td>Create a new subscription (see below for JSON body)</td></tr>
+<tr><td><code>POST</code></td><td><code>/2/activity/subscriptions</code></td><td>Create a new subscription</td></tr>
 <tr><td><code>DELETE</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Delete a subscription by ID</td></tr>
-<tr><td><code>PUT</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Update a subscription (see below for JSON body)</td></tr>
-</tbody></table>
+<tr><td><code>PUT</code></td><td><code>/2/activity/subscriptions/:subscription_id</code></td><td>Update a subscription</td></tr>
+</tbody>
+</table>
+</div>
+<p>Continue to <a href="#event-types-and-authentication">Event types and authentication</a> for the full event catalog and auth model, then <a href="#subscribing-to-public-events">Subscribing to public events</a> for a hands-on walkthrough with <strong><code>xurl --auth app</code></strong>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="event-types-and-authentication"><a class="header" href="#event-types-and-authentication">Event types and authentication</a></h1>
+<p>This page lists supported <strong>event types</strong> and explains how they line up with <strong>authentication</strong>. For XAA, <strong>whether an event is public or private is the same question as whether you may use app-only credentials or must use user credentials</strong>. The privacy class tells you which OAuth style X expects (See section below).</p>
+<h2 id="supported-event-types"><a class="header" href="#supported-event-types">Supported event types</a></h2>
+<p>Most filters use <strong><code>user_id</code></strong> (numeric user ID). The exception is <strong><code>news.new</code></strong>, which uses a <strong><code>keyword</code></strong> filter.</p>
+<p>The <strong>Privacy</strong> column is how X classifies the event for XAA: <strong>Public</strong> (app Bearer is the usual subscription path, subject to tier rules), <strong>Private</strong> (user OAuth required), or <strong>Multi</strong> (both shapes exist, for example a path that is public under Enterprise app auth and a path that is private under pay-per-user / user context, per product configuration).</p>
+<h3 id="profile-events"><a class="header" href="#profile-events">Profile events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>profile.update.bio</code></td><td>User updates their profile bio</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.profile_picture</code></td><td>User updates their profile picture</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.banner_picture</code></td><td>User updates their profile banner</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.screenname</code></td><td>User updates their display name</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.handle</code></td><td>User updates their handle</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.geo</code></td><td>User updates their profile location</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.url</code></td><td>User updates their profile website URL</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.verified_badge</code></td><td>User updates their verified badge</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>profile.update.affiliate_badge</code></td><td>User updates their affiliate badge</td><td>Public</td><td><code>user_id</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="follow-events"><a class="header" href="#follow-events">Follow events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>follow.follow</code></td><td>User follows another user</td><td>Multi</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+<tr><td><code>follow.unfollow</code></td><td>User unfollows another user</td><td>Multi</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+</tbody>
+</table>
 </div>
 <blockquote>
-<p><strong>Note</strong>: All sample commands in this section use the <code>xurl</code> CLI tool. If you haven't set up <code>xurl</code> yet, check out the <a href="2_realtime/2_xaa/../../1_tools/1_xurl/xurl.html">xURL section</a> first.</p>
+<p><strong>Direction filter:</strong> For <code>follow.follow</code> and <code>follow.unfollow</code>, the filter may include <strong><code>direction</code></strong>: <strong><code>"inbound"</code></strong> or <strong><code>"outbound"</code></strong> alongside <strong><code>user_id</code></strong>. Only follow events support this today. See <a href="#direction-filter">Direction filter</a>.</p>
 </blockquote>
-<p>Let's run the <code>GET</code> route first just to ensure the route is working and our account has access.</p>
-<p>You'll use your bearer token for authentication for all routes:</p>
+<p><strong>Multi</strong> here means XAA supports more than one auth posture: Some trusted packages may subscribe with <strong>application-only</strong> access (public-style entitlement for that tier), while <strong>pay-per-user</strong> flows treat the same event as <strong>private</strong> and require <strong>user OAuth</strong> for the filtered account. Confirm the matrix for your package on <a href="https://docs.x.com">docs.x.com</a>.</p>
+<h3 id="spaces-events"><a class="header" href="#spaces-events">Spaces events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>spaces.start</code></td><td>User starts a Space</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>spaces.end</code></td><td>User ends a Space</td><td>Public</td><td><code>user_id</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="legacy-dm-events"><a class="header" href="#legacy-dm-events">Legacy DM events</a></h3>
+<p>Unencrypted, legacy direct messages.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>dm.received</code></td><td>User receives an unencrypted DM</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>dm.sent</code></td><td>User sends an unencrypted DM</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>dm.read</code></td><td>User reads a DM or read receipt for the filtered user</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>dm.indicate_typing</code></td><td>User is typing a message to the filtered user</td><td>Private</td><td><code>user_id</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="chat-events-encrypted--xchat"><a class="header" href="#chat-events-encrypted--xchat">Chat events (encrypted / XChat)</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>chat.received</code></td><td>User receives an encrypted direct message</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>chat.sent</code></td><td>User sends an encrypted direct message</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>chat.conversation_join</code></td><td>User joins an encrypted chat conversation</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>chat.indicate_typing</code></td><td>User is typing in an encrypted chat</td><td>Private</td><td><code>user_id</code></td></tr>
+<tr><td><code>chat.read</code></td><td>User read state in encrypted chat</td><td>Private</td><td><code>user_id</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>The last two rows are <strong>in development</strong>; availability and payload fields may change—watch X developer docs.</p>
+<h3 id="news-events"><a class="header" href="#news-events">News events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>news.new</code></td><td>New Grok-curated trends and headlines</td><td>Public</td><td><code>keyword</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><code>news.new</code> is <strong>Enterprise and Partner tier only</strong> at this time.</p>
+<p>XAA will add more event types over time (for example social interactions, content engagement, and monetization); check <a href="https://docs.x.com">X developer documentation</a> for the latest list.</p>
+<h2 id="subscription-limits"><a class="header" href="#subscription-limits">Subscription limits</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Package tier</th><th>Maximum subscriptions</th></tr>
+</thead>
+<tbody>
+<tr><td>Self-serve</td><td>1,000</td></tr>
+<tr><td>Enterprise</td><td>50,000</td></tr>
+<tr><td>Partner</td><td>100,000</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="public-vs-private-events--app-vs-user-auth"><a class="header" href="#public-vs-private-events--app-vs-user-auth">Public vs private events = app vs user auth</a></h2>
+<p>X labels each XAA event type as <strong>public</strong> or <strong>private</strong> in line with the main app. That label is not a separate concept from authentication: it tells you <strong>whose OAuth grant</strong> must back your requests.</p>
+<p><strong>Private events</strong> are activities that are not universally visible on X (for example DMs and encrypted chat). Accessing them requires <strong>explicit user authorization</strong>: the relevant user must have signed in and approved your app, with the right permissions. In practice that means <strong>OAuth 2.0 user context</strong> (“3-legged” OAuth) <strong>or OAuth 1.0a user access</strong>—a token tied to that user, not just your app’s identity. You may only create subscriptions for private streams for users who have authorized your application, and you will use <strong>user-scoped</strong> credentials in <code>xurl</code> with <strong><code>--auth oauth2</code></strong> (OAuth 2.0 user context) or <strong><code>--auth oauth1</code></strong> (OAuth 1.0a user access), after registering the matching profile. See the <a href="https://github.com/xdevplatform/xurl">xurl README</a> for setup; scopes are defined in the current X developer docs.</p>
+<p><strong>Public events</strong> are activities that are already visible in public on the platform (for example many profile updates). Subscribing and receiving those streams is done with <strong>OAuth 2.0 application-only authentication</strong>: a <strong>Bearer token</strong> for your app from the <a href="https://developer.x.com/en/portal/dashboard">developer portal</a>—no end-user login for that token. In this book that is the <code>xurl</code> pattern <strong><code>xurl auth app --bearer-token …</code></strong> then <strong><code>--auth app</code></strong> (see the <a href="#xurl---curl-for-x">xURL</a> chapter).</p>
+<p>So: <strong>private ⟺ user OAuth (OAuth2 user context or OAuth1 user access)</strong>; <strong>public ⟺ OAuth2 app Bearer</strong> for the subscription and delivery patterns X documents for XAA. Calling subscription management endpoints themselves still typically uses your <strong>app</strong> credentials; the distinction above is what X requires for the <strong>event family</strong> you target and for <strong>which users</strong> you may filter on for private data.</p>
+<p><strong>Caveat:</strong> Some event types can be accessed with <strong>either</strong> user OAuth <strong>or</strong> app-level OAuth, depending on how X exposes them for your product. Even then, <strong>application-only (Bearer) access is not always available on every package</strong>: for certain events—for example <strong><code>follow.follow</code> / <code>follow.unfollow</code></strong>—X may reserve app-only subscriptions to <strong>higher or “elevated” tiers</strong>, while lower tiers still work if the relevant user has authorized your app with user context. Treat the public/private split above as the <strong>privacy model</strong>; treat <strong>tier and contract</strong> as a separate gate for whether <strong>app</strong> auth is actually enabled for a given <code>event_type</code> on your developer account. Confirm both in the current XAA docs and your portal entitlements.</p>
+<p>The event tables above mix both families (for example profile vs DM/chat). For the authoritative public/private list and any nuance, use X’s <strong>Event privacy and authentication</strong> section for XAA on <a href="https://docs.x.com">docs.x.com</a>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th><strong>Public events</strong></th><th><strong>Private events</strong></th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Relationship to your app</strong></td><td>Data X treats as already public; your app does not need that user’s personal OAuth grant</td><td>Data X treats as private; that user must explicitly authorize your app before you can subscribe</td></tr>
+<tr><td><strong>OAuth model</strong></td><td><strong>OAuth 2.0 app-only</strong> (Bearer token)</td><td><strong>OAuth 2.0 user context</strong> or <strong>OAuth 1.0a</strong> user access (user explicitly grants your app)</td></tr>
+<tr><td><strong><code>xurl</code></strong></td><td><code>--auth app</code></td><td><code>--auth oauth2</code> or <code>--auth oauth1</code> (after configuring user tokens)</td></tr>
+<tr><td><strong>Typical subscription rule</strong></td><td>Filter by <code>user_id</code> (or <code>keyword</code> for <code>news.new</code>) per docs</td><td>Filter only for users who have authorized your app</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="next"><a class="header" href="#next">Next</a></h2>
+<ul>
+<li><strong><a href="#subscribing-to-public-events">Subscribing to public events</a></strong> — verify access with <code>xurl --auth app</code>, look up a user id, create a <code>profile.update.bio</code> subscription, and inspect webhook payloads.</li>
+<li><strong><a href="#subscribing-to-private-events">Subscribing to private events</a></strong> — configure user OAuth and call the subscription API with <strong><code>xurl --auth oauth2</code></strong> or <strong><code>xurl --auth oauth1</code></strong> for private event types.</li>
+<li><strong><a href="#getting-news-by-keyword-in-realtime">News by keyword</a></strong> — <code>news.new</code> with a <code>keyword</code> filter (Enterprise / Partner).</li>
+<li><strong><a href="#direction-filter">Direction filter</a></strong> — <code>direction</code> (<code>inbound</code> / <code>outbound</code>) for follow subscriptions.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="subscribing-to-public-events"><a class="header" href="#subscribing-to-public-events">Subscribing to public events</a></h1>
+<p>This walkthrough assumes you have completed the <a href="#the-x-activity-api">X Activity API introduction</a> and read <a href="#event-types-and-authentication">Event types and authentication</a>. It uses a <strong>public</strong> event type (<code>profile.update.bio</code>) with <strong>OAuth 2.0 application-only</strong> credentials (<code>xurl --auth app</code>). Commands use the <code>xurl</code> CLI; if you have not installed it yet, follow the <a href="#xurl---curl-for-x">xURL</a> chapter first.</p>
+<p>For <strong>private</strong> event types (DMs, chat, and so on) you must use <strong>user OAuth</strong> instead—see <a href="#subscribing-to-private-events">Subscribing to private events</a>.</p>
+<h2 id="verify-access"><a class="header" href="#verify-access">Verify access</a></h2>
+<p>Confirm your app can call the subscriptions API:</p>
 <pre><code>xurl --auth app /2/activity/subscriptions
 </code></pre>
 <pre><code class="language-json">{
   "data":[
   ],
   "meta": {
-    "total_subscriptions": 0
+    "result_count": 0
   }
 }
 </code></pre>
-<p>Looks like everything's working. We currently have no active subscriptions.</p>
-<h2 id="getting-your-user-id"><a class="header" href="#getting-your-user-id">Getting Your User ID</a></h2>
-<p>Before creating a subscription, we need to know our user ID. The X Activity API requires user IDs (not usernames) in the filter criteria.</p>
-<p>Let's get our user ID using the User Lookup endpoint:</p>
+<p>If you see a JSON body like the above (possibly with existing subscriptions), your bearer token and project access are working. For <strong><code>GET /2/activity/subscriptions</code></strong>, <code>meta.result_count</code> is the number of subscription objects returned in <code>data</code> (not <code>total_subscriptions</code>).</p>
+<h2 id="getting-your-user-id"><a class="header" href="#getting-your-user-id">Getting your user ID</a></h2>
+<p>Most public XAA filters use <strong><code>user_id</code></strong> (numeric user ID, not username). The exception is <strong><code>news.new</code></strong>, which uses a <strong><code>keyword</code></strong> filter—see <a href="#getting-news-by-keyword-in-realtime">News by Keyword</a>.</p>
+<p>Look up your user id with the User Lookup endpoint:</p>
 <pre><code class="language-bash">xurl --auth app /2/users/by/username/YOUR_USERNAME
 </code></pre>
-<p>Replace <code>YOUR_USERNAME</code> with your actual X username (without the @ symbol).</p>
+<p>Replace <code>YOUR_USERNAME</code> with your X handle without <code>@</code>.</p>
 <p><strong>Example response:</strong></p>
 <pre><code class="language-json">{
   "data": {
@@ -720,31 +886,20 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<p>Copy the <code>id</code> value from the response - you'll need it for creating subscriptions.</p>
-<h2 id="creating-a-subscription"><a class="header" href="#creating-a-subscription">Creating a Subscription</a></h2>
-<p>Now let's create our first subscription. We'll subscribe to our own profile update events first, so we can test for an event coming through.</p>
-<h3 id="subscription-parameters"><a class="header" href="#subscription-parameters">Subscription Parameters</a></h3>
-<p>When creating a subscription, you need to specify:</p>
+<p>Copy the <code>id</code> value for the subscription below.</p>
+<h2 id="creating-a-subscription"><a class="header" href="#creating-a-subscription">Creating a subscription</a></h2>
+<p>Subscribe to your own profile bio updates so you can trigger a test event.</p>
+<h3 id="subscription-payload"><a class="header" href="#subscription-payload">Subscription payload</a></h3>
+<p>When creating a subscription, you typically send:</p>
 <ul>
-<li><strong><code>event_type</code></strong>: The type of event to subscribe to (required)</li>
-<li><strong><code>filter</code></strong>: Criteria to filter which events to receive (required)</li>
-<li><strong><code>webhook_id</code></strong>: The ID of your registered webhook where events will be delivered (optional, but required for webhook delivery)</li>
-<li><strong><code>tag</code></strong>: An optional identifier for your subscription (recommended)</li>
+<li><strong><code>event_type</code></strong>: The event to subscribe to (required)</li>
+<li><strong><code>filter</code></strong>: Match criteria (required)—often <code>{ "user_id": "…" }</code></li>
+<li><strong><code>webhook_id</code></strong>: Where to deliver events (optional, but required for webhook delivery)</li>
+<li><strong><code>tag</code></strong>: Optional label for your own bookkeeping (recommended)</li>
 </ul>
-<h3 id="available-event-types"><a class="header" href="#available-event-types">Available Event Types</a></h3>
-<p>XAA supports several event types:</p>
-<ul>
-<li><code>ProfileBioUpdate</code> - When a user updates their bio</li>
-<li><code>ProfilePictureUpdate</code> - When a user changes their profile picture</li>
-<li><code>ProfileBannerPictureUpdate</code> - When a user changes their banner</li>
-<li><code>ProfileScreennameUpdate</code> - When a user changes their username</li>
-<li><code>ProfileGeoUpdate</code> - When a user updates their location</li>
-<li><code>ProfileUrlUpdate</code> - When a user updates their website URL</li>
-</ul>
-<h3 id="creating-the-subscription"><a class="header" href="#creating-the-subscription">Creating the Subscription</a></h3>
-<p>Let's create a subscription to monitor our own profile bio updates:</p>
+<p>Create the subscription:</p>
 <pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
-  "event_type": "ProfileBioUpdate",
+  "event_type": "profile.update.bio",
   "filter": {
     "user_id": "YOUR_USER_ID"
   },
@@ -752,13 +907,12 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   "tag": "my bio updates"
 }'
 </code></pre>
-<h3 id="success-response"><a class="header" href="#success-response">Success Response</a></h3>
-<p>If successful, you'll receive a response like this:</p>
+<h3 id="success-response"><a class="header" href="#success-response">Success response</a></h3>
 <pre><code class="language-json">{
   "data": {
     "subscription": {
       "created_at": "2025-10-07T05:31:56Z",
-      "event_type": "ProfileBioUpdate",
+      "event_type": "profile.update.bio",
       "filter": {
         "user_id": "YOUR_USER_ID"
       },
@@ -773,17 +927,15 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<h2 id="testing-your-subscription"><a class="header" href="#testing-your-subscription">Testing Your Subscription</a></h2>
-<p>Once you've created the subscription, any bio updates to your own profile will be delivered to your webhook endpoint. You should see events arrive in your webhook server logs.</p>
-<p><strong>To test</strong>: Update your bio on X and watch for the event to arrive at your webhook!</p>
-<h3 id="sample-event-payload"><a class="header" href="#sample-event-payload">Sample Event Payload</a></h3>
-<p>When a profile bio update occurs, you'll receive a webhook event like this:</p>
+<h2 id="testing-your-subscription"><a class="header" href="#testing-your-subscription">Testing your subscription</a></h2>
+<p>After the subscription is created, change your profile bio on X. Your webhook server should log a delivery.</p>
+<h3 id="sample-webhook-payload"><a class="header" href="#sample-webhook-payload">Sample webhook payload</a></h3>
 <pre><code class="language-json">{
   "data": {
     "filter": {
       "user_id": "YOUR_USER_ID"
     },
-    "event_type": "ProfileBioUpdate",
+    "event_type": "profile.update.bio",
     "tag": "my bio updates",
     "payload": {
       "before": "vox populi",
@@ -792,55 +944,61 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<p>The event includes:</p>
+<p>Fields:</p>
 <ul>
-<li><strong><code>filter</code></strong>: The filter criteria that triggered this event</li>
-<li><strong><code>event_type</code></strong>: The type of event that occurred</li>
-<li><strong><code>tag</code></strong>: The tag you assigned to the subscription</li>
-<li><strong><code>payload</code></strong>: The actual change data (before/after values)</li>
+<li><strong><code>filter</code></strong>: The subscription filter that matched</li>
+<li><strong><code>event_type</code></strong>: Which event fired</li>
+<li><strong><code>tag</code></strong>: The tag you set when creating the subscription</li>
+<li><strong><code>payload</code></strong>: Change-specific data (here, before/after bio text)</li>
 </ul>
-<p>You can also list your active subscriptions again to confirm:</p>
+<p>List subscriptions again to confirm:</p>
 <pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
 </code></pre>
-<p>This will now show your active subscription in the response.</p>
-<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next Steps</a></h2>
-<p>Your XAA subscription is now active! Events will be delivered to your webhook as they occur. In production applications, you'll want to:</p>
+<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next steps</a></h2>
 <ol>
-<li><strong>Handle multiple event types</strong> based on your use case</li>
-<li><strong>Implement proper error handling</strong> for failed deliveries</li>
-<li><strong>Monitor subscription health</strong> and revalidate when needed</li>
-<li><strong>Clean up unused subscriptions</strong> to avoid hitting rate limits</li>
+<li><strong>Handle multiple event types</strong> as needed for your product</li>
+<li><strong>Handle delivery failures</strong> and retries responsibly</li>
+<li><strong>Monitor subscription health</strong> and rotate credentials on schedule</li>
+<li><strong>Delete unused subscriptions</strong> and stay under your tier cap (see <a href="#subscription-limits">Subscription limits</a>)</li>
 </ol>
-<p>The X Activity API provides powerful real-time monitoring capabilities when combined with webhooks!</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="getting-new-trends-by-keyword-in-realtime"><a class="header" href="#getting-new-trends-by-keyword-in-realtime">Getting New Trends By Keyword in Realtime</a></h1>
-<p>This chapter is a brief tutorial on how to use the X Activity API to get new trends emerging on X in realtime, filtered by keywords of your choice.</p>
-<blockquote>
-<p><strong>Note</strong>: This feature is currently only for Enterprise customers</p>
-</blockquote>
-<h2 id="subscribing-to-trends"><a class="header" href="#subscribing-to-trends">Subscribing to Trends</a></h2>
-<p>You'll create a subscription to trends using the X Activity API in the same way you did in the last chapter.</p>
-<p>This time, you'll use the <code>TrendsNew</code> event type, and you'll specify a <code>keyword</code> in the <code>filter</code> field instead of a user id:</p>
-<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
-  "event_type": "TrendsNew",
+<p>Continue with <a href="#subscribing-to-private-events">Subscribing to private events</a> for user-authenticated subscriptions, or <a href="#getting-news-by-keyword-in-realtime">News by Keyword</a> for <code>news.new</code> and keyword filters.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="subscribing-to-private-events"><a class="header" href="#subscribing-to-private-events">Subscribing to private events</a></h1>
+<p><strong>Private</strong> XAA event types (legacy DMs, encrypted chat, and others marked <strong>Private</strong> in <a href="#event-types-and-authentication">Event types and authentication</a>) require <strong>explicit user authorization</strong>: OAuth <strong>2.0 user context</strong> or <strong>OAuth 1.0a</strong> user access for the user whose activity you are allowed to subscribe to. Application-only Bearer tokens are <strong>not</strong> sufficient for creating or receiving those subscriptions on behalf of that user.</p>
+<p>This page shows the same subscription HTTP shape as <a href="#subscribing-to-public-events">Subscribing to public events</a>, but with <strong><code>xurl --auth oauth2</code></strong> or <strong><code>xurl --auth oauth1</code></strong> so the request runs under a <strong>user</strong> credential that has granted your app the right scopes. App-only traffic continues to use <strong><code>--auth app</code></strong> (see the <a href="#xurl---curl-for-x">xURL</a> chapter).</p>
+<h2 id="prerequisites-1"><a class="header" href="#prerequisites-1">Prerequisites</a></h2>
+<ol>
+<li>An X app with XAA access and a <a href="#using-webhooks-with-the-x-developer-api">registered webhook</a> (same as the public flow).</li>
+<li>A real user (often you, while testing) who <strong>signs in with X</strong> and approves your app, granting the permissions X requires for the private event family you care about.</li>
+<li>User tokens registered in <code>xurl</code> for <strong><code>--auth oauth2</code></strong> (OAuth 2.0 user context) or <strong><code>--auth oauth1</code></strong> (OAuth 1.0a user access), whichever you use.</li>
+</ol>
+<p>The <a href="https://github.com/xdevplatform/xurl">xurl README</a> documents how to configure <strong>OAuth 2.0 user</strong> flows and <strong>OAuth 1.0a user</strong> access; follow that for your stack (PKCE / callback URL / token storage). Exact CLI subcommands and flags can change between <code>xurl</code> releases—use the README as source of truth. The <a href="#xurl---curl-for-x">xURL</a> chapter covers installing the tool and <strong>app</strong> bearer registration; extend that setup with user credentials before continuing.</p>
+<h2 id="who-the-user_id-filter-refers-to"><a class="header" href="#who-the-user_id-filter-refers-to">Who the <code>user_id</code> filter refers to</a></h2>
+<p>For private streams, the <strong><code>user_id</code></strong> in your filter must be a user who has <strong>authorized your app</strong>. In the common “subscribe to my own DMs or chat” case, that is the same user whose OAuth 2.0 or OAuth 1.0a profile you select with <strong><code>--auth oauth2</code></strong> or <strong><code>--auth oauth1</code></strong>.</p>
+<h2 id="example-subscribe-with-user-auth"><a class="header" href="#example-subscribe-with-user-auth">Example: subscribe with user auth</a></h2>
+<p>Below, the authenticated user is subscribing to <strong>their own</strong> incoming encrypted messages (<code>chat.received</code>). Replace placeholders with your webhook id, user id, and ensure your app has the chat/DM scopes X documents for XAA. The example uses OAuth 2.0 user context; if you use OAuth 1.0a user access instead, swap in <strong><code>--auth oauth1</code></strong>.</p>
+<pre><code class="language-bash">xurl --auth oauth2 /2/activity/subscriptions -X POST -d '{
+  "event_type": "chat.received",
   "filter": {
-    "keyword": "Tesla"
+    "user_id": "AUTHORIZED_USER_ID"
   },
-  "tag": "Tesla trends",
-  "webhook_id": "YOUR_WEBHOOK_ID"
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "my chat inbox"
 }'
 </code></pre>
-<h3 id="success-response-1"><a class="header" href="#success-response-1">Success Response</a></h3>
-<p>Upon success, you'll receive this response:</p>
+<p>If your token or scopes are wrong, X returns an OAuth or permission error instead of a <code>200</code> subscription body—treat that as a configuration issue, not a generic “XAA down” failure.</p>
+<h3 id="success-response-1"><a class="header" href="#success-response-1">Success response</a></h3>
+<p>The JSON shape matches the public case: <code>data.subscription</code> with <code>subscription_id</code>, <code>event_type</code>, <code>filter</code>, <code>webhook_id</code>, and <code>tag</code>.</p>
 <pre><code class="language-json">{
   "data": {
     "subscription": {
       "created_at": "2025-10-07T05:31:56Z",
-      "event_type": "TrendsNew",
+      "event_type": "chat.received",
       "filter": {
-        "keyword": "Tesla"
+        "user_id": "AUTHORIZED_USER_ID"
       },
       "subscription_id": "1146654567674912769",
-      "tag": "Tesla trends",
+      "tag": "my chat inbox",
       "updated_at": "2025-10-07T05:31:56Z",
       "webhook_id": "YOUR_WEBHOOK_ID"
     }
@@ -850,36 +1008,86 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<h3 id="getting-trend-events"><a class="header" href="#getting-trend-events">Getting Trend Events</a></h3>
-<p>If you specified a webhook, then you'll start to see trends with a headline containing your keyword right away (as they are generated of course, so it may be a minute until a trend containing your keyword is seen).</p>
-<p>Trend events have this form:</p>
+<h2 id="listing-with-user-context"><a class="header" href="#listing-with-user-context">Listing with user context</a></h2>
+<h3 id="listing-with-user-auth"><a class="header" href="#listing-with-user-auth">Listing with user auth</a></h3>
+<p>When you call <strong><code>GET /2/activity/subscriptions</code></strong> with the same user profile you used to create private subscriptions—for example <strong><code>xurl --auth oauth2</code></strong> or <strong><code>xurl --auth oauth1</code></strong>—the response includes <strong>only the subscriptions that were created under that specific user’s authorization</strong>. You do not see every subscription visible to your app under <strong><code>--auth app</code></strong>.</p>
+<p>That makes user-scoped <code>GET</code> useful for debugging or UI that should show “my subscriptions” for the signed-in account, without mixing in subscriptions that another user (or your app bearer) created.</p>
+<pre><code class="language-bash">xurl --auth oauth2 /2/activity/subscriptions
+</code></pre>
+<p>As with <a href="#subscribing-to-public-events">Subscribing to public events</a>, list responses use <strong><code>meta.result_count</code></strong> for how many subscription objects appear in <strong><code>data</code></strong>.</p>
+<h2 id="next-1"><a class="header" href="#next-1">Next</a></h2>
+<ul>
+<li><strong><a href="#getting-news-by-keyword-in-realtime">News by Keyword</a></strong> — <code>news.new</code> is <strong>public</strong> and typically uses <strong><code>--auth app</code></strong> (Enterprise / Partner); it is a separate tutorial because the filter is a <strong><code>keyword</code></strong>, not <code>user_id</code>.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="getting-news-by-keyword-in-realtime"><a class="header" href="#getting-news-by-keyword-in-realtime">Getting News By Keyword in Realtime</a></h1>
+<p>This chapter is a brief tutorial on how to use the X Activity API to get news emerging on X in realtime, filtered by keywords of your choice.</p>
+<blockquote>
+<p><strong>Note</strong>: This feature is currently only for Enterprise customers</p>
+</blockquote>
+<h2 id="subscribing-to-news"><a class="header" href="#subscribing-to-news">Subscribing to News</a></h2>
+<p>You create a subscription the same way as in <a href="#subscribing-to-public-events">Subscribing to public events</a>: <code>POST /2/activity/subscriptions</code> with <code>event_type</code>, <code>filter</code>, and <code>webhook_id</code>. For when to use <strong>app</strong> vs <strong>user</strong> credentials, see <a href="#event-types-and-authentication">Event types and authentication</a>.</p>
+<p>This time, you’ll use the <code>news.new</code> event type, and you’ll specify a <code>keyword</code> in the <code>filter</code> field instead of a user id:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "news.new",
+  "filter": {
+    "keyword": "Tesla"
+  },
+  "tag": "Tesla trends",
+  "webhook_id": "YOUR_WEBHOOK_ID"
+}'
+</code></pre>
+<h3 id="success-response-2"><a class="header" href="#success-response-2">Success Response</a></h3>
+<p>Upon success, you’ll receive this response:</p>
+<pre><code class="language-json">{
+  "data": {
+    "subscription": {
+      "created_at": "2025-10-07T05:31:56Z",
+      "event_type": "news.new",
+      "filter": {
+        "keyword": "Tesla"
+      },
+      "subscription_id": "1146654567674912769",
+      "tag": "Tesla news",
+      "updated_at": "2025-10-07T05:31:56Z",
+      "webhook_id": "YOUR_WEBHOOK_ID"
+    }
+  },
+  "meta": {
+    "total_subscriptions": 1
+  }
+}
+</code></pre>
+<h3 id="getting-news-events"><a class="header" href="#getting-news-events">Getting News Events</a></h3>
+<p>If you specified a webhook, then you’ll start to see news with a headline containing your keyword right away (as they are generated of course, so it may be a minute until a trend containing your keyword is seen).</p>
+<p>News events have this form:</p>
 <pre><code class="language-json">{
   "data": {
     "event_uuid": "1985729017958244577",
     "filter": {
-      "keyword": "news"
+      "keyword": "spacex"
     },
-    "event_type": "TrendsNew",
-    "tag": "news trends",
+    "event_type": "news.new",
+    "tag": "spacex news",
     "payload": {
-      "headline": "This is some news breaking on X",
-      "summary": "Some new news broke on X today, which is an awesome place to go for breaking news!"
+      "headline": "This is some spacex news breaking on X",
+      "summary": "Spacex just launched a rocket"
     }
   }
 }
 </code></pre>
 <p>As the X Activity API matures, more fields will be added to the payload.</p>
-<h3 id="duplicate-trends"><a class="header" href="#duplicate-trends">Duplicate Trends</a></h3>
-<p>If you specified multiple subscriptions for trends, and a single trend event matches multiple subscriptions, it may be delivered multiple times.</p>
-<p>Here's an example:</p>
+<h3 id="duplicate-news"><a class="header" href="#duplicate-news">Duplicate News</a></h3>
+<p>If you specified multiple subscriptions for news, and a single news event matches multiple subscriptions, it may be delivered multiple times.</p>
+<p>Here’s an example:</p>
 <pre><code class="language-json">{
   "data": {
     "event_uuid": "1985729017958244577",
     "filter": {
       "keyword": "jack"
     },
-    "event_type": "TrendsNew",
-    "tag": "jack trends",
+    "event_type": "news.new",
+    "tag": "jack news",
     "payload": {
       "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
       "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
@@ -893,8 +1101,8 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
     "filter": {
       "keyword": "mikie"
     },
-    "event_type": "TrendsNew",
-    "tag": "mikie trends",
+    "event_type": "news.new",
+    "tag": "mikie news",
     "payload": {
       "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",
       "summary": "Voters in New Jersey head to the polls to elect the state's next governor in a contest between Republican Jack Ciattarelli and Democratic incumbent Mikie Sherrill. Polls are open from 6 a.m. to 8 p.m. across the state."
@@ -902,10 +1110,44 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
   }
 }
 </code></pre>
-<p>You can see there are two separate subscriptions, one on the keyword <code>jack</code> and one on <code>mikie</code>. The headline in this trend contained both keywords, so it was delivered to the webhook twice.</p>
+<p>You can see there are two separate subscriptions, one on the keyword <code>jack</code> and one on <code>mikie</code>. The headline in this news contained both keywords, so it was delivered to the webhook twice.</p>
 <p>X does some deduplication on its end, but you can use the <code>event_uuid</code> to do deduplication at the application layer as well.</p>
 <h3 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h3>
-<p>Setting up a trends feed using the X Activity API is a perfect way to integrate a live news feed of events you care about into your application!</p>
+<p>Setting up a news feed using the X Activity API is a perfect way to integrate a live feed of events you care about into your application!</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="direction-filter"><a class="header" href="#direction-filter">Direction filter</a></h1>
+<p>Some XAA event types accept an optional <strong><code>direction</code></strong> field inside the subscription <strong><code>filter</code></strong>, next to <strong><code>user_id</code></strong>. It restricts events to <strong>which side of the relationship</strong> the filtered user is on (for example “someone followed <em>them</em>” vs “<em>they</em> followed someone else”).</p>
+<p>Today, <strong>only follow events</strong> support this field: <strong><code>follow.follow</code></strong> and <strong><code>follow.unfollow</code></strong>. Other <code>event_type</code> values either ignore <code>direction</code> or reject the subscription—check the current X developer docs if you are unsure.</p>
+<h2 id="values"><a class="header" href="#values">Values</a></h2>
+<ul>
+<li><strong><code>"inbound"</code></strong> — activity where another account follows or unfollows <strong>the user</strong> identified by <code>user_id</code>.</li>
+<li><strong><code>"outbound"</code></strong> — activity where <strong>that user</strong> follows or unfollows another account.</li>
+</ul>
+<h2 id="example-request"><a class="header" href="#example-request">Example request</a></h2>
+<pre><code class="language-http">POST /2/activity/subscriptions
+</code></pre>
+<p>Body (use <strong><code>inbound</code></strong> or <strong><code>outbound</code></strong>):</p>
+<pre><code class="language-json">{
+  "event_type": "follow.follow",
+  "filter": {
+    "user_id": "&lt;id&gt;",
+    "direction": "inbound"
+  }
+}
+</code></pre>
+<p>For webhook delivery, include <strong><code>webhook_id</code></strong> (and optionally <strong><code>tag</code></strong>) the same way as in <a href="#subscribing-to-public-events">Subscribing to public events</a>.</p>
+<h3 id="with-xurl"><a class="header" href="#with-xurl">With <code>xurl</code></a></h3>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "follow.follow",
+  "filter": {
+    "user_id": "YOUR_USER_ID",
+    "direction": "inbound"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "follows inbound"
+}'
+</code></pre>
+<p>Use <strong><code>"direction": "outbound"</code></strong> when you want the opposite direction. Follow subscriptions may require <strong>Enterprise</strong> (or other elevated) entitlements for app-only auth; see <a href="#follow-events">Event types and authentication</a>.</p>
 
                     </main>
 
@@ -924,6 +1166,11 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -932,13 +1179,13 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

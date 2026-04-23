@@ -30,6 +30,6 @@ and make requests:
 xurl --auth app /2/tweets/20
 ```
 
-Check out the xurl github README for further tutorials including using OAuth1 + 2, user auth, and other features.
+Check out the xurl GitHub README for further tutorials. For **user** (non–app-only) requests, `xurl` selects the credential profile with **`--auth oauth2`** (OAuth 2.0 user context) or **`--auth oauth1`** (OAuth 1.0a user access), depending on how you registered tokens—not a separate `--auth user` flag.
 
 I'll be using xurl in all sample commands in follow-on sections in this blog.

@@ -1,6 +1,10 @@
 [book]
 authors = ["m-rosinsky"]
 language = "en"
-multilingual = false
 src = "src"
 title = "Mike's X API Blog"
+
+[output.html]
+# When true (default), mdBook adds in-page headings under the current chapter and
+# expands/collapses that tree as you scroll. Set false for a static sidebar.
+sidebar-header-nav = false

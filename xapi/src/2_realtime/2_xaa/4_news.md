@@ -6,7 +6,7 @@ This chapter is a brief tutorial on how to use the X Activity API to get news em
 
 ## Subscribing to News
 
-You'll create a subscription to news using the X Activity API in the same way you did in the last chapter.
+You create a subscription the same way as in [Subscribing to public events](./2_subscribe_public.md): `POST /2/activity/subscriptions` with `event_type`, `filter`, and `webhook_id`. For when to use **app** vs **user** credentials, see [Event types and authentication](./1_events_and_auth.md).
 
 This time, you'll use the `news.new` event type, and you'll specify a `keyword` in the `filter` field instead of a user id:
 
@@ -101,7 +101,7 @@ Here's an example:
     "filter": {
       "keyword": "mikie"
     },
-    "event_type": "news.",
+    "event_type": "news.new",
     "tag": "mikie news",
     "payload": {
       "headline": "New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill",

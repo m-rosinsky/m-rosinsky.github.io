@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Mike&#x27;s X API Blog</title>
+        <title>Subscribing to public events - Mike&#x27;s X API Blog</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bc1866c2.js";
+            window.path_to_searchindex_js = "../../searchindex-bc1866c2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-73c737d1.js"></script>
+        <script src="../../toc-73c737d1.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,7 +140,7 @@
                     <h1 class="menu-title">Mike&#x27;s X API Blog</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
@@ -174,23 +174,123 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="mikes-x-developer-api-blog"><a class="header" href="#mikes-x-developer-api-blog">Mike’s X Developer API Blog</a></h1>
-<hr>
-<blockquote>
-<p><em>“How about ‘Hook into what’s happening’, y’know for our slogan!”</em></p>
-<p><em>“Mike that’s awful”</em></p>
-<p><em>“Yeah…”</em></p>
-</blockquote>
-<p>Hey everyone, thanks for checking out my tutorial.</p>
-<p>My name is Mike Rosinsky. I’m a software engineer on the X Developer Platform team, and I wanted to make a blog-style page to showcase some fun demos and other things relating to the API.</p>
-<p>This doesn’t intend to serve as a replacement for docs, but maybe can give some good insight into what you can create with the APIs that X offers.</p>
+                        <h1 id="subscribing-to-public-events"><a class="header" href="#subscribing-to-public-events">Subscribing to public events</a></h1>
+<p>This walkthrough assumes you have completed the <a href="./0_xaa.html">X Activity API introduction</a> and read <a href="./1_events_and_auth.html">Event types and authentication</a>. It uses a <strong>public</strong> event type (<code>profile.update.bio</code>) with <strong>OAuth 2.0 application-only</strong> credentials (<code>xurl --auth app</code>). Commands use the <code>xurl</code> CLI; if you have not installed it yet, follow the <a href="../../1_tools/1_xurl/xurl.html">xURL</a> chapter first.</p>
+<p>For <strong>private</strong> event types (DMs, chat, and so on) you must use <strong>user OAuth</strong> instead—see <a href="./3_subscribe_private.html">Subscribing to private events</a>.</p>
+<h2 id="verify-access"><a class="header" href="#verify-access">Verify access</a></h2>
+<p>Confirm your app can call the subscriptions API:</p>
+<pre><code>xurl --auth app /2/activity/subscriptions
+</code></pre>
+<pre><code class="language-json">{
+  "data":[
+  ],
+  "meta": {
+    "result_count": 0
+  }
+}
+</code></pre>
+<p>If you see a JSON body like the above (possibly with existing subscriptions), your bearer token and project access are working. For <strong><code>GET /2/activity/subscriptions</code></strong>, <code>meta.result_count</code> is the number of subscription objects returned in <code>data</code> (not <code>total_subscriptions</code>).</p>
+<h2 id="getting-your-user-id"><a class="header" href="#getting-your-user-id">Getting your user ID</a></h2>
+<p>Most public XAA filters use <strong><code>user_id</code></strong> (numeric user ID, not username). The exception is <strong><code>news.new</code></strong>, which uses a <strong><code>keyword</code></strong> filter—see <a href="./4_news.html">News by Keyword</a>.</p>
+<p>Look up your user id with the User Lookup endpoint:</p>
+<pre><code class="language-bash">xurl --auth app /2/users/by/username/YOUR_USERNAME
+</code></pre>
+<p>Replace <code>YOUR_USERNAME</code> with your X handle without <code>@</code>.</p>
+<p><strong>Example response:</strong></p>
+<pre><code class="language-json">{
+  "data": {
+    "id": "1234567890",
+    "name": "Your Name",
+    "username": "your_username"
+  }
+}
+</code></pre>
+<p>Copy the <code>id</code> value for the subscription below.</p>
+<h2 id="creating-a-subscription"><a class="header" href="#creating-a-subscription">Creating a subscription</a></h2>
+<p>Subscribe to your own profile bio updates so you can trigger a test event.</p>
+<h3 id="subscription-payload"><a class="header" href="#subscription-payload">Subscription payload</a></h3>
+<p>When creating a subscription, you typically send:</p>
+<ul>
+<li><strong><code>event_type</code></strong>: The event to subscribe to (required)</li>
+<li><strong><code>filter</code></strong>: Match criteria (required)—often <code>{ "user_id": "…" }</code></li>
+<li><strong><code>webhook_id</code></strong>: Where to deliver events (optional, but required for webhook delivery)</li>
+<li><strong><code>tag</code></strong>: Optional label for your own bookkeeping (recommended)</li>
+</ul>
+<p>Create the subscription:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "profile.update.bio",
+  "filter": {
+    "user_id": "YOUR_USER_ID"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "my bio updates"
+}'
+</code></pre>
+<h3 id="success-response"><a class="header" href="#success-response">Success response</a></h3>
+<pre><code class="language-json">{
+  "data": {
+    "subscription": {
+      "created_at": "2025-10-07T05:31:56Z",
+      "event_type": "profile.update.bio",
+      "filter": {
+        "user_id": "YOUR_USER_ID"
+      },
+      "subscription_id": "1146654567674912769",
+      "tag": "my bio updates",
+      "updated_at": "2025-10-07T05:31:56Z",
+      "webhook_id": "YOUR_WEBHOOK_ID"
+    }
+  },
+  "meta": {
+    "total_subscriptions": 1
+  }
+}
+</code></pre>
+<h2 id="testing-your-subscription"><a class="header" href="#testing-your-subscription">Testing your subscription</a></h2>
+<p>After the subscription is created, change your profile bio on X. Your webhook server should log a delivery.</p>
+<h3 id="sample-webhook-payload"><a class="header" href="#sample-webhook-payload">Sample webhook payload</a></h3>
+<pre><code class="language-json">{
+  "data": {
+    "filter": {
+      "user_id": "YOUR_USER_ID"
+    },
+    "event_type": "profile.update.bio",
+    "tag": "my bio updates",
+    "payload": {
+      "before": "vox populi",
+      "after": "vox dei"
+    }
+  }
+}
+</code></pre>
+<p>Fields:</p>
+<ul>
+<li><strong><code>filter</code></strong>: The subscription filter that matched</li>
+<li><strong><code>event_type</code></strong>: Which event fired</li>
+<li><strong><code>tag</code></strong>: The tag you set when creating the subscription</li>
+<li><strong><code>payload</code></strong>: Change-specific data (here, before/after bio text)</li>
+</ul>
+<p>List subscriptions again to confirm:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
+</code></pre>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h2>
+<ol>
+<li><strong>Handle multiple event types</strong> as needed for your product</li>
+<li><strong>Handle delivery failures</strong> and retries responsibly</li>
+<li><strong>Monitor subscription health</strong> and rotate credentials on schedule</li>
+<li><strong>Delete unused subscriptions</strong> and stay under your tier cap (see <a href="./1_events_and_auth.html#subscription-limits">Subscription limits</a>)</li>
+</ol>
+<p>Continue with <a href="./3_subscribe_private.html">Subscribing to private events</a> for user-authenticated subscriptions, or <a href="./4_news.html">News by Keyword</a> for <code>news.new</code> and keyword filters.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../2_realtime/2_xaa/1_events_and_auth.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
 
-                            <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../2_realtime/2_xaa/3_subscribe_private.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -200,8 +300,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../2_realtime/2_xaa/1_events_and_auth.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
 
-                    <a rel="next prefetch" href="1_tools/1_xurl/xurl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../2_realtime/2_xaa/3_subscribe_private.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -221,13 +324,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 
