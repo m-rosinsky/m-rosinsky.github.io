@@ -15,8 +15,8 @@
         <link rel="icon" href="../../favicon-de23e50b.svg">
         <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
         <link rel="stylesheet" href="../../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../../css/general-2459343d.css">
-        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/general-0392ca55.css">
+        <link rel="stylesheet" href="../../css/chrome-fc474251.css">
         <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -36,10 +36,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-bc1866c2.js";
+            window.path_to_searchindex_js = "../../searchindex-24ed01f5.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-73c737d1.js"></script>
+        <script src="../../toc-6aed747c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -274,6 +274,18 @@
 <p>List subscriptions again to confirm:</p>
 <pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
 </code></pre>
+<h3 id="other-public-events"><a class="header" href="#other-public-events">Other public events</a></h3>
+<p>The same <code>--auth app</code> flow works for other public event types—just swap the <code>event_type</code>. For example, to track an account’s posts:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "post.create",
+  "filter": {
+    "user_id": "YOUR_USER_ID"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "their posts"
+}'
+</code></pre>
+<p>Use <code>post.delete</code> to learn when those posts are removed. Likes (<code>like.create</code>) are a <strong>private</strong> event and use user OAuth instead—see <a href="./3_subscribe_private.html">Subscribing to private events</a>. For the full catalog, see <a href="./1_events_and_auth.html">Event types and authentication</a>.</p>
 <h2 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h2>
 <ol>
 <li><strong>Handle multiple event types</strong> as needed for your product</li>
@@ -327,11 +339,11 @@
 
         <script src="../../elasticlunr-ef4e11c1.min.js"></script>
         <script src="../../mark-09e88c2c.min.js"></script>
-        <script src="../../searcher-c2a407aa.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
         <script src="../../highlight-abc7f01d.js"></script>
-        <script src="../../book-a0b12cfe.js"></script>
+        <script src="../../book-c22b7243.js"></script>
 
         <!-- Custom JS scripts -->
         <script src="../../copy-md-a9b94bb1.js"></script>

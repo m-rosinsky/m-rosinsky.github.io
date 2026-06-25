@@ -72,6 +72,24 @@ xurl --auth oauth2 /2/activity/subscriptions
 
 As with [Subscribing to public events](./2_subscribe_public.md), list responses use **`meta.result_count`** for how many subscription objects appear in **`data`**.
 
+## Other private events
+
+The same user-OAuth flow applies to any event marked **Private** in the catalog—just swap the `event_type`. For example, **`like.create`** lets you track when an authorized user likes a post, and it also accepts the optional **`direction`** filter:
+
+```bash
+xurl --auth oauth2 /2/activity/subscriptions -X POST -d '{
+  "event_type": "like.create",
+  "filter": {
+    "user_id": "AUTHORIZED_USER_ID",
+    "direction": "outbound"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "my likes"
+}'
+```
+
+Use **`"direction": "inbound"`** instead to track likes *received* on that user's posts. See [Direction filter](./5_direction_filter.md) for details.
+
 ## Next
 
 - **[News by Keyword](./4_news.md)** — `news.new` is **public** and typically uses **`--auth app`** (Enterprise / Partner); it is a separate tutorial because the filter is a **`keyword`**, not `user_id`.

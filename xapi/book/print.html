@@ -16,8 +16,8 @@
         <link rel="icon" href="favicon-de23e50b.svg">
         <link rel="shortcut icon" href="favicon-8114d1fc.png">
         <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
         <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-bc1866c2.js";
+            window.path_to_searchindex_js = "searchindex-24ed01f5.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-73c737d1.js"></script>
+        <script src="toc-6aed747c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -699,7 +699,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <h2 id="about"><a class="header" href="#about">About</a></h2>
 <p>The X Activity API lets you subscribe to <strong>event types</strong> with <strong>filters</strong> (for example a <code>user_id</code> or a <code>keyword</code>). When a matching event occurs, X delivers it to your integration—typically over a <strong>webhook</strong> or a <strong>persistent HTTP stream</strong> (<code>GET /2/activity/stream</code>). These docs focus on webhooks.</p>
 <blockquote>
-<p><strong>Note:</strong> XAA does not deliver posts. For real-time post delivery, use the <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction">Filtered Stream</a> endpoint.</p>
+<p><strong>Note:</strong> XAA now delivers <strong>post</strong> and <strong>like</strong> activity for accounts you subscribe to (<code>post.create</code>, <code>post.delete</code>, <code>like.create</code>). For a high-volume, rule-based firehose of public posts across all of X, use the <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction">Filtered Stream</a> endpoint instead.</p>
 </blockquote>
 <p><strong>Public</strong> vs <strong>private</strong> for XAA is the same axis as <strong>app vs user auth</strong>: public streams use <strong>OAuth 2.0 app Bearer</strong> tokens; private streams require <strong>explicit user OAuth</strong> (OAuth 2.0 user context or OAuth 1.0a user access). The next chapter lists <strong>event types</strong>, <strong>subscription limits</strong>, and spells that model out in one place.</p>
 <h2 id="routes-1"><a class="header" href="#routes-1">Routes</a></h2>
@@ -759,6 +759,36 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <p><strong>Direction filter:</strong> For <code>follow.follow</code> and <code>follow.unfollow</code>, the filter may include <strong><code>direction</code></strong>: <strong><code>"inbound"</code></strong> or <strong><code>"outbound"</code></strong> alongside <strong><code>user_id</code></strong>. Only follow events support this today. See <a href="#direction-filter">Direction filter</a>.</p>
 </blockquote>
 <p><strong>Multi</strong> here means XAA supports more than one auth posture: Some trusted packages may subscribe with <strong>application-only</strong> access (public-style entitlement for that tier), while <strong>pay-per-user</strong> flows treat the same event as <strong>private</strong> and require <strong>user OAuth</strong> for the filtered account. Confirm the matrix for your package on <a href="https://docs.x.com">docs.x.com</a>.</p>
+<h3 id="post-events"><a class="header" href="#post-events">Post events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>post.create</code></td><td>User creates a post (including replies, quotes, and reposts)</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>post.delete</code></td><td>User deletes one of their posts</td><td>Public</td><td><code>user_id</code></td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Scope:</strong> These events fire for posts authored by the filtered <code>user_id</code>. For a high-volume, rule-based firehose of public posts across all of X, the <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction">Filtered Stream</a> endpoint is still the right tool; XAA post events are best for tracking activity from specific accounts you subscribe to.</p>
+</blockquote>
+<h3 id="like-events"><a class="header" href="#like-events">Like events</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+</thead>
+<tbody>
+<tr><td><code>like.create</code></td><td>User likes a post</td><td>Private</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Direction filter:</strong> <code>like.create</code> accepts an optional <strong><code>direction</code></strong> (<strong><code>"inbound"</code></strong> or <strong><code>"outbound"</code></strong>) alongside <strong><code>user_id</code></strong>, the same way follow events do. See <a href="#direction-filter">Direction filter</a>.</p>
+</blockquote>
+<p>Likes are <strong>private</strong>: subscribing requires <strong>user OAuth</strong> (OAuth 2.0 user context or OAuth 1.0a user access) for an account that has authorized your app. See <a href="#subscribing-to-private-events">Subscribing to private events</a>.</p>
 <h3 id="spaces-events"><a class="header" href="#spaces-events">Spaces events</a></h3>
 <div class="table-wrapper">
 <table>
@@ -814,7 +844,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 </table>
 </div>
 <p><code>news.new</code> is <strong>Enterprise and Partner tier only</strong> at this time.</p>
-<p>XAA will add more event types over time (for example social interactions, content engagement, and monetization); check <a href="https://docs.x.com">X developer documentation</a> for the latest list.</p>
+<p>XAA continues to add more event types over time (for example more social interactions, content engagement, and monetization); check <a href="https://docs.x.com">X developer documentation</a> for the latest list.</p>
 <h2 id="subscription-limits"><a class="header" href="#subscription-limits">Subscription limits</a></h2>
 <div class="table-wrapper">
 <table>
@@ -955,6 +985,18 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <p>List subscriptions again to confirm:</p>
 <pre><code class="language-bash">xurl --auth app /2/activity/subscriptions
 </code></pre>
+<h3 id="other-public-events"><a class="header" href="#other-public-events">Other public events</a></h3>
+<p>The same <code>--auth app</code> flow works for other public event types—just swap the <code>event_type</code>. For example, to track an account’s posts:</p>
+<pre><code class="language-bash">xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "post.create",
+  "filter": {
+    "user_id": "YOUR_USER_ID"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "their posts"
+}'
+</code></pre>
+<p>Use <code>post.delete</code> to learn when those posts are removed. Likes (<code>like.create</code>) are a <strong>private</strong> event and use user OAuth instead—see <a href="#subscribing-to-private-events">Subscribing to private events</a>. For the full catalog, see <a href="#event-types-and-authentication">Event types and authentication</a>.</p>
 <h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next steps</a></h2>
 <ol>
 <li><strong>Handle multiple event types</strong> as needed for your product</li>
@@ -1016,6 +1058,19 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <pre><code class="language-bash">xurl --auth oauth2 /2/activity/subscriptions
 </code></pre>
 <p>As with <a href="#subscribing-to-public-events">Subscribing to public events</a>, list responses use <strong><code>meta.result_count</code></strong> for how many subscription objects appear in <strong><code>data</code></strong>.</p>
+<h2 id="other-private-events"><a class="header" href="#other-private-events">Other private events</a></h2>
+<p>The same user-OAuth flow applies to any event marked <strong>Private</strong> in the catalog—just swap the <code>event_type</code>. For example, <strong><code>like.create</code></strong> lets you track when an authorized user likes a post, and it also accepts the optional <strong><code>direction</code></strong> filter:</p>
+<pre><code class="language-bash">xurl --auth oauth2 /2/activity/subscriptions -X POST -d '{
+  "event_type": "like.create",
+  "filter": {
+    "user_id": "AUTHORIZED_USER_ID",
+    "direction": "outbound"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "my likes"
+}'
+</code></pre>
+<p>Use <strong><code>"direction": "inbound"</code></strong> instead to track likes <em>received</em> on that user’s posts. See <a href="#direction-filter">Direction filter</a> for details.</p>
 <h2 id="next-1"><a class="header" href="#next-1">Next</a></h2>
 <ul>
 <li><strong><a href="#getting-news-by-keyword-in-realtime">News by Keyword</a></strong> — <code>news.new</code> is <strong>public</strong> and typically uses <strong><code>--auth app</code></strong> (Enterprise / Partner); it is a separate tutorial because the filter is a <strong><code>keyword</code></strong>, not <code>user_id</code>.</li>
@@ -1118,12 +1173,13 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="direction-filter"><a class="header" href="#direction-filter">Direction filter</a></h1>
 <p>Some XAA event types accept an optional <strong><code>direction</code></strong> field inside the subscription <strong><code>filter</code></strong>, next to <strong><code>user_id</code></strong>. It restricts events to <strong>which side of the relationship</strong> the filtered user is on (for example “someone followed <em>them</em>” vs “<em>they</em> followed someone else”).</p>
-<p>Today, <strong>only follow events</strong> support this field: <strong><code>follow.follow</code></strong> and <strong><code>follow.unfollow</code></strong>. Other <code>event_type</code> values either ignore <code>direction</code> or reject the subscription—check the current X developer docs if you are unsure.</p>
+<p>Today, the events that support this field are <strong><code>follow.follow</code></strong>, <strong><code>follow.unfollow</code></strong>, and <strong><code>like.create</code></strong>. Other <code>event_type</code> values either ignore <code>direction</code> or reject the subscription—check the current X developer docs if you are unsure.</p>
 <h2 id="values"><a class="header" href="#values">Values</a></h2>
 <ul>
-<li><strong><code>"inbound"</code></strong> — activity where another account follows or unfollows <strong>the user</strong> identified by <code>user_id</code>.</li>
-<li><strong><code>"outbound"</code></strong> — activity where <strong>that user</strong> follows or unfollows another account.</li>
+<li><strong><code>"inbound"</code></strong> — activity directed <strong>at the user</strong> identified by <code>user_id</code> (another account followed/unfollowed them, or liked one of their posts).</li>
+<li><strong><code>"outbound"</code></strong> — activity <strong>by that user</strong> toward another account (they followed/unfollowed someone, or liked someone else’s post).</li>
 </ul>
+<p>Note that <code>like.create</code> is a <strong>private</strong> event, so its subscriptions require <strong>user OAuth</strong> (<code>--auth oauth2</code> or <code>--auth oauth1</code>) rather than the app-only auth used in the follow example below. See <a href="#subscribing-to-private-events">Subscribing to private events</a>.</p>
 <h2 id="example-request"><a class="header" href="#example-request">Example request</a></h2>
 <pre><code class="language-http">POST /2/activity/subscriptions
 </code></pre>
@@ -1182,11 +1238,11 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 
         <script src="elasticlunr-ef4e11c1.min.js"></script>
         <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
         <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="book-c22b7243.js"></script>
 
         <!-- Custom JS scripts -->
         <script src="copy-md-a9b94bb1.js"></script>

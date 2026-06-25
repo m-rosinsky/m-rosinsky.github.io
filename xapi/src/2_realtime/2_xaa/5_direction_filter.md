@@ -2,12 +2,14 @@
 
 Some XAA event types accept an optional **`direction`** field inside the subscription **`filter`**, next to **`user_id`**. It restricts events to **which side of the relationship** the filtered user is on (for example “someone followed *them*” vs “*they* followed someone else”).
 
-Today, **only follow events** support this field: **`follow.follow`** and **`follow.unfollow`**. Other `event_type` values either ignore `direction` or reject the subscription—check the current X developer docs if you are unsure.
+Today, the events that support this field are **`follow.follow`**, **`follow.unfollow`**, and **`like.create`**. Other `event_type` values either ignore `direction` or reject the subscription—check the current X developer docs if you are unsure.
 
 ## Values
 
-- **`"inbound"`** — activity where another account follows or unfollows **the user** identified by `user_id`.
-- **`"outbound"`** — activity where **that user** follows or unfollows another account.
+- **`"inbound"`** — activity directed **at the user** identified by `user_id` (another account followed/unfollowed them, or liked one of their posts).
+- **`"outbound"`** — activity **by that user** toward another account (they followed/unfollowed someone, or liked someone else's post).
+
+Note that `like.create` is a **private** event, so its subscriptions require **user OAuth** (`--auth oauth2` or `--auth oauth1`) rather than the app-only auth used in the follow example below. See [Subscribing to private events](./3_subscribe_private.md).
 
 ## Example request
 

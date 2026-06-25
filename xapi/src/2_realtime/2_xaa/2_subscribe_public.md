@@ -134,6 +134,23 @@ List subscriptions again to confirm:
 xurl --auth app /2/activity/subscriptions
 ```
 
+### Other public events
+
+The same `--auth app` flow works for other public event types—just swap the `event_type`. For example, to track an account's posts:
+
+```bash
+xurl --auth app /2/activity/subscriptions -X POST -d '{
+  "event_type": "post.create",
+  "filter": {
+    "user_id": "YOUR_USER_ID"
+  },
+  "webhook_id": "YOUR_WEBHOOK_ID",
+  "tag": "their posts"
+}'
+```
+
+Use `post.delete` to learn when those posts are removed. Likes (`like.create`) are a **private** event and use user OAuth instead—see [Subscribing to private events](./3_subscribe_private.md). For the full catalog, see [Event types and authentication](./1_events_and_auth.md).
+
 ## Next steps
 
 1. **Handle multiple event types** as needed for your product

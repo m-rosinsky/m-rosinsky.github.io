@@ -33,6 +33,25 @@ The **Privacy** column is how X classifies the event for XAA: **Public** (app Be
 
 **Multi** here means XAA supports more than one auth posture: Some trusted packages may subscribe with **application-only** access (public-style entitlement for that tier), while **pay-per-user** flows treat the same event as **private** and require **user OAuth** for the filtered account. Confirm the matrix for your package on [docs.x.com](https://docs.x.com).
 
+### Post events
+
+| Event type | Description | Privacy | Filter |
+| --- | --- | --- | --- |
+| `post.create` | User creates a post (including replies, quotes, and reposts) | Public | `user_id` |
+| `post.delete` | User deletes one of their posts | Public | `user_id` |
+
+> **Scope:** These events fire for posts authored by the filtered `user_id`. For a high-volume, rule-based firehose of public posts across all of X, the [Filtered Stream](https://developer.x.com/x-api/posts/filtered-stream/introduction) endpoint is still the right tool; XAA post events are best for tracking activity from specific accounts you subscribe to.
+
+### Like events
+
+| Event type | Description | Privacy | Filter |
+| --- | --- | --- | --- |
+| `like.create` | User likes a post | Private | `user_id`, optional `direction` |
+
+> **Direction filter:** `like.create` accepts an optional **`direction`** (**`"inbound"`** or **`"outbound"`**) alongside **`user_id`**, the same way follow events do. See [Direction filter](./5_direction_filter.md).
+
+Likes are **private**: subscribing requires **user OAuth** (OAuth 2.0 user context or OAuth 1.0a user access) for an account that has authorized your app. See [Subscribing to private events](./3_subscribe_private.md).
+
 ### Spaces events
 
 | Event type | Description | Privacy | Filter |
@@ -71,7 +90,7 @@ The last two rows are **in development**; availability and payload fields may ch
 
 `news.new` is **Enterprise and Partner tier only** at this time.
 
-XAA will add more event types over time (for example social interactions, content engagement, and monetization); check [X developer documentation](https://docs.x.com) for the latest list.
+XAA continues to add more event types over time (for example more social interactions, content engagement, and monetization); check [X developer documentation](https://docs.x.com) for the latest list.
 
 ## Subscription limits
 
