@@ -1,12 +1,380 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="0; url=xapi/book/index.html">
-        <title>Redirecting to X API Documentation</title>
-        <meta name="description" content="Redirecting to Mike's X API Blog">
-    </head>
-    <body>
-        <p>If you are not redirected automatically, <a href="xapi/book/index.html">click here to go to the X API Blog</a>.</p>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mike Rosinsky</title>
+  <meta name="description" content="Mike Rosinsky — software engineer. Projects and writing.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #6f6f6f;
+      --border: #e8e8e6;
+      --accent: #f1490c;
+      --surface-hover: #fafaf8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---- Top nav ---- */
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      transition: color 120ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* ---- Main ---- */
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    .hero-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    .hero p + p {
+      margin-top: 10px;
+    }
+
+    .hero .role {
+      color: var(--text);
+    }
+
+    .hero .role .at {
+      color: var(--accent);
+    }
+
+    /* ---- Projects ---- */
+
+    .section-label {
+      margin-top: 72px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .project {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: background 120ms ease, border-color 120ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    /* Alternate the thumbnail side for each successive project */
+    .projects .project:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .project + .project {
+      margin-top: 24px;
+    }
+
+    .project:hover {
+      background: var(--surface-hover);
+      border-color: #d9d9d6;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+      transform: translateY(-2px);
+    }
+
+    .project-thumb {
+      position: relative;
+      width: 44%;
+      flex-shrink: 0;
+      min-height: 180px;
+      /* Thin angled divider painted where the image is clipped */
+      background: linear-gradient(112deg,
+        transparent calc(72% - 3px),
+        #d4d4d0 calc(72% - 2px),
+        #d4d4d0 72%,
+        transparent calc(72% + 1px));
+    }
+
+    .project-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      /* Sharp diagonal cut, ending where the divider line starts */
+      -webkit-mask-image: linear-gradient(112deg, black calc(72% - 4px), transparent calc(72% - 3px));
+      mask-image: linear-gradient(112deg, black calc(72% - 4px), transparent calc(72% - 3px));
+    }
+
+    .projects .project:nth-child(even) .project-thumb {
+      background: linear-gradient(248deg,
+        transparent calc(72% - 3px),
+        #d4d4d0 calc(72% - 2px),
+        #d4d4d0 72%,
+        transparent calc(72% + 1px));
+    }
+
+    .projects .project:nth-child(even) .project-thumb img {
+      object-position: top right;
+      -webkit-mask-image: linear-gradient(248deg, black calc(72% - 4px), transparent calc(72% - 3px));
+      mask-image: linear-gradient(248deg, black calc(72% - 4px), transparent calc(72% - 3px));
+    }
+
+    .project-body {
+      flex: 1;
+      padding: 20px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project-title h2 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .project-title .arrow {
+      color: var(--text-muted);
+      font-size: 14px;
+      transition: color 120ms ease, transform 120ms ease;
+    }
+
+    .project:hover .arrow {
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+
+    .project p {
+      margin-top: 6px;
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 540px;
+    }
+
+    .project-tags {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--accent);
+      background: #fef1ec;
+      border-radius: 5px;
+      padding: 2px 8px;
+    }
+
+    /* ---- Footer ---- */
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .footer-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-inner a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 640px) {
+      .project,
+      .projects .project:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .project-thumb,
+      .projects .project:nth-child(even) .project-thumb {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 2 / 1;
+        background: linear-gradient(160deg,
+          transparent calc(82% - 3px),
+          #d4d4d0 calc(82% - 2px),
+          #d4d4d0 82%,
+          transparent calc(82% + 1px));
+      }
+
+      .project-thumb img,
+      .projects .project:nth-child(even) .project-thumb img {
+        object-position: top;
+        -webkit-mask-image: linear-gradient(160deg, black calc(82% - 4px), transparent calc(82% - 3px));
+        mask-image: linear-gradient(160deg, black calc(82% - 4px), transparent calc(82% - 3px));
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      main {
+        padding-top: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-name" href="/">Mike Rosinsky</a>
+      <div class="nav-links">
+        <a href="xapi/book/index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-header">
+        <img class="hero-avatar" src="assets/profile.jpg" alt="Mike Rosinsky">
+        <h1>Mike Rosinsky</h1>
+      </div>
+      <p class="role">Software engineer on the <span class="at">X Developer Platform</span> team.</p>
+      <p>I build tools and integrations around the X API, and I write about them here — mostly webhooks, real-time activity, and the developer tooling that makes them approachable.</p>
+    </section>
+
+    <div class="section-label">Projects</div>
+
+    <div class="projects">
+    <a class="project" href="xapi/book/index.html">
+      <div class="project-thumb">
+        <img src="assets/blog_thumbnail.png" alt="X API Developer Blog — example webhook subscription request">
+      </div>
+      <div class="project-body">
+        <div class="project-title">
+          <h2>X API Developer Blog</h2>
+          <span class="arrow">&#8594;</span>
+        </div>
+        <p>A tutorial-style book on getting real-time signal from the X API: registering webhooks, handling CRC challenges, and subscribing to events with the X Activity API.</p>
+        <div class="project-tags">
+          <span class="tag">webhooks</span>
+          <span class="tag">x-activity-api</span>
+          <span class="tag">xurl</span>
+          <span class="tag">mdbook</span>
+        </div>
+      </div>
+    </a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="https://github.com/m-rosinsky/m-rosinsky.github.io" target="_blank" rel="noopener">Source</a>
+    </div>
+  </footer>
+</body>
 </html>

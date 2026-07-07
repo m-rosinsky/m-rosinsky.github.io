@@ -6,8 +6,6 @@ This part of the book builds on the [webhook](../1_webhooks/0_webhooks.md) you r
 
 The X Activity API lets you subscribe to **event types** with **filters** (for example a `user_id` or a `keyword`). When a matching event occurs, X delivers it to your integration—typically over a **webhook** or a **persistent HTTP stream** (`GET /2/activity/stream`). These docs focus on webhooks.
 
-> **Note:** XAA now delivers **post** and **like** activity for accounts you subscribe to (`post.create`, `post.delete`, `like.create`). For a high-volume, rule-based firehose of public posts across all of X, use the [Filtered Stream](https://developer.x.com/x-api/posts/filtered-stream/introduction) endpoint instead.
-
 **Public** vs **private** for XAA is the same axis as **app vs user auth**: public streams use **OAuth 2.0 app Bearer** tokens; private streams require **explicit user OAuth** (OAuth 2.0 user context or OAuth 1.0a user access). The next chapter lists **event types**, **subscription limits**, and spells that model out in one place.
 
 ## Routes

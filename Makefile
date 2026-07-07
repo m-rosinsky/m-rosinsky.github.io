@@ -4,6 +4,7 @@ copy-html:
 	@cp index.html index.html.bak
 
 build:
+	@cp README.md xapi/src/README.md
 	@mdbook build xapi
 	@rm -rf xapi/book/_md_src
 	@mkdir -p xapi/book/_md_src

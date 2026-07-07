@@ -39,6 +39,7 @@ The **Privacy** column is how X classifies the event for XAA: **Public** (app Be
 | --- | --- | --- | --- |
 | `post.create` | User creates a post (including replies, quotes, and reposts) | Public | `user_id` |
 | `post.delete` | User deletes one of their posts | Public | `user_id` |
+| `post.mention.create` | User is @mentioned in a post | Private | `user_id` |
 
 > **Scope:** These events fire for posts authored by the filtered `user_id`. For a high-volume, rule-based firehose of public posts across all of X, the [Filtered Stream](https://developer.x.com/x-api/posts/filtered-stream/introduction) endpoint is still the right tool; XAA post events are best for tracking activity from specific accounts you subscribe to.
 

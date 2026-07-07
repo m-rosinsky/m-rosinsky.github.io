@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-24ed01f5.js";
+            window.path_to_searchindex_js = "searchindex-86769f88.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-6aed747c.js"></script>
+        <script src="toc-9bc3c12b.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -698,9 +698,6 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <p>This part of the book builds on the <a href="#using-webhooks-with-the-x-developer-api">webhook</a> you registered earlier. Here we use X’s <strong>X Activity API (XAA)</strong> to subscribe to activity events and receive them on your app in near real time.</p>
 <h2 id="about"><a class="header" href="#about">About</a></h2>
 <p>The X Activity API lets you subscribe to <strong>event types</strong> with <strong>filters</strong> (for example a <code>user_id</code> or a <code>keyword</code>). When a matching event occurs, X delivers it to your integration—typically over a <strong>webhook</strong> or a <strong>persistent HTTP stream</strong> (<code>GET /2/activity/stream</code>). These docs focus on webhooks.</p>
-<blockquote>
-<p><strong>Note:</strong> XAA now delivers <strong>post</strong> and <strong>like</strong> activity for accounts you subscribe to (<code>post.create</code>, <code>post.delete</code>, <code>like.create</code>). For a high-volume, rule-based firehose of public posts across all of X, use the <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction">Filtered Stream</a> endpoint instead.</p>
-</blockquote>
 <p><strong>Public</strong> vs <strong>private</strong> for XAA is the same axis as <strong>app vs user auth</strong>: public streams use <strong>OAuth 2.0 app Bearer</strong> tokens; private streams require <strong>explicit user OAuth</strong> (OAuth 2.0 user context or OAuth 1.0a user access). The next chapter lists <strong>event types</strong>, <strong>subscription limits</strong>, and spells that model out in one place.</p>
 <h2 id="routes-1"><a class="header" href="#routes-1">Routes</a></h2>
 <div class="table-wrapper">
@@ -768,6 +765,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 <tbody>
 <tr><td><code>post.create</code></td><td>User creates a post (including replies, quotes, and reposts)</td><td>Public</td><td><code>user_id</code></td></tr>
 <tr><td><code>post.delete</code></td><td>User deletes one of their posts</td><td>Public</td><td><code>user_id</code></td></tr>
+<tr><td><code>post.mention.create</code></td><td>User is @mentioned in a post</td><td>Private</td><td><code>user_id</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1246,6 +1244,7 @@ Starting local HTTP server to handle requests from ngrok tunnel (forwarded from 
 
         <!-- Custom JS scripts -->
         <script src="copy-md-a9b94bb1.js"></script>
+        <script src="home-link-da7f3e35.js"></script>
 
         <script>
         window.addEventListener('load', function() {
