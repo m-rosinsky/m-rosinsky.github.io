@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The X Activity API — Mike Rosinsky</title>
+  <meta name="description" content="Subscribe to X activity events with filters and receive them via webhook or stream.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="xaa" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          X Activity API
+        </div>
+
+        <h1>The X Activity API</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">webhooks</span>
+            <span class="tag">realtime</span>
+          </div>
+          <span class="meta-date">Getting real-time signal</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            This part of the book builds on the
+            <a href="../1_webhooks/0_webhooks.html">webhook</a> you registered earlier. Here we use
+            X's <strong>X Activity API (XAA)</strong> to subscribe to activity events and receive
+            them on your app in near real time.
+          </p>
+
+          <h2>About</h2>
+
+          <p>
+            The X Activity API lets you subscribe to <strong>event types</strong> with
+            <strong>filters</strong> (for example a <code>user_id</code> or a
+            <code>keyword</code>). When a matching event occurs, X delivers it to your
+            integration—typically over a <strong>webhook</strong> or a
+            <strong>persistent HTTP stream</strong> (<code>GET /2/activity/stream</code>). These
+            docs focus on webhooks.
+          </p>
+
+          <p>
+            <strong>Public</strong> vs <strong>private</strong> for XAA is the same axis as
+            <strong>app vs user auth</strong>: public streams use
+            <strong>OAuth 2.0 app Bearer</strong> tokens; private streams require
+            <strong>explicit user OAuth</strong> (OAuth 2.0 user context or OAuth 1.0a user
+            access). The next chapter lists <strong>event types</strong>,
+            <strong>subscription limits</strong>, and spells that model out in one place.
+          </p>
+
+          <h2>Routes</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Route</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>GET</code></td>
+                <td><code>/2/activity/stream</code></td>
+                <td>Connect to the activity stream (persistent HTTP)</td>
+              </tr>
+              <tr>
+                <td><code>GET</code></td>
+                <td><code>/2/activity/subscriptions</code></td>
+                <td>List all active subscriptions</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/2/activity/subscriptions</code></td>
+                <td>Create a new subscription</td>
+              </tr>
+              <tr>
+                <td><code>DELETE</code></td>
+                <td><code>/2/activity/subscriptions/:subscription_id</code></td>
+                <td>Delete a subscription by ID</td>
+              </tr>
+              <tr>
+                <td><code>PUT</code></td>
+                <td><code>/2/activity/subscriptions/:subscription_id</code></td>
+                <td>Update a subscription</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            Continue to
+            <a href="./1_events_and_auth.html">Event types and authentication</a> for the full
+            event catalog and auth model, then
+            <a href="./2_subscribe_public.html">Subscribing to public events</a> for a hands-on
+            walkthrough with <code>xurl --auth app</code>.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="../1_webhooks/4_replay.html">
+            <span class="label">Previous</span>
+            Replay webhook events
+          </a>
+          <a class="next" href="./1_events_and_auth.html">
+            <span class="label">Next</span>
+            Event types and authentication
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

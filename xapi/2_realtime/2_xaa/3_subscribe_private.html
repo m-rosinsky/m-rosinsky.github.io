@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribing to private events — Mike Rosinsky</title>
+  <meta name="description" content="Create private XAA subscriptions with user OAuth via xurl --auth oauth2 or oauth1.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="subscribe-private" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_xaa.html">X Activity API</a>
+        </div>
+
+        <h1>Subscribing to private events</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">oauth</span>
+            <span class="tag">private</span>
+          </div>
+          <span class="meta-date">X Activity API</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            <strong>Private</strong> XAA event types (legacy DMs, encrypted chat, likes, and others
+            marked <strong>Private</strong> in
+            <a href="./1_events_and_auth.html">Event types and authentication</a>) require
+            <strong>explicit user authorization</strong>: OAuth 2.0 user context or OAuth 1.0a user
+            access. Application-only Bearer tokens are <strong>not</strong> sufficient.
+          </p>
+
+          <p>
+            This page shows the same subscription HTTP shape as
+            <a href="./2_subscribe_public.html">Subscribing to public events</a>, but with
+            <code>xurl --auth oauth2</code> or <code>xurl --auth oauth1</code>.
+          </p>
+
+          <h2>Prerequisites</h2>
+
+          <ol>
+            <li>
+              An X app with XAA access and a
+              <a href="../1_webhooks/0_webhooks.html">registered webhook</a>
+            </li>
+            <li>
+              A real user who signs in with X and approves your app with the right permissions
+            </li>
+            <li>
+              User tokens registered in <code>xurl</code> for <code>--auth oauth2</code> or
+              <code>--auth oauth1</code>
+            </li>
+          </ol>
+
+          <div class="callout">
+            <strong class="callout-title">Setup</strong>
+            <p>
+              The
+              <a href="https://github.com/xdevplatform/xurl" target="_blank" rel="noopener">xurl README</a>
+              documents OAuth 2.0 user and OAuth 1.0a user flows. The
+              <a href="../../1_tools/xurl.html">xURL</a> chapter covers installing the tool and app
+              bearer registration; extend that setup with user credentials before continuing.
+            </p>
+          </div>
+
+          <h2>Who the <code>user_id</code> filter refers to</h2>
+
+          <p>
+            For private streams, the <code>user_id</code> in your filter must be a user who has
+            <strong>authorized your app</strong>. In the common “subscribe to my own DMs or chat”
+            case, that is the same user whose OAuth profile you select with
+            <code>--auth oauth2</code> or <code>--auth oauth1</code>.
+          </p>
+
+          <h2>Example: subscribe with user auth</h2>
+
+          <p>
+            Below, the authenticated user is subscribing to <strong>their own</strong> incoming
+            encrypted messages (<code>chat.received</code>):
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth oauth2 /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"chat.received"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"AUTHORIZED_USER_ID"</span>
+  },
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>,
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"my chat inbox"</span>
+}'</code></pre>
+
+          <p>
+            If your token or scopes are wrong, X returns an OAuth or permission error instead of a
+            <code>200</code> subscription body—treat that as a configuration issue.
+          </p>
+
+          <h3>Success response</h3>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"subscription"</span>: {
+      <span class="tok-key">"created_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"event_type"</span>: <span class="tok-str">"chat.received"</span>,
+      <span class="tok-key">"filter"</span>: {
+        <span class="tok-key">"user_id"</span>: <span class="tok-str">"AUTHORIZED_USER_ID"</span>
+      },
+      <span class="tok-key">"subscription_id"</span>: <span class="tok-str">"1146654567674912769"</span>,
+      <span class="tok-key">"tag"</span>: <span class="tok-str">"my chat inbox"</span>,
+      <span class="tok-key">"updated_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>
+    }
+  },
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"total_subscriptions"</span>: <span class="tok-num">1</span>
+  }
+}</code></pre>
+
+          <h2>Listing with user context</h2>
+
+          <p>
+            When you call <code>GET /2/activity/subscriptions</code> with the same user profile you
+            used to create private subscriptions, the response includes
+            <strong>only the subscriptions created under that specific user’s authorization</strong>.
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth oauth2 /2/activity/subscriptions</code></pre>
+
+          <h2>Other private events</h2>
+
+          <p>
+            The same user-OAuth flow applies to any event marked <strong>Private</strong>. For
+            example, <code>like.create</code> also accepts the optional <code>direction</code>
+            filter:
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth oauth2 /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"like.create"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"AUTHORIZED_USER_ID"</span>,
+    <span class="tok-key">"direction"</span>: <span class="tok-str">"outbound"</span>
+  },
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>,
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"my likes"</span>
+}'</code></pre>
+
+          <p>
+            Use <code>"direction": "inbound"</code> to track likes <em>received</em> on that user's
+            posts. See <a href="./5_direction_filter.html">Direction filter</a> for details.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./2_subscribe_public.html">
+            <span class="label">Previous</span>
+            Subscribing to public events
+          </a>
+          <a class="next" href="./4_news.html">
+            <span class="label">Next</span>
+            News by keyword
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registering a Webhook With X — Mike Rosinsky</title>
+  <meta name="description" content="Register, list, and re-validate webhook URLs with the X API using xurl.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="registration" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_webhooks.html">Webhooks</a>
+        </div>
+
+        <h1>Registering a Webhook With X</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">webhooks</span>
+            <span class="tag">xurl</span>
+            <span class="tag">api</span>
+          </div>
+          <span class="meta-date">Webhooks</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            Registering a webhook involves passing the HTTPS URL for your webhook app to X's
+            servers, so they know where to send events to.
+          </p>
+
+          <p>
+            The official docs are here:
+            <a href="https://docs.x.com/x-api/webhooks/introduction" target="_blank" rel="noopener">docs.x.com/x-api/webhooks/introduction</a>
+          </p>
+
+          <h2>Routes</h2>
+
+          <p>The X API offers the following endpoints to manage your registered webhooks:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Route</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>GET</code></td>
+                <td><code>/2/webhooks</code></td>
+                <td>List all registered webhooks for your account</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/2/webhooks</code></td>
+                <td>Create a webhook</td>
+              </tr>
+              <tr>
+                <td><code>DELETE</code></td>
+                <td><code>/2/webhooks/:webhook_id</code></td>
+                <td>Delete a webhook by ID</td>
+              </tr>
+              <tr>
+                <td><code>PUT</code></td>
+                <td><code>/2/webhooks/:webhook_id</code></td>
+                <td>Manually trigger a security check to re-validate a webhook</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/2/webhooks/replay</code></td>
+                <td>Initiate a replay job</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <strong class="callout-title">Note</strong>
+            <p>
+              All sample commands in this section use the <code>xurl</code> CLI tool. If you
+              haven't set up <code>xurl</code> yet, check out the
+              <a href="../../1_tools/xurl.html">xURL section</a> first.
+            </p>
+          </div>
+
+          <h2>Register a Webhook</h2>
+
+          <p>
+            To register the webhook, you'll use the <code>POST</code> route, along with the
+            following JSON body:
+          </p>
+
+          <pre><code>{
+  <span class="tok-key">"url"</span>: <span class="tok-str">"&lt;YOUR WEBHOOK HTTPS URL&gt;"</span>
+}</code></pre>
+
+          <p>We can use <code>xurl</code> to test this:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/webhooks -X POST -d <span class="tok-str">'{"url": "&lt;YOUR WEBHOOK HTTPS URL&gt;"}'</span></code></pre>
+
+          <p>
+            When this request is sent, X will send a <code>GET</code> request to the provided URL
+            to validate that the webhook belongs to you. This is the security check we demonstrated
+            earlier.
+          </p>
+
+          <p>On successful validation, the webhook will be created:</p>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"created_at"</span>: <span class="tok-str">"2025-10-15T20:53:05.000Z"</span>,
+    <span class="tok-key">"id"</span>: <span class="tok-str">"1146654567674912769"</span>,
+    <span class="tok-key">"url"</span>: <span class="tok-str">"&lt;YOUR WEBHOOK HTTPS URL&gt;"</span>,
+    <span class="tok-key">"valid"</span>: <span class="tok-num">true</span>
+  }
+}</code></pre>
+
+          <h2>List your Webhooks</h2>
+
+          <p>Now we can call the <code>GET</code> route to see our registered webhooks:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/webhooks</code></pre>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: [
+    {
+      <span class="tok-key">"created_at"</span>: <span class="tok-str">"2025-10-15T20:53:05.000Z"</span>,
+      <span class="tok-key">"id"</span>: <span class="tok-str">"1146654567674912769"</span>,
+      <span class="tok-key">"url"</span>: <span class="tok-str">"&lt;YOUR WEBHOOK HTTPS URL&gt;"</span>,
+      <span class="tok-key">"valid"</span>: <span class="tok-num">true</span>
+    }
+  ],
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"result_count"</span>: <span class="tok-num">1</span>
+  }
+}</code></pre>
+
+          <h2>Re-validating your webhook</h2>
+
+          <p>
+            At regular intervals (~24hrs), X will attempt to validate that your webhook is still
+            operational by sending the <code>GET</code> CRC check again.
+          </p>
+
+          <p>
+            If for some reason this validation fails, the webhook will be marked as
+            <code>"valid": false</code> and will no longer receive events.
+          </p>
+
+          <p>
+            To re-validate the webhook, you can call the <code>PUT</code> request, which will
+            manually trigger the re-validation process:
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/webhooks/1146654567674912769 -X PUT</code></pre>
+
+          <p>Providing the validation was successful, our webhook will be re-validated:</p>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"valid"</span>: <span class="tok-num">true</span>
+  }
+}</code></pre>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./2_xurl_webhook.html">
+            <span class="label">Previous</span>
+            Temporary webhooks with xURL
+          </a>
+          <a class="next" href="./4_replay.html">
+            <span class="label">Next</span>
+            Replay webhook events
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

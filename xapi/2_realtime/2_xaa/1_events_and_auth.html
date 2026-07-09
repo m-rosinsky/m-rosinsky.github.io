@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event types and authentication — Mike Rosinsky</title>
+  <meta name="description" content="Catalog of XAA event types and how public vs private maps to app vs user auth.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="events-auth" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_xaa.html">X Activity API</a>
+        </div>
+
+        <h1>Event types and authentication</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">auth</span>
+            <span class="tag">events</span>
+          </div>
+          <span class="meta-date">X Activity API</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            This page lists supported <strong>event types</strong> and explains how they line up
+            with <strong>authentication</strong>. For XAA, <strong>whether an event is public or
+            private is the same question as whether you may use app-only credentials or must use
+            user credentials</strong>. The privacy class tells you which OAuth style X expects.
+          </p>
+
+          <h2>Supported event types</h2>
+
+          <p>
+            Most filters use <code>user_id</code> (numeric user ID). The exception is
+            <code>news.new</code>, which uses a <code>keyword</code> filter.
+          </p>
+
+          <p>
+            The <strong>Privacy</strong> column is how X classifies the event for XAA:
+            <strong>Public</strong> (app Bearer is the usual subscription path, subject to tier
+            rules), <strong>Private</strong> (user OAuth required), or <strong>Multi</strong>
+            (both shapes exist, for example a path that is public under Enterprise app auth and a
+            path that is private under pay-per-user / user context, per product configuration).
+          </p>
+
+          <h3>Profile events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>profile.update.bio</code></td><td>User updates their profile bio</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.profile_picture</code></td><td>User updates their profile picture</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.banner_picture</code></td><td>User updates their profile banner</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.screenname</code></td><td>User updates their display name</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.handle</code></td><td>User updates their handle</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.geo</code></td><td>User updates their profile location</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.url</code></td><td>User updates their profile website URL</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.verified_badge</code></td><td>User updates their verified badge</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>profile.update.affiliate_badge</code></td><td>User updates their affiliate badge</td><td>Public</td><td><code>user_id</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Follow events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>follow.follow</code></td><td>User follows another user</td><td>Multi</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+              <tr><td><code>follow.unfollow</code></td><td>User unfollows another user</td><td>Multi</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+            </tbody>
+          </table>
+
+          <blockquote>
+            <p>
+              <strong>Direction filter:</strong> For <code>follow.follow</code> and
+              <code>follow.unfollow</code>, the filter may include <code>direction</code>:
+              <code>"inbound"</code> or <code>"outbound"</code> alongside <code>user_id</code>.
+              See <a href="./5_direction_filter.html">Direction filter</a>.
+            </p>
+          </blockquote>
+
+          <p>
+            <strong>Multi</strong> here means XAA supports more than one auth posture: some trusted
+            packages may subscribe with <strong>application-only</strong> access, while
+            <strong>pay-per-user</strong> flows treat the same event as <strong>private</strong>
+            and require <strong>user OAuth</strong>. Confirm the matrix for your package on
+            <a href="https://docs.x.com" target="_blank" rel="noopener">docs.x.com</a>.
+          </p>
+
+          <h3>Post events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>post.create</code></td><td>User creates a post (including replies, quotes, and reposts)</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>post.delete</code></td><td>User deletes one of their posts</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>post.mention.create</code></td><td>User is @mentioned in a post</td><td>Private</td><td><code>user_id</code></td></tr>
+            </tbody>
+          </table>
+
+          <blockquote>
+            <p>
+              <strong>Scope:</strong> These events fire for posts authored by the filtered
+              <code>user_id</code> (mentions are for the mentioned user). For a high-volume,
+              rule-based firehose of public posts across all of X, the
+              <a href="https://developer.x.com/x-api/posts/filtered-stream/introduction" target="_blank" rel="noopener">Filtered Stream</a>
+              endpoint is still the right tool; XAA post events are best for tracking activity from
+              specific accounts you subscribe to.
+            </p>
+          </blockquote>
+
+          <h3>Like events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>like.create</code></td><td>User likes a post</td><td>Private</td><td><code>user_id</code>, optional <code>direction</code></td></tr>
+            </tbody>
+          </table>
+
+          <blockquote>
+            <p>
+              <strong>Direction filter:</strong> <code>like.create</code> accepts an optional
+              <code>direction</code> (<code>"inbound"</code> or <code>"outbound"</code>) alongside
+              <code>user_id</code>. See <a href="./5_direction_filter.html">Direction filter</a>.
+            </p>
+          </blockquote>
+
+          <p>
+            Likes are <strong>private</strong>: subscribing requires <strong>user OAuth</strong>.
+            See <a href="./3_subscribe_private.html">Subscribing to private events</a>.
+          </p>
+
+          <h3>Spaces events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>spaces.start</code></td><td>User starts a Space</td><td>Public</td><td><code>user_id</code></td></tr>
+              <tr><td><code>spaces.end</code></td><td>User ends a Space</td><td>Public</td><td><code>user_id</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Legacy DM events</h3>
+
+          <p>Unencrypted, legacy direct messages.</p>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>dm.received</code></td><td>User receives an unencrypted DM</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>dm.sent</code></td><td>User sends an unencrypted DM</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>dm.read</code></td><td>User reads a DM or read receipt for the filtered user</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>dm.indicate_typing</code></td><td>User is typing a message to the filtered user</td><td>Private</td><td><code>user_id</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Chat events (encrypted / XChat)</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>chat.received</code></td><td>User receives an encrypted direct message</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>chat.sent</code></td><td>User sends an encrypted direct message</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>chat.conversation_join</code></td><td>User joins an encrypted chat conversation</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>chat.indicate_typing</code></td><td>User is typing in an encrypted chat</td><td>Private</td><td><code>user_id</code></td></tr>
+              <tr><td><code>chat.read</code></td><td>User read state in encrypted chat</td><td>Private</td><td><code>user_id</code></td></tr>
+            </tbody>
+          </table>
+
+          <p>
+            The last two rows are <strong>in development</strong>; availability and payload fields
+            may change—watch X developer docs.
+          </p>
+
+          <h3>News events</h3>
+
+          <table>
+            <thead>
+              <tr><th>Event type</th><th>Description</th><th>Privacy</th><th>Filter</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>news.new</code></td><td>New Grok-curated trends and headlines</td><td>Public</td><td><code>keyword</code></td></tr>
+            </tbody>
+          </table>
+
+          <p><code>news.new</code> is <strong>Enterprise and Partner tier only</strong> at this time.</p>
+
+          <p>
+            XAA continues to add more event types over time; check
+            <a href="https://docs.x.com" target="_blank" rel="noopener">X developer documentation</a>
+            for the latest list.
+          </p>
+
+          <h2>Subscription limits</h2>
+
+          <table>
+            <thead>
+              <tr><th>Package tier</th><th>Maximum subscriptions</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Self-serve</td><td>1,000</td></tr>
+              <tr><td>Enterprise</td><td>50,000</td></tr>
+              <tr><td>Partner</td><td>100,000</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Public vs private events = app vs user auth</h2>
+
+          <p>
+            X labels each XAA event type as <strong>public</strong> or <strong>private</strong> in
+            line with the main app. That label is not a separate concept from authentication: it
+            tells you <strong>whose OAuth grant</strong> must back your requests.
+          </p>
+
+          <p>
+            <strong>Private events</strong> are activities that are not universally visible on X
+            (for example DMs and encrypted chat). Accessing them requires
+            <strong>explicit user authorization</strong>: OAuth 2.0 user context or OAuth 1.0a user
+            access. Use <code>xurl --auth oauth2</code> or <code>xurl --auth oauth1</code> after
+            registering the matching profile. See the
+            <a href="https://github.com/xdevplatform/xurl" target="_blank" rel="noopener">xurl README</a>
+            for setup.
+          </p>
+
+          <p>
+            <strong>Public events</strong> are activities already visible on the platform.
+            Subscribing uses <strong>OAuth 2.0 application-only</strong> authentication: a Bearer
+            token for your app. In this book that is
+            <code>xurl auth app --bearer-token …</code> then <code>--auth app</code> (see the
+            <a href="../../1_tools/xurl.html">xURL</a> chapter).
+          </p>
+
+          <div class="callout">
+            <strong class="callout-title">Caveat</strong>
+            <p>
+              Some event types can be accessed with either user OAuth or app-level OAuth depending
+              on your package. For example, app-only subscriptions for
+              <code>follow.follow</code> / <code>follow.unfollow</code> may be reserved to higher
+              tiers. Confirm both privacy class and tier entitlements in the current XAA docs.
+            </p>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th></th><th>Public events</th><th>Private events</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Relationship to your app</strong></td>
+                <td>Data X treats as already public; no personal OAuth grant needed</td>
+                <td>User must explicitly authorize your app before you can subscribe</td>
+              </tr>
+              <tr>
+                <td><strong>OAuth model</strong></td>
+                <td>OAuth 2.0 app-only (Bearer token)</td>
+                <td>OAuth 2.0 user context or OAuth 1.0a user access</td>
+              </tr>
+              <tr>
+                <td><strong><code>xurl</code></strong></td>
+                <td><code>--auth app</code></td>
+                <td><code>--auth oauth2</code> or <code>--auth oauth1</code></td>
+              </tr>
+              <tr>
+                <td><strong>Typical subscription rule</strong></td>
+                <td>Filter by <code>user_id</code> (or <code>keyword</code> for <code>news.new</code>)</td>
+                <td>Filter only for users who have authorized your app</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./0_xaa.html">
+            <span class="label">Previous</span>
+            The X Activity API
+          </a>
+          <a class="next" href="./2_subscribe_public.html">
+            <span class="label">Next</span>
+            Subscribing to public events
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

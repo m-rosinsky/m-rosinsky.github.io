@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscribing to public events — Mike Rosinsky</title>
+  <meta name="description" content="Create an XAA public-event subscription with xurl --auth app and inspect webhook payloads.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="subscribe-public" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_xaa.html">X Activity API</a>
+        </div>
+
+        <h1>Subscribing to public events</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">webhooks</span>
+            <span class="tag">xurl</span>
+          </div>
+          <span class="meta-date">X Activity API</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            This walkthrough assumes you have completed the
+            <a href="./0_xaa.html">X Activity API introduction</a> and read
+            <a href="./1_events_and_auth.html">Event types and authentication</a>. It uses a
+            <strong>public</strong> event type (<code>profile.update.bio</code>) with
+            <strong>OAuth 2.0 application-only</strong> credentials
+            (<code>xurl --auth app</code>). If you have not installed <code>xurl</code> yet, follow
+            the <a href="../../1_tools/xurl.html">xURL</a> chapter first.
+          </p>
+
+          <p>
+            For <strong>private</strong> event types (DMs, chat, likes, and so on) you must use
+            <em>user OAuth</em> instead—see
+            <a href="./3_subscribe_private.html">Subscribing to private events</a>.
+          </p>
+
+          <h2>Verify access</h2>
+
+          <p>Confirm your app can call the subscriptions API:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/activity/subscriptions</code></pre>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: [],
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"result_count"</span>: <span class="tok-num">0</span>
+  }
+}</code></pre>
+
+          <p>
+            If you see a JSON body like the above (possibly with existing subscriptions), your
+            bearer token and project access are working. For
+            <code>GET /2/activity/subscriptions</code>, <code>meta.result_count</code> is the
+            number of subscription objects returned in <code>data</code>.
+          </p>
+
+          <h2>Getting your user ID</h2>
+
+          <p>
+            Most public XAA filters use <code>user_id</code> (numeric user ID, not username). The
+            exception is <code>news.new</code>, which uses a <code>keyword</code> filter—see
+            <a href="./4_news.html">News by Keyword</a>.
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/users/by/username/YOUR_USERNAME</code></pre>
+
+          <h3>Example response</h3>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"id"</span>: <span class="tok-str">"1234567890"</span>,
+    <span class="tok-key">"name"</span>: <span class="tok-str">"Your Name"</span>,
+    <span class="tok-key">"username"</span>: <span class="tok-str">"your_username"</span>
+  }
+}</code></pre>
+
+          <p>Copy the <code>id</code> value for the subscription below.</p>
+
+          <h2>Creating a subscription</h2>
+
+          <p>Subscribe to your own profile bio updates so you can trigger a test event.</p>
+
+          <h3>Subscription payload</h3>
+
+          <p>When creating a subscription, you typically send:</p>
+
+          <ul>
+            <li><code>event_type</code> — the event to subscribe to (required)</li>
+            <li><code>filter</code> — match criteria (required)—often <code>{ "user_id": "…" }</code></li>
+            <li><code>webhook_id</code> — where to deliver events (optional, but required for webhook delivery)</li>
+            <li><code>tag</code> — optional label for your own bookkeeping (recommended)</li>
+          </ul>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"profile.update.bio"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"YOUR_USER_ID"</span>
+  },
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>,
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"my bio updates"</span>
+}'</code></pre>
+
+          <h3>Success response</h3>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"subscription"</span>: {
+      <span class="tok-key">"created_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"event_type"</span>: <span class="tok-str">"profile.update.bio"</span>,
+      <span class="tok-key">"filter"</span>: {
+        <span class="tok-key">"user_id"</span>: <span class="tok-str">"YOUR_USER_ID"</span>
+      },
+      <span class="tok-key">"subscription_id"</span>: <span class="tok-str">"1146654567674912769"</span>,
+      <span class="tok-key">"tag"</span>: <span class="tok-str">"my bio updates"</span>,
+      <span class="tok-key">"updated_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>
+    }
+  },
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"total_subscriptions"</span>: <span class="tok-num">1</span>
+  }
+}</code></pre>
+
+          <h2>Testing your subscription</h2>
+
+          <p>
+            After the subscription is created, change your profile bio on X. Your webhook server
+            should log a delivery.
+          </p>
+
+          <details class="spoiler">
+            <summary>Sample webhook payload</summary>
+            <div class="spoiler-body">
+              <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"filter"</span>: {
+      <span class="tok-key">"user_id"</span>: <span class="tok-str">"YOUR_USER_ID"</span>
+    },
+    <span class="tok-key">"event_type"</span>: <span class="tok-str">"profile.update.bio"</span>,
+    <span class="tok-key">"tag"</span>: <span class="tok-str">"my bio updates"</span>,
+    <span class="tok-key">"payload"</span>: {
+      <span class="tok-key">"before"</span>: <span class="tok-str">"vox populi"</span>,
+      <span class="tok-key">"after"</span>: <span class="tok-str">"vox dei"</span>
+    }
+  }
+}</code></pre>
+              <p>Fields:</p>
+              <ul>
+                <li><code>filter</code> — the subscription filter that matched</li>
+                <li><code>event_type</code> — which event fired</li>
+                <li><code>tag</code> — the tag you set when creating the subscription</li>
+                <li><code>payload</code> — change-specific data (here, before/after bio text)</li>
+              </ul>
+            </div>
+          </details>
+
+          <h3>Other public events</h3>
+
+          <p>
+            The same <code>--auth app</code> flow works for other public event types—just swap the
+            <code>event_type</code>. For example, to track an account's posts:
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"post.create"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"YOUR_USER_ID"</span>
+  },
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>,
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"their posts"</span>
+}'</code></pre>
+
+          <p>
+            Use <code>post.delete</code> to learn when those posts are removed. Likes
+            (<code>like.create</code>) are a <strong>private</strong> event and use user OAuth
+            instead—see <a href="./3_subscribe_private.html">Subscribing to private events</a>.
+          </p>
+
+          <h2>Next steps</h2>
+
+          <ol>
+            <li>Handle multiple event types as needed for your product</li>
+            <li>Handle delivery failures and retries responsibly</li>
+            <li>Monitor subscription health and rotate credentials on schedule</li>
+            <li>Delete unused subscriptions and stay under your tier cap</li>
+          </ol>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./1_events_and_auth.html">
+            <span class="label">Previous</span>
+            Event types and authentication
+          </a>
+          <a class="next" href="./3_subscribe_private.html">
+            <span class="label">Next</span>
+            Subscribing to private events
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction filter — Mike Rosinsky</title>
+  <meta name="description" content="Use the optional direction filter (inbound / outbound) on follow and like XAA subscriptions.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="direction" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_xaa.html">X Activity API</a>
+        </div>
+
+        <h1>Direction filter</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">filters</span>
+            <span class="tag">follows</span>
+          </div>
+          <span class="meta-date">X Activity API</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            Some XAA event types accept an optional <code>direction</code> field inside the
+            subscription <code>filter</code>, next to <code>user_id</code>. It restricts events to
+            <strong>which side of the relationship</strong> the filtered user is on (for example
+            “someone followed <em>them</em>” vs “<em>they</em> followed someone else”).
+          </p>
+
+          <p>
+            Today, the events that support this field are <code>follow.follow</code>,
+            <code>follow.unfollow</code>, and <code>like.create</code>. Other
+            <code>event_type</code> values either ignore <code>direction</code> or reject the
+            subscription—check the current X developer docs if you are unsure.
+          </p>
+
+          <h2>Values</h2>
+
+          <ul>
+            <li>
+              <code>"inbound"</code> — activity directed <strong>at the user</strong> identified by
+              <code>user_id</code> (another account followed/unfollowed them, or liked one of their
+              posts)
+            </li>
+            <li>
+              <code>"outbound"</code> — activity <strong>by that user</strong> toward another
+              account (they followed/unfollowed someone, or liked someone else's post)
+            </li>
+          </ul>
+
+          <div class="callout">
+            <strong class="callout-title">Note</strong>
+            <p>
+              <code>like.create</code> is a <strong>private</strong> event, so its subscriptions
+              require user OAuth (<code>--auth oauth2</code> or <code>--auth oauth1</code>) rather
+              than the app-only auth used in the follow example below. See
+              <a href="./3_subscribe_private.html">Subscribing to private events</a>.
+            </p>
+          </div>
+
+          <h2>Example request</h2>
+
+          <pre><code>POST /2/activity/subscriptions</code></pre>
+
+          <p>Body (use <code>inbound</code> or <code>outbound</code>):</p>
+
+          <pre><code>{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"follow.follow"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"&lt;id&gt;"</span>,
+    <span class="tok-key">"direction"</span>: <span class="tok-str">"inbound"</span>
+  }
+}</code></pre>
+
+          <p>
+            For webhook delivery, include <code>webhook_id</code> (and optionally
+            <code>tag</code>) the same way as in
+            <a href="./2_subscribe_public.html">Subscribing to public events</a>.
+          </p>
+
+          <h3>With <code>xurl</code></h3>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"follow.follow"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"user_id"</span>: <span class="tok-str">"YOUR_USER_ID"</span>,
+    <span class="tok-key">"direction"</span>: <span class="tok-str">"inbound"</span>
+  },
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>,
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"follows inbound"</span>
+}'</code></pre>
+
+          <p>
+            Use <code>"direction": "outbound"</code> when you want the opposite direction. Follow
+            subscriptions may require <strong>Enterprise</strong> (or other elevated) entitlements
+            for app-only auth; see
+            <a href="./1_events_and_auth.html">Event types and authentication</a>.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./4_news.html">
+            <span class="label">Previous</span>
+            News by keyword
+          </a>
+          <span class="disabled">
+            <span class="label">Next</span>
+            
+          </span>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

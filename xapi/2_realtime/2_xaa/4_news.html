@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting News By Keyword in Realtime — Mike Rosinsky</title>
+  <meta name="description" content="Subscribe to news.new with a keyword filter via the X Activity API (Enterprise).">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="news" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_xaa.html">X Activity API</a>
+        </div>
+
+        <h1>Getting News By Keyword in Realtime</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">x-activity-api</span>
+            <span class="tag">news</span>
+            <span class="tag">enterprise</span>
+          </div>
+          <span class="meta-date">X Activity API</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            This chapter is a brief tutorial on how to use the X Activity API to get news emerging
+            on X in realtime, filtered by keywords of your choice.
+          </p>
+
+          <div class="callout">
+            <strong class="callout-title">Note</strong>
+            <p>This feature is currently only for Enterprise customers.</p>
+          </div>
+
+          <h2>Subscribing to News</h2>
+
+          <p>
+            You create a subscription the same way as in
+            <a href="./2_subscribe_public.html">Subscribing to public events</a>:
+            <code>POST /2/activity/subscriptions</code> with <code>event_type</code>,
+            <code>filter</code>, and <code>webhook_id</code>.
+          </p>
+
+          <p>
+            This time, you'll use the <code>news.new</code> event type, and you'll specify a
+            <code>keyword</code> in the <code>filter</code> field instead of a user id:
+          </p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/activity/subscriptions -X POST -d '{
+  <span class="tok-key">"event_type"</span>: <span class="tok-str">"news.new"</span>,
+  <span class="tok-key">"filter"</span>: {
+    <span class="tok-key">"keyword"</span>: <span class="tok-str">"Tesla"</span>
+  },
+  <span class="tok-key">"tag"</span>: <span class="tok-str">"Tesla trends"</span>,
+  <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>
+}'</code></pre>
+
+          <h3>Success Response</h3>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"subscription"</span>: {
+      <span class="tok-key">"created_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"event_type"</span>: <span class="tok-str">"news.new"</span>,
+      <span class="tok-key">"filter"</span>: {
+        <span class="tok-key">"keyword"</span>: <span class="tok-str">"Tesla"</span>
+      },
+      <span class="tok-key">"subscription_id"</span>: <span class="tok-str">"1146654567674912769"</span>,
+      <span class="tok-key">"tag"</span>: <span class="tok-str">"Tesla news"</span>,
+      <span class="tok-key">"updated_at"</span>: <span class="tok-str">"2025-10-07T05:31:56Z"</span>,
+      <span class="tok-key">"webhook_id"</span>: <span class="tok-str">"YOUR_WEBHOOK_ID"</span>
+    }
+  },
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"total_subscriptions"</span>: <span class="tok-num">1</span>
+  }
+}</code></pre>
+
+          <h3>Getting News Events</h3>
+
+          <p>
+            If you specified a webhook, you'll start to see news with a headline containing your
+            keyword as trends are generated.
+          </p>
+
+          <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"event_uuid"</span>: <span class="tok-str">"1985729017958244577"</span>,
+    <span class="tok-key">"filter"</span>: {
+      <span class="tok-key">"keyword"</span>: <span class="tok-str">"spacex"</span>
+    },
+    <span class="tok-key">"event_type"</span>: <span class="tok-str">"news.new"</span>,
+    <span class="tok-key">"tag"</span>: <span class="tok-str">"spacex news"</span>,
+    <span class="tok-key">"payload"</span>: {
+      <span class="tok-key">"headline"</span>: <span class="tok-str">"This is some spacex news breaking on X"</span>,
+      <span class="tok-key">"summary"</span>: <span class="tok-str">"Spacex just launched a rocket"</span>
+    }
+  }
+}</code></pre>
+
+          <h3>Duplicate News</h3>
+
+          <p>
+            If you specified multiple subscriptions for news, and a single news event matches
+            multiple subscriptions, it may be delivered multiple times. Use
+            <code>event_uuid</code> to deduplicate at the application layer.
+          </p>
+
+          <details class="spoiler">
+            <summary>Example: one headline, two keyword matches</summary>
+            <div class="spoiler-body">
+              <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"event_uuid"</span>: <span class="tok-str">"1985729017958244577"</span>,
+    <span class="tok-key">"filter"</span>: { <span class="tok-key">"keyword"</span>: <span class="tok-str">"jack"</span> },
+    <span class="tok-key">"event_type"</span>: <span class="tok-str">"news.new"</span>,
+    <span class="tok-key">"tag"</span>: <span class="tok-str">"jack news"</span>,
+    <span class="tok-key">"payload"</span>: {
+      <span class="tok-key">"headline"</span>: <span class="tok-str">"New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill"</span>,
+      <span class="tok-key">"summary"</span>: <span class="tok-str">"Voters in New Jersey head to the polls..."</span>
+    }
+  }
+}</code></pre>
+              <pre><code>{
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"event_uuid"</span>: <span class="tok-str">"1985729017958244577"</span>,
+    <span class="tok-key">"filter"</span>: { <span class="tok-key">"keyword"</span>: <span class="tok-str">"mikie"</span> },
+    <span class="tok-key">"event_type"</span>: <span class="tok-str">"news.new"</span>,
+    <span class="tok-key">"tag"</span>: <span class="tok-str">"mikie news"</span>,
+    <span class="tok-key">"payload"</span>: {
+      <span class="tok-key">"headline"</span>: <span class="tok-str">"New Jersey Gubernatorial Election Between Jack Ciattarelli and Mikie Sherrill"</span>,
+      <span class="tok-key">"summary"</span>: <span class="tok-str">"Voters in New Jersey head to the polls..."</span>
+    }
+  }
+}</code></pre>
+            </div>
+          </details>
+
+          <h3>Use Cases</h3>
+
+          <p>
+            Setting up a news feed using the X Activity API is a perfect way to integrate a live
+            feed of events you care about into your application.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./3_subscribe_private.html">
+            <span class="label">Previous</span>
+            Subscribing to private events
+          </a>
+          <a class="next" href="./5_direction_filter.html">
+            <span class="label">Next</span>
+            Direction filter
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

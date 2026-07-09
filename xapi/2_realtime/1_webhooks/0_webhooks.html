@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Webhooks with the X Developer API — Mike Rosinsky</title>
+  <meta name="description" content="Webhooks let X push real-time events to your server instead of polling.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="webhooks" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          Webhooks
+        </div>
+
+        <h1>Using Webhooks with the X Developer API</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">webhooks</span>
+            <span class="tag">realtime</span>
+          </div>
+          <span class="meta-date">Getting real-time signal</span>
+        </div>
+
+        <div class="prose">
+
+          <blockquote>
+            <p>☎️ Don't call us, we'll call you!</p>
+          </blockquote>
+
+          <h2>What's a Webhook?</h2>
+
+          <p>
+            Webhooks are an efficient way to receive real-time data from the X Developer API.
+            It's an industry standard practice, and a growing number of X's products currently
+            support webhooks.
+          </p>
+
+          <p>
+            Instead of polling the API servers to check if any new data is available on a regular
+            interval, the API will reach out to you automatically!
+          </p>
+
+          <p>
+            You register your server's callback URL with X, and when new data becomes available
+            that matches your criteria, the API will reach out to your server, deliver the event,
+            and disconnect.
+          </p>
+
+          <p>
+            This is all secured using industry standard encryption, making it an ideal choice for
+            efficient, event-driven data delivery.
+          </p>
+
+          <p>A growing number of X's real-time products support webhook delivery. These products include:</p>
+
+          <ul>
+            <li>Filtered Stream</li>
+            <li>Account Activity API</li>
+            <li>X Activity API</li>
+          </ul>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="../../1_tools/xurl.html">
+            <span class="label">Previous</span>
+            xURL — cURL for X
+          </a>
+          <a class="next" href="./1_sample_app.html">
+            <span class="label">Next</span>
+            Writing a basic webhook app
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

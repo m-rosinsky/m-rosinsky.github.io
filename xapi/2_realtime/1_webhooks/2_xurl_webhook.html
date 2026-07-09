@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standing up a Temporary Webhook using xURL — Mike Rosinsky</title>
+  <meta name="description" content="Use xURL and ngrok to stand up a temporary HTTPS webhook without writing handlers.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="xurl-webhook" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_webhooks.html">Webhooks</a>
+        </div>
+
+        <h1>Standing up a Temporary Webhook using xURL</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">webhooks</span>
+            <span class="tag">xurl</span>
+            <span class="tag">ngrok</span>
+          </div>
+          <span class="meta-date">Webhooks</span>
+        </div>
+
+        <div class="prose">
+
+          <div class="callout">
+            <strong class="callout-title">Note</strong>
+            <p>
+              This section assumes you have the <code>xurl</code> CLI tool set up. If you haven't
+              installed and configured <code>xurl</code> yet, check out the
+              <a href="../../1_tools/xurl.html">xURL section</a> first.
+            </p>
+          </div>
+
+          <p>
+            If you're looking for a quick and easy way to stand up a webhook to use with the X API,
+            the xURL tool offers this functionality.
+          </p>
+
+          <p>
+            The xURL webhook abstracts away the need to write your own handlers for the GET and
+            POST requests that X sends to your server. If you're looking for that logic to
+            incorporate into your production app, check out the previous section where we write a
+            Python Flask app.
+          </p>
+
+          <h2>Prerequisites</h2>
+
+          <p>What you'll need:</p>
+
+          <ul>
+            <li>The xURL CLI tool (already installed and configured)</li>
+            <li>A free (or higher) account with <code>ngrok.com</code></li>
+            <li>Your ngrok auth token</li>
+          </ul>
+
+          <h2>Setup Steps</h2>
+
+          <h3>1. Register Your OAuth1 Keys</h3>
+
+          <p>First, ensure your OAuth1 keys are registered with xurl:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> auth oauth1</code></pre>
+
+          <p>
+            You'll need to provide your consumer key and secret, and access key and secret.
+            Generate these from the
+            <a href="https://developer.x.com" target="_blank" rel="noopener">X Developer Portal</a>.
+          </p>
+
+          <h3>2. Start the Webhook Server</h3>
+
+          <p>Run the xURL webhook command:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> webhook start</code></pre>
+
+          <p>
+            You'll be prompted for your ngrok auth token so that xURL can create a temporary HTTPS
+            endpoint:
+          </p>
+
+          <pre><code>Starting webhook server with ngrok...
+Enter your ngrok authtoken (leave empty to try NGROK_AUTHTOKEN env var):</code></pre>
+
+          <p>
+            Once you've entered your auth token, your endpoint will be generated and you'll see
+            output like this:
+          </p>
+
+          <pre><code>Configuring ngrok to forward to local port: 8080
+Ngrok tunnel established!
+  Forwarding URL: https://d1cb5181df5c.ngrok.app -&gt; localhost:8080
+Use this URL for your X API webhook registration: https://d1cb5181df5c.ngrok.app/webhook
+Starting local HTTP server to handle requests from ngrok tunnel...</code></pre>
+
+          <h2>Using Your Webhook</h2>
+
+          <p>
+            Leave the terminal window running — any webhook events, including the security check,
+            will be displayed in that window.
+          </p>
+
+          <p><strong>To stop the webhook server</strong>: Press <code>Ctrl+C</code> in the terminal.</p>
+
+          <p>
+            You can now use the generated URL (ending in <code>/webhook</code>) to register a
+            webhook with the X API. See the next section for a tutorial on webhook registration.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./1_sample_app.html">
+            <span class="label">Previous</span>
+            Writing a basic webhook app
+          </a>
+          <a class="next" href="./3_registration.html">
+            <span class="label">Next</span>
+            Registering the webhook with X
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

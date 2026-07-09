@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing a Basic Webhook App — Mike Rosinsky</title>
+  <meta name="description" content="Build a Flask webhook app that handles CRC security checks and incoming X events.">
+  <link rel="stylesheet" href="../../blog.css">
+</head>
+<body data-page="webhook-app" data-depth="2">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          <a href="./0_webhooks.html">Webhooks</a>
+        </div>
+
+        <h1>Writing a Basic Webhook App</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">webhooks</span>
+            <span class="tag">python</span>
+            <span class="tag">flask</span>
+            <span class="tag">crc</span>
+          </div>
+          <span class="meta-date">Webhooks</span>
+        </div>
+
+        <div class="prose">
+
+          <p>
+            In this section, we'll write a basic app to get started with receiving webhook events
+            from X.
+          </p>
+
+          <p>Here's the requests that the app will need to handle:</p>
+
+          <ul>
+            <li><code>GET</code> requests for security challenge checks</li>
+            <li><code>POST</code> requests for receiving events</li>
+          </ul>
+
+          <p>
+            After we make the app, we'll need to host it with a public-facing HTTPS URL. I'll show
+            you some options for quick, free methods for getting this stood up quickly so you can
+            test.
+          </p>
+
+          <h2>The Basic App</h2>
+
+          <p>
+            Let's start with a basic skeleton for our webhook app. We'll build it incrementally,
+            adding features step by step.
+          </p>
+
+          <pre><code><span class="tok-cmd">from</span> flask <span class="tok-cmd">import</span> Flask
+<span class="tok-cmd">from</span> waitress <span class="tok-cmd">import</span> serve
+
+HOST = <span class="tok-str">"0.0.0.0"</span>
+PORT = <span class="tok-num">8080</span>
+
+app = Flask(__name__)
+
+@app.route(<span class="tok-str">'/webhooks'</span>, methods=[<span class="tok-str">'GET'</span>, <span class="tok-str">'POST'</span>])
+<span class="tok-cmd">def</span> webhook_request():
+
+    <span class="tok-cmd">if</span> request.method == <span class="tok-str">'GET'</span>:
+        <span class="tok-cmt"># Stub - we'll implement the security check here</span>
+        print(<span class="tok-str">"Got GET request"</span>)
+        <span class="tok-cmd">return</span> <span class="tok-str">''</span>, <span class="tok-num">200</span>
+
+    <span class="tok-cmd">elif</span> request.method == <span class="tok-str">'POST'</span>:
+        <span class="tok-cmt"># Stub - we'll implement webhook event handling here</span>
+        print(<span class="tok-str">"Got POST request"</span>)
+        <span class="tok-cmd">return</span> <span class="tok-str">''</span>, <span class="tok-num">200</span>
+
+    <span class="tok-cmt"># Got an invalid method</span>
+    <span class="tok-cmd">return</span> <span class="tok-str">'Method Not Allowed'</span>, <span class="tok-num">405</span>
+
+<span class="tok-cmd">def</span> main():
+    print(<span class="tok-str">f"Hosting WSGI server on {HOST}:{PORT}"</span>)
+    serve(app, host=HOST, port=PORT)
+
+<span class="tok-cmd">if</span> __name__==<span class="tok-str">'__main__'</span>:
+    main()</code></pre>
+
+          <p>
+            This gives us a basic Flask app with stub endpoints for both GET and POST requests.
+            Now let's implement each part step by step.
+          </p>
+
+          <h2>Implementing the Security Check (GET Request)</h2>
+
+          <p>
+            X uses a Challenge-Response Check (CRC) to verify that your webhook endpoint is
+            legitimate and secure. When you register a webhook URL, X will send a GET request with
+            a <code>crc_token</code> parameter. Your app must respond with an HMAC SHA-256 hash of
+            that token using your consumer secret.
+          </p>
+
+          <h3>Getting Your Consumer Secret</h3>
+
+          <p>
+            To get your consumer secret, go to your X Developer Portal and navigate to your app's
+            settings. You'll find the Consumer Keys section where you can view and regenerate your
+            API keys. Copy the "API Key Secret" (also called Consumer Secret) and set it as an
+            environment variable before running your app.
+          </p>
+
+          <h3>Why This Matters</h3>
+
+          <p>The CRC check ensures that:</p>
+
+          <ul>
+            <li>Your endpoint is accessible and responding</li>
+            <li>Only you (with your consumer secret) can validate the webhook</li>
+            <li>The connection between X and your server is secure</li>
+          </ul>
+
+          <h3>Implementation</h3>
+
+          <p>First, let's add the necessary imports and environment variable setup:</p>
+
+          <pre><code><span class="tok-cmd">from</span> flask <span class="tok-cmd">import</span> Flask, request, jsonify
+<span class="tok-cmd">from</span> waitress <span class="tok-cmd">import</span> serve
+
+<span class="tok-cmd">import</span> base64
+<span class="tok-cmd">import</span> hashlib
+<span class="tok-cmd">import</span> hmac
+<span class="tok-cmd">import</span> os
+<span class="tok-cmd">import</span> json
+<span class="tok-cmd">import</span> sys
+
+app = Flask(__name__)
+
+<span class="tok-cmt"># Your Twitter consumer secret - set this as an environment variable</span>
+CONSUMER_SECRET = os.environ.get(<span class="tok-str">"CONSUMER_SECRET"</span>)
+<span class="tok-cmd">if</span> CONSUMER_SECRET <span class="tok-cmd">is</span> <span class="tok-cmd">None</span>:
+  print(<span class="tok-str">"Missing consumer secret. Ensure CONSUMER_SECRET env var is set."</span>)
+  sys.exit(<span class="tok-num">1</span>)
+
+HOST = <span class="tok-str">"0.0.0.0"</span>
+PORT = <span class="tok-num">8080</span></code></pre>
+
+          <p>Now let's implement the GET request handler:</p>
+
+          <pre><code>@app.route(<span class="tok-str">'/webhooks'</span>, methods=[<span class="tok-str">'GET'</span>, <span class="tok-str">'POST'</span>])
+<span class="tok-cmd">def</span> webhook_request():
+    <span class="tok-cmt"># Handle GET request (CRC challenge)</span>
+    <span class="tok-cmd">if</span> request.method == <span class="tok-str">'GET'</span>:
+        crc_token = request.args.get(<span class="tok-str">'crc_token'</span>)
+        print(<span class="tok-str">f"CRC Token received: {crc_token}"</span>)
+
+        <span class="tok-cmd">if</span> crc_token <span class="tok-cmd">is</span> <span class="tok-cmd">None</span>:
+            print(<span class="tok-str">"Error: No crc_token found in the request."</span>)
+            <span class="tok-cmd">return</span> json.dumps({<span class="tok-str">'error'</span>: <span class="tok-str">'No crc_token'</span>})
+
+        <span class="tok-cmt"># Creates HMAC SHA-256 hash from incoming token and your consumer secret</span>
+        sha256_hash_digest = hmac.new(
+            CONSUMER_SECRET.encode(<span class="tok-str">'utf-8'</span>),
+            msg=crc_token.encode(<span class="tok-str">'utf-8'</span>),
+            digestmod=hashlib.sha256
+        ).digest()
+
+        <span class="tok-cmt"># Construct response data with base64 encoded hash</span>
+        response = {
+            <span class="tok-str">'response_token'</span>: <span class="tok-str">'sha256='</span> + base64.b64encode(sha256_hash_digest).decode(<span class="tok-str">'utf-8'</span>)
+        }
+
+        <span class="tok-cmd">return</span> jsonify(response)
+
+    <span class="tok-cmd">elif</span> request.method == <span class="tok-str">'POST'</span>:
+        print(<span class="tok-str">"Got POST request"</span>)
+        <span class="tok-cmd">return</span> <span class="tok-str">'Not implemented yet'</span>, <span class="tok-num">501</span>
+
+    <span class="tok-cmd">return</span> <span class="tok-str">'Method Not Allowed'</span>, <span class="tok-num">405</span></code></pre>
+
+          <h3>How the CRC Check Works</h3>
+
+          <ol>
+            <li><strong>X sends a challenge</strong>: GET request with <code>crc_token</code> parameter</li>
+            <li><strong>You create an HMAC hash</strong>: Using SHA-256 with your consumer secret and the token</li>
+            <li><strong>You respond</strong>: With <code>{"response_token": "sha256=&lt;base64_hash&gt;"}</code></li>
+            <li><strong>X verifies</strong>: Compares your hash with what they expect</li>
+          </ol>
+
+          <h2>Implementing Webhook Events (POST Request)</h2>
+
+          <p>
+            Now let's implement the POST request handler to receive actual webhook events from X.
+            Replace the POST stub with this implementation:
+          </p>
+
+          <pre><code>@app.route(<span class="tok-str">'/webhooks'</span>, methods=[<span class="tok-str">'GET'</span>, <span class="tok-str">'POST'</span>])
+<span class="tok-cmd">def</span> webhook_request():
+    <span class="tok-cmd">if</span> request.method == <span class="tok-str">'GET'</span>:
+        <span class="tok-cmt"># Truncated...</span>
+        ...
+
+    <span class="tok-cmd">elif</span> request.method == <span class="tok-str">'POST'</span>:
+        event_data = request.get_json()
+        <span class="tok-cmd">if</span> event_data:
+            print(json.dumps(event_data, indent=<span class="tok-num">2</span>))
+        <span class="tok-cmd">else</span>:
+            print(<span class="tok-str">f"Body: {request.data.decode('utf-8')}"</span>)
+
+        <span class="tok-cmd">return</span> <span class="tok-str">''</span>, <span class="tok-num">200</span>
+
+    <span class="tok-cmd">return</span> <span class="tok-str">'Method Not Allowed'</span>, <span class="tok-num">405</span></code></pre>
+
+          <h3>Processing Events</h3>
+
+          <p>The POST handler:</p>
+
+          <ol>
+            <li><strong>Parses the JSON payload</strong> from the request body</li>
+            <li><strong>Logs the event data</strong> for debugging and processing</li>
+            <li><strong>Returns 200 OK</strong> to acknowledge successful receipt</li>
+            <li><strong>Handles edge cases</strong> like non-JSON payloads</li>
+          </ol>
+
+          <h2>Running the Complete App</h2>
+
+          <p>To run the app:</p>
+
+          <ol>
+            <li>
+              Set your consumer secret:
+              <pre><code><span class="tok-cmd">export</span> CONSUMER_SECRET=<span class="tok-str">"your_consumer_secret_here"</span></code></pre>
+            </li>
+            <li>
+              Run the app:
+              <pre><code><span class="tok-cmd">python</span> sample_app.py</code></pre>
+            </li>
+          </ol>
+
+          <details class="spoiler">
+            <summary>The complete code</summary>
+            <div class="spoiler-body">
+              <pre><code><span class="tok-cmd">from</span> flask <span class="tok-cmd">import</span> Flask, request, jsonify
+<span class="tok-cmd">from</span> waitress <span class="tok-cmd">import</span> serve
+
+<span class="tok-cmd">import</span> base64
+<span class="tok-cmd">import</span> hashlib
+<span class="tok-cmd">import</span> hmac
+<span class="tok-cmd">import</span> os
+<span class="tok-cmd">import</span> json
+<span class="tok-cmd">import</span> sys
+
+app = Flask(__name__)
+
+CONSUMER_SECRET = os.environ.get(<span class="tok-str">"CONSUMER_SECRET"</span>)
+<span class="tok-cmd">if</span> CONSUMER_SECRET <span class="tok-cmd">is</span> <span class="tok-cmd">None</span>:
+  print(<span class="tok-str">"Missing consumer secret. Ensure CONSUMER_SECRET env var is set."</span>)
+  sys.exit(<span class="tok-num">1</span>)
+
+HOST = <span class="tok-str">"0.0.0.0"</span>
+PORT = <span class="tok-num">8080</span>
+
+@app.route(<span class="tok-str">'/webhooks'</span>, methods=[<span class="tok-str">'GET'</span>, <span class="tok-str">'POST'</span>])
+<span class="tok-cmd">def</span> webhook_request():
+    <span class="tok-cmd">if</span> request.method == <span class="tok-str">'GET'</span>:
+        crc_token = request.args.get(<span class="tok-str">'crc_token'</span>)
+        print(<span class="tok-str">f"CRC Token received: {crc_token}"</span>)
+
+        <span class="tok-cmd">if</span> crc_token <span class="tok-cmd">is</span> <span class="tok-cmd">None</span>:
+            print(<span class="tok-str">"Error: No crc_token found in the request."</span>)
+            <span class="tok-cmd">return</span> json.dumps({<span class="tok-str">'error'</span>: <span class="tok-str">'No crc_token'</span>})
+
+        sha256_hash_digest = hmac.new(
+            CONSUMER_SECRET.encode(<span class="tok-str">'utf-8'</span>),
+            msg=crc_token.encode(<span class="tok-str">'utf-8'</span>),
+            digestmod=hashlib.sha256
+        ).digest()
+
+        response = {
+            <span class="tok-str">'response_token'</span>: <span class="tok-str">'sha256='</span> + base64.b64encode(sha256_hash_digest).decode(<span class="tok-str">'utf-8'</span>)
+        }
+        <span class="tok-cmd">return</span> jsonify(response)
+
+    <span class="tok-cmd">elif</span> request.method == <span class="tok-str">'POST'</span>:
+        event_data = request.get_json()
+        <span class="tok-cmd">if</span> event_data:
+            print(json.dumps(event_data, indent=<span class="tok-num">2</span>))
+        <span class="tok-cmd">else</span>:
+            print(<span class="tok-str">f"Body: {request.data.decode('utf-8')}"</span>)
+        <span class="tok-cmd">return</span> <span class="tok-str">''</span>, <span class="tok-num">200</span>
+
+    <span class="tok-cmd">return</span> <span class="tok-str">'Method Not Allowed'</span>, <span class="tok-num">405</span>
+
+<span class="tok-cmd">def</span> main():
+    print(<span class="tok-str">"--- Starting Webhook App ---"</span>)
+    print(<span class="tok-str">f"Running with Waitress WSGI server on {HOST}:{PORT}"</span>)
+    serve(app, host=HOST, port=PORT)
+
+<span class="tok-cmd">if</span> __name__ == <span class="tok-str">'__main__'</span>:
+    main()</code></pre>
+            </div>
+          </details>
+
+          <h2>Next Steps</h2>
+
+          <p>
+            Now that the server is running locally, you'll need to host it to generate a
+            publicly-available HTTPS URL. This can be done for free using public tools like
+            <code>ngrok</code>, deployed to a cloud environment, or any other means you wish.
+          </p>
+
+          <p>
+            In the next section, we'll look at a temporary webhook via xURL — then register the
+            URL with X so we can start receiving events.
+          </p>
+
+        </div>
+
+        <div class="article-nav">
+          <a href="./0_webhooks.html">
+            <span class="label">Previous</span>
+            Using Webhooks with the X Developer API
+          </a>
+          <a class="next" href="./2_xurl_webhook.html">
+            <span class="label">Next</span>
+            Temporary webhooks with xURL
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../../toc.js"></script>
+  <script src="../../vendor/turndown.js"></script>
+  <script src="../../copy-as-md.js"></script>
+  <script src="../../copy-code.js"></script>
+  <script src="../../sidebar.js"></script>
+</body>
+</html>

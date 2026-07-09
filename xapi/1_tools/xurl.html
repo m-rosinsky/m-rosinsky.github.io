@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xURL — Mike Rosinsky</title>
+  <meta name="description" content="xURL is a CLI tool for interfacing with the X API — auth handling, URL shortening, and webhook testing.">
+  <link rel="stylesheet" href="../blog.css">
+</head>
+<body data-page="xurl" data-depth="1">
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-name" href="../../index.html">Mike Rosinsky</a>
+      <div class="nav-links">
+        <button class="sidebar-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+        <a class="active" href="../index.html">Blog</a>
+        <a href="https://github.com/m-rosinsky" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Table of contents" data-toc></aside>
+
+    <div class="main">
+      <article>
+        <div class="breadcrumb">
+          <a href="../../index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="../index.html">X API Blog</a>
+          <span class="sep">/</span>
+          Helpful tools
+        </div>
+
+        <h1>xURL — cURL for X</h1>
+
+        <div class="meta">
+          <div class="meta-tags">
+            <span class="tag">xurl</span>
+            <span class="tag">cli</span>
+            <span class="tag">auth</span>
+          </div>
+          <span class="meta-date">Helpful tools</span>
+        </div>
+
+        <div class="prose">
+          <p>
+            <code>xURL</code> is a CLI tool specifically designed for interfacing with the X API.
+          </p>
+
+          <p>Some key features include:</p>
+
+          <ul>
+            <li>URL shortening</li>
+            <li>Authentication handling</li>
+            <li>Webhook testing via ngrok</li>
+          </ul>
+
+          <p>
+            You can check out the full project, including the README, here:
+            <a href="https://github.com/xdevplatform/xurl" target="_blank" rel="noopener">github.com/xdevplatform/xurl</a>
+          </p>
+
+          <h2>Quick Start</h2>
+
+          <p>Install the tool with one curl command:</p>
+
+          <pre><code><span class="tok-cmd">curl</span> -fsSL https://raw.githubusercontent.com/xdevplatform/xurl/main/install.sh | sudo bash</code></pre>
+
+          <p>Register your auth token:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> auth app --bearer-token YOUR_BEARER_TOKEN</code></pre>
+
+          <p>And make requests:</p>
+
+          <pre><code><span class="tok-cmd">xurl</span> --auth app /2/tweets/20</code></pre>
+
+          <div class="callout">
+            <strong class="callout-title">User auth</strong>
+            <p>
+              For <strong>user</strong> (non–app-only) requests, <code>xurl</code> selects the
+              credential profile with <code>--auth oauth2</code> (OAuth 2.0 user context) or
+              <code>--auth oauth1</code> (OAuth 1.0a user access), depending on how you registered
+              tokens — not a separate <code>--auth user</code> flag.
+            </p>
+          </div>
+
+          <p>
+            Check out the xurl GitHub README for further tutorials. I'll be using xurl in all
+            sample commands in follow-on sections of this blog.
+          </p>
+        </div>
+
+        <div class="article-nav">
+          <a href="../index.html">
+            <span class="label">Previous</span>
+            Introduction
+          </a>
+          <a class="next" href="../2_realtime/1_webhooks/0_webhooks.html">
+            <span class="label">Next</span>
+            Using Webhooks with the X Developer API
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; 2026 Mike Rosinsky</span>
+      <a href="../../index.html">Home</a>
+    </div>
+  </footer>
+
+  <script src="../toc.js"></script>
+  <script src="../vendor/turndown.js"></script>
+  <script src="../copy-as-md.js"></script>
+  <script src="../copy-code.js"></script>
+  <script src="../sidebar.js"></script>
+</body>
+</html>
