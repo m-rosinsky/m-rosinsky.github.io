@@ -141,6 +141,63 @@
     return parts.join("\n\n").replace(/\n{3,}/g, "\n\n").trim() + "\n";
   }
 
+  var skillTipTimer = null;
+
+  function skillLink() {
+    var links = document.querySelectorAll(".nav-links a");
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute("href") || "";
+      if (/SKILL\.md$/i.test(href) || links[i].textContent.trim() === "Skill") {
+        return links[i];
+      }
+    }
+    return null;
+  }
+
+  function hideSkillTip() {
+    var tip = document.querySelector(".skill-tip");
+    if (!tip) return;
+    tip.classList.remove("is-visible");
+    if (skillTipTimer) {
+      clearTimeout(skillTipTimer);
+      skillTipTimer = null;
+    }
+  }
+
+  function showSkillTip() {
+    var link = skillLink();
+    if (!link) return;
+
+    var tip = document.querySelector(".skill-tip");
+    if (!tip) {
+      tip = document.createElement("div");
+      tip.className = "skill-tip";
+      tip.setAttribute("role", "status");
+      tip.innerHTML =
+        '<span class="skill-tip__arrow" aria-hidden="true"></span>' +
+        '<p class="skill-tip__text">Pssst — looking for me?</p>';
+      link.classList.add("nav-skill");
+      link.appendChild(tip);
+
+    }
+
+    // Restart visibility so repeat copies re-trigger the animation.
+    tip.classList.remove("is-visible");
+    // Force reflow so the transition replays.
+    void tip.offsetWidth;
+    tip.classList.add("is-visible");
+
+    if (skillTipTimer) clearTimeout(skillTipTimer);
+    skillTipTimer = setTimeout(hideSkillTip, 4500);
+
+    document.addEventListener("keydown", function onKey(e) {
+      if (e.key === "Escape") {
+        hideSkillTip();
+        document.removeEventListener("keydown", onKey);
+      }
+    });
+  }
+
   function install() {
     var article = document.querySelector("article");
     if (!article || article.querySelector(".copy-menu")) return;
@@ -217,6 +274,7 @@
         writeClipboard(md)
           .then(function () {
             flash(item, true);
+            showSkillTip();
           })
           .catch(function () {
             flash(item, false);
